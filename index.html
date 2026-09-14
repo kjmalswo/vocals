@@ -333,7 +333,7 @@ const DEFAULT_ARTIST_DB = [
     "tone": 96,
     "technique": 92,
     "emotion": 94,
-    "note": "바운디(Vaundy)는 곡에 따라 목소리의 인상 자체를 바꾸는 음색 운용과 장르 적응력, 그리고 중음에서 고음으로 넘어가는 구간의 유연성을 중심으로 평가했다. 고음은 높은 음을 강하게 내는 능력뿐 아니라 믹스 계열의 질감, 파워를 실은 벨팅, 가벼운 헤드 계열의 소리를 상황에 따라 선택할 수 있는 폭을 반영해 높게 배정했다. 저음은 어둡고 라프한 질감을 만들 수 있는 중저음의 중심을 고려해 균형 있게 평가했다. 가성은 곡의 색을 바꾸는 중요한 도구로 활용되는 점을 반영해 높은 점수를 주었다. 음색은 같은 가수가 맞는지 느껴질 정도로 곡에 따라 밝고 부드럽게, 거칠고 어둡게, 힘 있고 선명하게 바꿔 사용할 수 있는 다면성을 가장 큰 강점으로 보아 최고 수준으로 평가했다. 테크닉은 고음, 믹스, 가성 사이를 빠르게 전환하면서 리듬과 발음을 동시에 처리하는 능력, 그리고 장르에 맞는 소리 선택을 포함해 매우 높게 배정했다. 감정은 과도한 발라드식 과장보다 곡의 장르와 캐릭터에 맞는 말투, 에너지, 질감을 선택하는 방식의 표현력을 중심으로 평가했다. 전체적으로 한 가지 ‘좋은 목소리’를 고집하기보다 곡 자체의 세계관에 맞춰 목소리의 재질을 바꾸는 다재다능한 보컬 프로필이다."
+    "note": "Vaundy는 곡에 따라 목소리의 인상 자체를 바꾸는 음색 운용과 장르 적응력, 그리고 중음에서 고음으로 넘어가는 구간의 유연성을 중심으로 평가했다. 고음은 높은 음을 강하게 내는 능력뿐 아니라 믹스 계열의 질감, 파워를 실은 벨팅, 가벼운 헤드 계열의 소리를 상황에 따라 선택할 수 있는 폭을 반영해 높게 배정했다. 저음은 어둡고 라프한 질감을 만들 수 있는 중저음의 중심을 고려해 균형 있게 평가했다. 가성은 곡의 색을 바꾸는 중요한 도구로 활용되는 점을 반영해 높은 점수를 주었다. 음색은 같은 가수가 맞는지 느껴질 정도로 곡에 따라 밝고 부드럽게, 거칠고 어둡게, 힘 있고 선명하게 바꿔 사용할 수 있는 다면성을 가장 큰 강점으로 보아 최고 수준으로 평가했다. 테크닉은 고음, 믹스, 가성 사이를 빠르게 전환하면서 리듬과 발음을 동시에 처리하는 능력, 그리고 장르에 맞는 소리 선택을 포함해 매우 높게 배정했다. 감정은 과도한 발라드식 과장보다 곡의 장르와 캐릭터에 맞는 말투, 에너지, 질감을 선택하는 방식의 표현력을 중심으로 평가했다. 전체적으로 한 가지 ‘좋은 목소리’를 고집하기보다 곡 자체의 세계관에 맞춰 목소리의 재질을 바꾸는 다재다능한 보컬 프로필이다."
   },
   {
     "id": 19,
@@ -361,7 +361,7 @@ const DEFAULT_ARTIST_DB = [
     "emotion": 94,
     "note": "아도(Ado)는 일본의 팝 가수로, 넓은 발성 스펙트럼과 압도적인 성대 접촉을 기반으로 한 괴물 같은 가창력을 가진 것이 특징이다. 곡의 파트마다 완전히 다른 사람처럼 목소리를 바꿔가며 가창하는 극단적인 보컬 바리에이션이 가장 특징적이며, 시원하면서도 힘있는 음색을 가졌다. 폭발하듯 감정선을 표현해내는 것이 강점이다."
   }
-];;
+];;;
 </script>
 
 <script>
@@ -370,7 +370,7 @@ const DEFAULT_ARTIST_DB = [
   실제 편집 데이터는 브라우저 로컬 저장소에 저장합니다. 외부 JS 파일은 사용하지 않습니다.
 */
 const LOCAL_KEY='VOCAL_INDEX_DB';
-const DEFAULT_DB_VERSION='2026-09-14-DB20';
+const DEFAULT_DB_VERSION='2026-09-14-DB21';
 const DEFAULT_DB_VERSION_KEY='VOCAL_INDEX_DB_VERSION';
 const AXES=[
   {key:'high', label:'고음', cls:'crimson', angle:-90},
@@ -629,7 +629,7 @@ function mergeDefaults(){
   return current;
 }
 
-$('artistForm').addEventListener('submit',async e=>{e.preventDefault();const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};if(editingId!=null)record.id=Number(editingId);await putArtist(record);artists=localRows();resetForm();render();renderDBList()});
+$('artistForm').addEventListener('submit',async e=>{e.preventDefault();const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};if(editingId!=null)record.id=Number(editingId);await putArtist(record);artists=localRows();resetForm();render();renderDBList();if(adminSession){$('serverSyncInfo').textContent='저장 완료 · 서버에 반영하는 중…';await publishCurrentDBToServer();}});
 $('cancelEditBtn').onclick=resetForm;$('newArtistBtn').onclick=()=>{resetForm();$('fName').focus()};$('publishServerBtn').onclick=publishCurrentDBToServer;$('copyDbBtn').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(artists.map(x=>({...x})),null,2));alert('현재 DB JSON을 클립보드에 복사했습니다.');}catch(_e){alert('클립보드 복사에 실패했습니다.');}};$('downloadHtmlBtn').onclick=downloadCurrentHtml;$('manageBtn').onclick=()=>{if(adminSession){$('manageModal').classList.add('show');refresh();}else openAdminLogin();};$('adminLoginBtn').onclick=adminLogin;$('adminCancelBtn').onclick=()=>$('adminLoginModal').classList.remove('show');$('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin();});$('compareNowBtn').onclick=()=>openCompare();if($('sortSelect'))$('sortSelect').onchange=()=>{ $('statSelect').hidden=$('sortSelect').value!=='stat'; render(); };if($('statSelect'))$('statSelect').onchange=()=>render();
 $('detailBtn').onclick=()=>{if(selectedForMenu)openDetailWindow(selectedForMenu);$('actionMenu').classList.remove('show')};$('compareBtn').onclick=enterCompareMode;$('cancelCompareBtn').onclick=cancelCompareMode;
 document.addEventListener('click',e=>{if(!$('actionMenu').contains(e.target)&&!e.target.closest('.artist-card'))$('actionMenu').classList.remove('show')});
