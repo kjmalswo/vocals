@@ -48,16 +48,6 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 .server-sync{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid #343a41;border-radius:12px;background:#111519;margin-bottom:14px}
 .server-sync small{color:#89919a}
 
-
-/* --- UI layer isolation: hidden panels never occupy normal page flow --- */
-.overlay{display:none !important;position:fixed !important;inset:0 !important;z-index:200 !important;}
-.overlay.show{display:flex !important;}
-.action-menu{display:none !important;position:fixed !important;z-index:100 !important;}
-.action-menu.show{display:block !important;}
-.selection-tip{display:none !important;position:fixed !important;z-index:190 !important;}
-.selection-tip.show{display:flex !important;}
-#adminLoginModal,#compareModal,#manageModal{display:none !important;}
-#adminLoginModal.show,#compareModal.show,#manageModal.show{display:flex !important;}
 </style>
 </head>
 <body>
@@ -66,7 +56,7 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
   <div>
     <div class="title">SINGERS COMPARE</div>
   </div>
-  <div class="status" id="dbStatus">SINGERS COMPARE</div>
+  <div class="status" id="dbStatus">HTML 내부 DB 불러오는 중…</div>
 </header>
 <main>
   <div class="toolbar">
@@ -367,6 +357,8 @@ const DEFAULT_ARTIST_DB = [
   실제 편집 데이터는 브라우저 로컬 저장소에 저장합니다. 외부 JS 파일은 사용하지 않습니다.
 */
 const LOCAL_KEY='VOCAL_INDEX_DB';
+const DB_SCHEMA_VERSION='2026-09-14-descriptions-v2';
+const LOCAL_VERSION_KEY='VOCAL_INDEX_DB_SCHEMA_VERSION';
 const AXES=[
   {key:'high', label:'고음', cls:'crimson', angle:-90},
   {key:'falsetto', label:'가성', cls:'sky', angle:-30},
@@ -618,6 +610,25 @@ function mergeDefaults(){
   return current;
 }
 
+function syncDefaultDescriptions(){
+  const defaults=readDefaultDB();
+  const current=localRows();
+  if(!current.length) return;
+  const version = storageAvailable ? (()=>{try{return localStorage.getItem(LOCAL_VERSION_KEY)||''}catch(_e){return ''}})() : '';
+  if(version===DB_SCHEMA_VERSION) return;
+  const byName=new Map(defaults.map(a=>[String(a.name||'').trim().toLowerCase(),a]));
+  let changed=false;
+  const updated=current.map(row=>{
+    const d=byName.get(String(row.name||'').trim().toLowerCase());
+    if(!d || typeof d.note!=='string') return row;
+    if(row.note===d.note) return row;
+    changed=true;
+    return {...row,note:d.note};
+  });
+  if(changed) saveLocalRows(updated);
+  if(storageAvailable){try{localStorage.setItem(LOCAL_VERSION_KEY,DB_SCHEMA_VERSION)}catch(_e){}}
+}
+
 $('artistForm').addEventListener('submit',async e=>{e.preventDefault();const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};if(editingId)record.id=editingId;await putArtist(record);resetForm();await refresh()});
 $('cancelEditBtn').onclick=resetForm;$('newArtistBtn').onclick=()=>{resetForm();$('fName').focus()};$('publishServerBtn').onclick=publishCurrentDBToServer;$('copyDbBtn').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(artists.map(x=>({...x})),null,2));alert('현재 DB JSON을 클립보드에 복사했습니다.');}catch(_e){alert('클립보드 복사에 실패했습니다.');}};$('manageBtn').onclick=()=>{if(adminSession){$('manageModal').classList.add('show');refresh();}else openAdminLogin();};$('adminLoginBtn').onclick=adminLogin;$('adminCancelBtn').onclick=()=>$('adminLoginModal').classList.remove('show');$('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin();});$('compareNowBtn').onclick=()=>openCompare();if($('sortSelect'))$('sortSelect').onchange=()=>{ $('statSelect').hidden=$('sortSelect').value!=='stat'; render(); };if($('statSelect'))$('statSelect').onchange=()=>render();
 $('detailBtn').onclick=()=>{if(selectedForMenu)openDetailWindow(selectedForMenu);$('actionMenu').classList.remove('show')};$('compareBtn').onclick=enterCompareMode;$('cancelCompareBtn').onclick=cancelCompareMode;
@@ -668,6 +679,8 @@ function readDefaultDB(){
 function boot(){
   try{
     artists=mergeDefaults();
+    syncDefaultDescriptions();
+    artists=localRows();
     render();
     renderDBList();
     $('dbStatus').textContent=`HTML DB · ${artists.length}명 로드 완료${storageAvailable?'':' · 브라우저 임시 저장'}`;
