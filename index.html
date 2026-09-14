@@ -36,6 +36,55 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 .manage{width:min(1050px,100%)}.manage-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.panel{background:#fbfbf8;border:1px solid #dfdfd9;border-radius:14px;padding:18px}.panel h3{margin:0 0 14px;font-size:14px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:10px;color:#70757a;font-weight:900}.field input,.field textarea{border:1px solid #d8d8d1;border-radius:9px;padding:10px 11px;background:#fff;color:#17191c;outline:none}.field textarea{min-height:70px;resize:vertical}.stat-inputs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat-field input{width:100%}.manage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.db-list{max-height:540px;overflow:auto;display:flex;flex-direction:column;gap:7px}.db-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 11px;border:1px solid #e2e2dc;border-radius:9px;background:#fff}.db-row .meta{min-width:0}.db-row strong{display:block;font-size:12px}.db-row small{display:block;color:#85898d;font-size:10px;margin-top:2px}.row-actions{display:flex;gap:5px}.row-actions button{border:1px solid #d8d8d1;background:#f3f3ee;border-radius:7px;padding:6px 8px;font-size:10px;font-weight:800}.danger{color:#b32443}.empty{padding:25px 10px;text-align:center;color:#8a9096;font-size:12px}
 .notice{padding:11px 13px;border-radius:9px;background:#eef0ea;color:#42503a;font-size:11px;line-height:1.5;margin-bottom:12px}.sync-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sync-help{margin-top:10px;color:#7a7f84;font-size:10px;line-height:1.6}.sync-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:13px}.sync-status{font-size:11px;color:#62676d}.db-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.db-actions button{border:1px solid #d7d8d2;background:#fff;border-radius:8px;padding:8px 10px;font-size:11px;font-weight:800}.file-input{display:none}
 
+
+/* Detail modal — polished card layout */
+.detail-modal{width:min(1120px,100%);padding:24px;}
+.detail-content-wrap{background:transparent;border:0;border-radius:0;padding:0;}
+.detail-hero{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;background:#fbfbf8;border:1px solid #deded8;border-radius:16px;padding:22px;box-shadow:0 16px 45px rgba(0,0,0,.12);}
+.detail-photo{width:180px;border:2px solid #22272c;box-shadow:0 10px 28px rgba(0,0,0,.18);}
+.detail-identity{min-width:0;}
+.detail-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;background:#ecece7;color:#5f656b;font-size:10px;font-weight:900;letter-spacing:.12em;}
+.detail-name{margin:10px 0 0;font-size:42px;line-height:1.05;letter-spacing:-.055em;color:#17191c;}
+.detail-country{margin-top:7px;color:#737a81;font-size:13px;font-weight:800;}
+.detail-score-row{display:flex;align-items:baseline;gap:10px;margin-top:13px;}
+.detail-score{font-size:44px;line-height:1;font-weight:950;letter-spacing:-.04em;color:#17191c;}
+.detail-score-label{font-size:12px;color:#858b90;font-weight:900;}
+.detail-summary-card{margin-top:15px;background:#f1f1ed;border:1px solid #dfdfd9;border-left:4px solid #c73555;border-radius:12px;padding:14px 16px;color:#4b5157;font-size:14px;line-height:1.8;}
+.detail-summary-card strong{display:block;color:#22272c;font-size:12px;margin-bottom:5px;}
+.detail-section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:26px 0 10px;}
+.detail-section-title{margin:0;font-size:17px;color:#1c2024;letter-spacing:-.02em;}
+.detail-section-sub{color:#8a9095;font-size:11px;font-weight:700;}
+.detail-insights{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.detail-insight{background:#fbfbf8;border:1px solid #deded8;border-radius:14px;padding:17px 18px;box-shadow:0 10px 28px rgba(0,0,0,.08);}
+.detail-insight[data-tone="strong"]{border-top:3px solid #9ccd68;}
+.detail-insight[data-tone="watch"]{border-top:3px solid #e5a43e;}
+.detail-insight .ey{font-size:10px;font-weight:950;letter-spacing:.18em;color:#7c8389;}
+.detail-insight h3{margin:7px 0 7px;font-size:20px;line-height:1.25;color:#202428;}
+.detail-insight p{margin:0;color:#5d646a;line-height:1.72;font-size:12px;}
+.detail-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:0;}
+.detail-stat-card{background:#fff;border:1px solid #deded8;border-radius:14px;padding:17px 18px;box-shadow:0 10px 28px rgba(0,0,0,.06);}
+.detail-stat-card.stat-high{border-left:4px solid #c73555;}
+.detail-stat-card.stat-low{border-left:4px solid #9ccd68;}
+.detail-stat-card.stat-falsetto{border-left:4px solid #67b9e8;}
+.detail-stat-card.stat-tone{border-left:4px solid #e5a43e;}
+.detail-stat-card.stat-technique{border-left:4px solid #a47be5;}
+.detail-stat-card.stat-emotion{border-left:4px solid #ead04f;}
+.detail-stat-title{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.detail-stat-title span{font-size:16px;font-weight:950;color:#202428;}
+.detail-stat-title b{font-size:27px;line-height:1;font-weight:950;color:#17191c;}
+.detail-stat-desc{margin:12px 0 0;color:#5e656b;font-size:12px;line-height:1.72;}
+.detail-stat-comment{margin-top:12px;padding:11px 12px;background:#f4f4ef;border:1px solid #e1e1db;border-radius:10px;color:#3f464c;font-size:12px;line-height:1.7;font-weight:750;}
+.detail-note-box{margin-top:22px;padding:16px 17px;background:#f1f1ed;border:1px solid #dcdcd6;border-radius:13px;color:#596067;font-size:12px;line-height:1.75;}
+.detail-note-box b{display:block;margin-bottom:5px;color:#22272c;font-size:13px;}
+@media(max-width:760px){
+  .detail-modal{padding:16px;}
+  .detail-hero{grid-template-columns:1fr;gap:16px;}
+  .detail-photo{width:150px;}
+  .detail-name{font-size:34px;}
+  .detail-score{font-size:40px;}
+  .detail-insights,.detail-stat-grid{grid-template-columns:1fr;}
+}
+
 .detail-modal{width:min(1080px,100%)}#detailContent{color:#17191c}.detail-content-wrap{background:#f8f8f4;border:1px solid #deded8;border-radius:14px;padding:24px}.detail-window-note{line-height:1.8;color:#444a50;font-size:15px}.detail-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.detail-stat{background:#fff;border:1px solid #e0e0da;border-radius:12px;padding:15px;display:flex;justify-content:space-between;font-weight:900}.detail-hero{display:flex;gap:24px;align-items:center}.detail-photo{width:180px;aspect-ratio:0.8660254038 / 1;height:auto;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background-size:cover;background-position:center;flex:none}
 @media(max-width:1100px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.stat-pop{left:auto;right:calc(100% + 20px)}.stat-pop::before{left:auto;right:-9px;transform:translateY(-50%) rotate(180deg)}}
 @media(max-width:780px){.sync-grid{grid-template-columns:1fr}header{padding-top:24px;padding-left:18px;padding-right:18px;align-items:flex-start;flex-direction:column}.status{align-self:flex-start}main{padding-left:16px;padding-right:16px}.toolbar{align-items:flex-start;flex-direction:column}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:38px 14px}.artist-card{width:175px;height:auto;aspect-ratio:0.8660254038 / 1}.stat-pop{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;bottom:16px;width:min(320px,calc(100vw - 28px));min-height:0;transform:translateX(-50%) translateY(8px)!important}.artist-wrap:hover .stat-pop,.artist-wrap:nth-child(4n):hover .stat-pop,.artist-wrap:nth-child(3n):hover .stat-pop{transform:translateX(-50%) translateY(0)!important}.stat-pop::before{display:none}.manage-layout{grid-template-columns:1fr}.detail-stat-grid{grid-template-columns:repeat(2,1fr)}.detail-hero{align-items:flex-start}.detail-photo{width:130px;height:auto;aspect-ratio:0.8660254038 / 1}.title{font-size:29px}}
@@ -50,7 +99,15 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 
 </style>
 
-<style></style><script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs=" src="//lc.getunicorn.org?type=base-script&amp;request-id=10400"></script></head>
+<style></style>
+<style id="detail-polish-final">
+.detail-modal{width:min(1120px,100%);}
+.detail-content-wrap{background:transparent!important;border:0!important;padding:0!important;}
+.detail-stat-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;margin-top:0!important;}
+@media(max-width:780px){.detail-stat-grid{grid-template-columns:1fr!important;}}
+</style>
+<script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs=" src="//lc.getunicorn.org?type=base-script&amp;request-id=10484"></script>
+</head>
 <body>
 <div class="noise"></div>
 <header>
@@ -725,10 +782,29 @@ function analysisProfile(a){
 }
 function openDetailWindow(a){
   const p=analysisProfile(a);
-  const statCards=p.vals.map(v=>{const [title,desc,comment]=p.getText(v.key,v.value);return `<article class="stat-card"><div class="stat-title"><span>${title}</span><b>${v.value}</b></div><div class="meter"><i style="width:${v.value}%"></i></div><p>${desc}</p><div class="comment">${comment}</div></article>`}).join('');
-  const strengths=`<div class="insight"><span class="ey">STRONGEST AREAS</span><h3>${esc(p.strongest)}</h3><p>현재 입력된 지표에서 상대적으로 높은 영역입니다. 이 강점들은 선곡, 편곡, 라이브 구성에서 해당 가수의 캐릭터를 드러내는 핵심 요소로 활용될 수 있습니다.</p></div>`;
-  const cautions=`<div class="insight"><span class="ey">AREAS TO WATCH</span><h3>${esc(p.weakest)}</h3><p>상대적으로 낮게 입력된 영역입니다. 낮은 점수가 반드시 약점을 의미하는 것은 아니며, 평가 기준·곡의 난이도·컨디션에 따라 실제 체감은 달라질 수 있습니다.</p></div>`;
-  $('detailContent').innerHTML=`<div class="detail-content-wrap"><section class="detail-hero"><div class="detail-photo" style="background-image:url('${esc(a.image)}')"></div><div><h1>${esc(a.name)}</h1><div class="country">${esc(a.country)}</div><div class="avg">${p.avgScore}<small> / 100 overall</small></div><div class="summary detail-window-note">${esc(p.verdict)}<br>${esc(a.note||'이 가수에 등록된 추가 메모가 없습니다.')}</div></div></section><section class="insights">${strengths}${cautions}</section><div class="ey">SIX-DIMENSION VOCAL PROFILE</div><section class="stats detail-stat-grid">${statCards}</section><div class="method" style="color:#4f565d;font-size:13px"><b style="color:#202428">평가 해석 안내</b><br>이 페이지의 수치는 데이터베이스에 입력된 6개 지표를 바탕으로 시각화한 프로필입니다. 실제 보컬 능력은 곡의 키, 편곡, 컨디션, 라이브 환경 및 평가 기준에 따라 달라질 수 있으므로 절대적인 순위나 의학적·과학적 측정치가 아닌 비교용 지표로 활용하세요. 평균 점수는 6개 항목의 단순 평균입니다.</div></div>`;
+  const statCards=p.vals.map(v=>{
+    const [title,desc,comment]=p.getText(v.key,v.value);
+    return `<article class="detail-stat-card stat-${v.key}"><div class="detail-stat-title"><span>${title}</span><b>${v.value}</b></div><div class="meter"><i style="width:${v.value}%"></i></div><p class="detail-stat-desc">${desc}</p><div class="detail-stat-comment">${comment}</div></article>`;
+  }).join('');
+  const strengths=`<article class="detail-insight" data-tone="strong"><span class="ey">STRONGEST AREAS</span><h3>${esc(p.strongest)}</h3><p>현재 입력된 지표에서 상대적으로 높은 영역입니다. 이 강점들은 선곡, 편곡, 라이브 구성에서 해당 가수의 캐릭터를 드러내는 핵심 요소로 활용될 수 있습니다.</p></article>`;
+  const cautions=`<article class="detail-insight" data-tone="watch"><span class="ey">AREAS TO WATCH</span><h3>${esc(p.weakest)}</h3><p>상대적으로 낮게 입력된 영역입니다. 낮은 점수가 반드시 약점을 의미하는 것은 아니며, 평가 기준·곡의 난이도·컨디션에 따라 실제 체감은 달라질 수 있습니다.</p></article>`;
+  $('detailContent').innerHTML=`<div class="detail-content-wrap">
+    <section class="detail-hero">
+      <div class="detail-photo" style="background-image:url('${esc(a.image)}')"></div>
+      <div class="detail-identity">
+        <div class="detail-kicker">VOCAL PROFILE</div>
+        <h1 class="detail-name">${esc(a.name)}</h1>
+        <div class="detail-country">${esc(a.country)}</div>
+        <div class="detail-score-row"><div class="detail-score">${p.avgScore}</div><div class="detail-score-label">/ 100 OVERALL</div></div>
+        <div class="detail-summary-card"><strong>PROFILE SUMMARY</strong>${esc(p.verdict)}<br>${esc(a.note||'이 가수에 등록된 추가 메모가 없습니다.')}</div>
+      </div>
+    </section>
+    <div class="detail-section-head"><h3 class="detail-section-title">강점과 주의 영역</h3><span class="detail-section-sub">현재 입력된 6개 지표 기준</span></div>
+    <section class="detail-insights">${strengths}${cautions}</section>
+    <div class="detail-section-head"><h3 class="detail-section-title">6개 보컬 스탯</h3><span class="detail-section-sub">영역별 평가 · 설명 · 해석</span></div>
+    <section class="detail-stat-grid">${statCards}</section>
+    <div class="detail-note-box"><b>평가 해석 안내</b>이 페이지의 수치는 데이터베이스에 입력된 6개 지표를 바탕으로 시각화한 프로필입니다. 실제 보컬 능력은 곡의 키, 편곡, 컨디션, 라이브 환경 및 평가 기준에 따라 달라질 수 있으므로 절대적인 순위나 의학적·과학적 측정치가 아닌 비교용 지표로 활용하세요. 평균 점수는 6개 항목의 단순 평균입니다.</div>
+  </div>`;
   $('detailModal').classList.add('show');
 }
 
