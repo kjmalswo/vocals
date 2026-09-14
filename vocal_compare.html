@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SINGERS COMPARE</title>
+<style>
+:root{
+  --bg:#15171a; --bg2:#0f1113; --panel:#f5f5f1; --ink:#17191c; --muted:#8e959c; --line:#30353b;
+  --crimson:#c73555; --lime:#9ccd68; --sky:#67b9e8; --gold:#e5a43e; --purple:#a47be5; --yellow:#ead04f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Pretendard,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 50% 0,#25292e 0,#15171a 42%,#0f1113 100%);color:#f5f5f3}
+body{overflow-x:hidden}.noise{position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:radial-gradient(#fff .6px,transparent .6px);background-size:5px 5px;mix-blend-mode:overlay;z-index:0}
+button,input,textarea{font:inherit}button{cursor:pointer}
+header,main{position:relative;z-index:1;max-width:1380px;margin:auto;padding-left:28px;padding-right:28px}
+header{padding-top:32px;padding-bottom:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:18px}
+.eyebrow{font-size:11px;letter-spacing:.28em;color:#7e858d;margin-bottom:8px}.title{font-size:34px;line-height:1;font-weight:900;letter-spacing:-.045em}.intro{margin:10px 0 0;color:#aeb4ba;font-size:13px}.status{padding:10px 13px;border:1px solid #343a41;background:#1c1f23;border-radius:999px;font-size:11px;color:#cfd3d7;white-space:nowrap}
+main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:32px}.sort-controls{display:flex;align-items:center;gap:8px}.sort-controls label{font-size:11px;color:#848b92;font-weight:900}.sort-controls select{appearance:none;background:#1b1e22;color:#e2e5e8;border:1px solid #3a4047;border-radius:9px;padding:9px 28px 9px 11px;font-size:12px;font-weight:800;outline:none}.sort-controls select:focus{border-color:#7d858e}.hint{color:#7e858c;font-size:12px}.toolbar-actions{display:flex;gap:8px}.ghost-btn,.solid-btn{border:1px solid #3a4047;border-radius:10px;padding:10px 13px;font-size:12px;font-weight:800}.ghost-btn{background:#1b1e22;color:#d9dde1}.solid-btn{background:#f1f1ed;color:#17191c;border-color:#f1f1ed}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:58px 34px;align-items:start}.artist-wrap{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0}.artist-card{position:relative;width:190px;aspect-ratio:0.8660254038 / 1;height:auto;max-width:100%;border:0;background:none;padding:0;outline:0;transition:transform .25s ease;z-index:1;overflow:visible}.artist-card:hover,.artist-card:focus-visible{transform:scale(1.045);z-index:10}
+.artist-card::before{content:"";position:absolute;inset:-14px;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background:rgba(255,255,255,.10);opacity:0;transition:.25s ease;filter:blur(8px) drop-shadow(0 0 17px rgba(255,255,255,.72));z-index:-1}.artist-card::after{content:"";position:absolute;inset:-2px;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);border:1px solid rgba(255,255,255,.82);opacity:.72;pointer-events:none;transition:.25s ease}.artist-card:hover::before,.artist-card:focus-visible::before{opacity:1}.artist-card:hover::after,.artist-card:focus-visible::after{border-color:#fff;opacity:1}
+.hex-shell{position:absolute;inset:0;overflow:visible;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background:rgba(255,255,255,.82);padding:2px;filter:drop-shadow(0 0 0 rgba(255,255,255,0));transition:filter .25s ease}
+.artist-card:hover .hex-shell,.artist-card:focus-visible .hex-shell{filter:drop-shadow(0 0 5px rgba(255,255,255,.72)) drop-shadow(0 0 16px rgba(255,255,255,.32))}
+.hex{position:absolute;inset:2px;overflow:hidden;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background:#292d32}.portrait{width:100%;height:100%;object-fit:cover;object-position:var(--face-x,50%) var(--face-y,50%);display:block;transform:scale(var(--face-scale,1));transform-origin:var(--face-x,50%) var(--face-y,50%);filter:saturate(.86) contrast(1.05);transition:transform .3s ease,filter .25s ease}.artist-card:hover .portrait{transform:scale(calc(var(--face-scale,1) * 1.035));filter:saturate(1) contrast(1.08)}.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.15) 45%,rgba(0,0,0,.78) 100%)}
+.score-chip{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:29px;line-height:1;font-weight:950;letter-spacing:.01em;color:#fff;-webkit-text-stroke:2px #000;text-shadow:0 3px 12px rgba(0,0,0,.46);paint-order:stroke fill;z-index:2}.artist-name{margin-top:14px;font-size:16px;font-weight:900;letter-spacing:-.02em}.artist-country{margin-top:4px;color:#80878e;font-size:11px}.selected .artist-name::after{content:" ✓";color:#fff;background:#2e343b;border-radius:50%;padding:1px 4px;margin-left:4px}
+
+.stat-pop{position:absolute;left:calc(100% + 20px);top:50%;transform:translateY(-50%) translateX(-8px);width:286px;background:rgba(249,249,245,.98);color:#191b1e;border:1px solid #dddeda;border-radius:14px;padding:16px;box-shadow:0 26px 80px rgba(0,0,0,.42);opacity:0;visibility:hidden;transition:.2s ease;pointer-events:none;z-index:30}.artist-wrap:hover .stat-pop{opacity:1;visibility:visible;transform:translateY(-50%) translateX(0)}
+.stat-pop::before{content:"";position:absolute;left:-9px;top:50%;transform:translateY(-50%);border-width:9px 9px 9px 0;border-style:solid;border-color:transparent #f9f9f5 transparent transparent}.stat-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}.stat-head strong{font-size:12px}.stat-head span{font-size:10px;color:#878b8f}.radar-wrap{width:230px;height:215px;margin:0 auto;position:relative}.radar-wrap svg{width:100%;height:100%;overflow:visible}.r-label{position:absolute;font-size:10px;font-weight:900;white-space:nowrap}.r-label b{display:block;font-size:11px;margin-top:2px}.r-top{top:0;left:50%;transform:translateX(-50%);text-align:center}.r-ur{top:38px;right:3px;text-align:left}.r-lr{bottom:25px;right:12px;text-align:left}.r-bot{bottom:0;left:50%;transform:translateX(-50%);text-align:center}.r-ll{bottom:25px;left:8px;text-align:right}.r-ul{top:38px;left:0;text-align:right}.c-crimson{color:var(--crimson)}.c-lime{color:#6e934b}.c-sky{color:#3b86ad}.c-gold{color:#a36f1d}.c-purple{color:#7651b4}.c-yellow{color:#9e8a16}
+
+.action-menu{position:fixed;display:none;z-index:100;min-width:190px;background:#f6f6f2;color:#151719;border:1px solid #dddeda;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.48);overflow:hidden}.action-menu.show{display:block}.action-menu button{width:100%;border:0;background:transparent;text-align:left;padding:15px 17px;font-weight:900;font-size:13px;display:flex;justify-content:space-between}.action-menu button:hover{background:#e9e9e4}.action-menu small{color:#8c9095}
+.compare-badge{display:none;align-items:center;gap:10px;border:0;border-radius:10px;background:#f1f1ed;color:#17191c;padding:10px 13px;font-size:12px;font-weight:900;box-shadow:0 15px 40px rgba(0,0,0,.26)}.compare-badge.show{display:flex}
+.selection-tip{display:none;position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:190;background:#c73555;color:#fff;padding:11px 13px 11px 16px;border-radius:999px;font-size:12px;font-weight:900;box-shadow:0 18px 55px rgba(0,0,0,.55);align-items:center;gap:12px;border:1px solid rgba(255,255,255,.26)}.selection-tip.show{display:flex}.selection-tip button{border:1px solid rgba(255,255,255,.38);background:#17191c;color:#fff;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:900}.selection-tip .compare-now{border:0;background:#fff;color:#b52e4c;padding:8px 15px}.modal-sub{margin-top:5px;font-size:11px;color:#777d83}.compare-modal{width:min(1120px,100%)}.compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;background:transparent;border:0;overflow:visible}.compare-card{background:#fbfbf8;border:1px solid #deded8;border-radius:16px;padding:18px;color:#17191c}.compare-top{display:flex;align-items:flex-end;gap:14px}.compare-photo{width:110px;aspect-ratio:.8660254038/1;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background:#2b2f34 center/cover no-repeat;border:2px solid #17191c;flex:none}.compare-title{min-width:0}.compare-title h3{margin:0;font-size:22px;letter-spacing:-.04em}.compare-country{margin-top:5px;color:#83888d;font-size:11px}.compare-score{margin-top:8px;font-size:30px;font-weight:950}.compare-radar{height:300px;margin:10px auto 0;display:flex;align-items:center;justify-content:center}.compare-radar .radar-wrap{width:300px;height:280px}.compare-detail{margin-top:12px;padding-top:14px;border-top:1px solid #deded8;color:#555b60;font-size:12px;line-height:1.75}.compare-detail strong{display:block;color:#1a1c1f;font-size:13px;margin-bottom:5px}.compare-empty{grid-column:1/-1;padding:50px;text-align:center;color:#8b9095;border:1px dashed #cfd0cb;border-radius:14px}@media(max-width:760px){.toolbar{align-items:stretch;flex-direction:column}.sort-controls{flex-wrap:wrap}.compare-grid{grid-template-columns:1fr}.compare-photo{width:90px}}
+
+.overlay{position:fixed;inset:0;background:rgba(9,10,11,.78);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}.overlay.show{display:flex}.modal{width:min(1150px,100%);max-height:92vh;overflow:auto;background:#f4f4ef;color:#17191c;border-radius:18px;padding:24px;box-shadow:0 36px 120px rgba(0,0,0,.55)}.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.modal-head h2{margin:0;font-size:21px}.close{width:34px;height:34px;border:0;border-radius:999px;background:#e1e1dc;font-size:20px}
+.compare-grid{display:grid;grid-template-columns:150px repeat(3,1fr);gap:1px;background:#d8d8d2;border:1px solid #d8d8d2;border-radius:12px;overflow:hidden}.compare-grid>div{background:#fbfbf8;padding:13px 12px;font-size:12px}.metric{color:#777;font-weight:800}.compare-name{font-size:14px;font-weight:900}.compare-country{color:#83878a;margin-top:3px;font-size:10px}.compare-score{font-size:25px;font-weight:900;margin-top:5px}
+
+.manage{width:min(1050px,100%)}.manage-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.panel{background:#fbfbf8;border:1px solid #dfdfd9;border-radius:14px;padding:18px}.panel h3{margin:0 0 14px;font-size:14px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:10px;color:#70757a;font-weight:900}.field input,.field textarea{border:1px solid #d8d8d1;border-radius:9px;padding:10px 11px;background:#fff;color:#17191c;outline:none}.field textarea{min-height:70px;resize:vertical}.stat-inputs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat-field input{width:100%}.manage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.db-list{max-height:540px;overflow:auto;display:flex;flex-direction:column;gap:7px}.db-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 11px;border:1px solid #e2e2dc;border-radius:9px;background:#fff}.db-row .meta{min-width:0}.db-row strong{display:block;font-size:12px}.db-row small{display:block;color:#85898d;font-size:10px;margin-top:2px}.row-actions{display:flex;gap:5px}.row-actions button{border:1px solid #d8d8d1;background:#f3f3ee;border-radius:7px;padding:6px 8px;font-size:10px;font-weight:800}.danger{color:#b32443}.empty{padding:25px 10px;text-align:center;color:#8a9096;font-size:12px}
+.notice{padding:11px 13px;border-radius:9px;background:#eef0ea;color:#42503a;font-size:11px;line-height:1.5;margin-bottom:12px}.db-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.db-actions button{border:1px solid #d7d8d2;background:#fff;border-radius:8px;padding:8px 10px;font-size:11px;font-weight:800}.file-input{display:none}
+
+.detail-window-note{line-height:1.75;color:#60656a}.detail-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.detail-stat{background:#fff;border:1px solid #e0e0da;border-radius:12px;padding:15px;display:flex;justify-content:space-between;font-weight:900}.detail-hero{display:flex;gap:24px;align-items:center}.detail-photo{width:180px;aspect-ratio:0.8660254038 / 1;height:auto;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background-size:cover;background-position:center;flex:none}
+@media(max-width:1100px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.stat-pop{left:auto;right:calc(100% + 20px)}.stat-pop::before{left:auto;right:-9px;transform:translateY(-50%) rotate(180deg)}}
+@media(max-width:780px){header{padding-top:24px;padding-left:18px;padding-right:18px;align-items:flex-start;flex-direction:column}.status{align-self:flex-start}main{padding-left:16px;padding-right:16px}.toolbar{align-items:flex-start;flex-direction:column}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:38px 14px}.artist-card{width:175px;height:auto;aspect-ratio:0.8660254038 / 1}.stat-pop{position:fixed;left:50%;right:auto;top:auto;bottom:16px;width:min(320px,calc(100vw - 28px));transform:translateX(-50%) translateY(8px)}.artist-wrap:hover .stat-pop{transform:translateX(-50%) translateY(0)}.stat-pop::before{display:none}.manage-layout{grid-template-columns:1fr}.detail-stat-grid{grid-template-columns:repeat(2,1fr)}.detail-hero{align-items:flex-start}.detail-photo{width:130px;height:auto;aspect-ratio:0.8660254038 / 1}.title{font-size:29px}}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<header>
+  <div>
+    <div class="title">SINGERS COMPARE</div>
+  </div>
+  <div class="status" id="dbStatus">HTML 내부 DB 불러오는 중…</div>
+</header>
+<main>
+  <div class="toolbar">
+    <div class="sort-controls" aria-label="가수 정렬">
+      <label for="sortSelect">정렬</label>
+      <select id="sortSelect">
+        <option value="overall">오버롤순</option>
+        <option value="country">국적순</option>
+        <option value="stat">세부스탯순</option>
+      </select>
+      <select id="statSelect" hidden aria-label="세부 스탯 선택">
+        <option value="high">고음</option>
+        <option value="low">저음</option>
+        <option value="falsetto">가성</option>
+        <option value="tone">음색</option>
+        <option value="technique">테크닉</option>
+        <option value="emotion">감정</option>
+      </select>
+    </div>
+    <div class="toolbar-actions">
+      <button class="ghost-btn" id="manageBtn">데이터 관리</button>
+    </div>
+  </div>
+  <section id="gallery" class="gallery"></section>
+</main>
+
+<div id="actionMenu" class="action-menu"><button id="detailBtn">상세 보기 <small>↗</small></button><button id="compareBtn">비교하기 <small>＋</small></button></div>
+<div id="selectionTip" class="selection-tip"><span id="selectionTipText">비교할 카드를 클릭하세요 · 최대 2명</span><button class="compare-now" id="compareNowBtn" type="button" disabled>비교하기</button><button id="cancelCompareBtn" type="button">취소</button></div>
+
+<div id="compareModal" class="overlay"><div class="modal compare-modal"><div class="modal-head"><div><h2>보컬 능력치 비교</h2><div class="modal-sub">선택한 가수의 사진 · 6축 레이더 · 상세 설명</div></div><button class="close" data-close="compareModal">×</button></div><div id="compareGrid" class="compare-grid"></div></div></div>
+
+<div id="manageModal" class="overlay"><div class="modal manage"><div class="modal-head"><h2>보컬 DB 관리</h2><button class="close" data-close="manageModal">×</button></div><div class="notice">기본 가수 데이터는 이 HTML 파일 안의 <b>DEFAULT_ARTIST_DB</b> 영역에서 관리합니다. 서버에 이 HTML 파일을 다시 업로드하면 기본 가수 목록에 반영됩니다. 이후에는 이 브라우저에서 추가·수정·삭제할 수 있습니다.</div><div class="db-actions"><button id="newArtistBtn">＋ 새 가수</button></div><div class="manage-layout"><div class="panel"><h3 id="formTitle">가수 추가</h3><form id="artistForm"><div class="form-grid"><div class="field"><label>이름</label><input id="fName" required /></div><div class="field"><label>국적</label><input id="fCountry" required /></div><div class="field full"><label>사진 URL</label><input id="fImage" type="url" placeholder="https://…" required /></div><div class="field full"><label>상세 분석 메모</label><textarea id="fNote" placeholder="보컬 특성 / 대표적인 강점 / 라이브 안정성 등"></textarea></div></div><h3 style="margin-top:16px">6개 스탯 (0–100)</h3><div class="stat-inputs"><div class="field stat-field"><label class="c-crimson">고음</label><input id="sHigh" type="number" min="0" max="100" required /></div><div class="field stat-field"><label class="c-lime">저음</label><input id="sLow" type="number" min="0" max="100" required /></div><div class="field stat-field"><label class="c-sky">가성</label><input id="sFalsetto" type="number" min="0" max="100" required /></div><div class="field stat-field"><label class="c-gold">음색</label><input id="sTone" type="number" min="0" max="100" required /></div><div class="field stat-field"><label class="c-purple">테크닉</label><input id="sTechnique" type="number" min="0" max="100" required /></div><div class="field stat-field"><label class="c-yellow">감정</label><input id="sEmotion" type="number" min="0" max="100" required /></div></div><div class="manage-actions"><button class="solid-btn" type="submit">저장</button><button class="ghost-btn" type="button" id="cancelEditBtn">취소</button></div></form></div><div class="panel"><h3>현재 DB</h3><div id="dbList" class="db-list"></div></div></div></div></div>
+
+<!--
+  ==================== DEFAULT_ARTIST_DB ====================
+  서버 기본 데이터는 이 HTML 파일 안의 배열만 수정하면 됩니다.
+  이름 · 국적 · 사진 · 6개 스탯 · 상세 분석을 이 영역에 직접 입력합니다.
+  브라우저에 저장된 기존 데이터가 있더라도 새 기본 가수는 자동으로 추가됩니다.
+-->
+<!-- DEFAULT_ARTIST_DB -->
+<script>
+const DEFAULT_ARTIST_DB = [
+  {
+    "id": 1,
+    "name": "성시경",
+    "country": "대한민국",
+    "image": "https://yt3.googleusercontent.com/k7vcgjUvUjwwzbWbZ3qDWWzLCXYlNVfNIkMLWfOcDrWiZ8GTka-2tyj6rjUBv3n9Cl1yWo8d=s900-c-k-c0x00ffffff-no-rj",
+    "high": 92,
+    "low": 97,
+    "falsetto": 97,
+    "tone": 95,
+    "technique": 92,
+    "emotion": 98,
+    "note": "성시경의 프로필은 중저음의 안정감과 섬세한 프레이징, 그리고 호흡을 활용한 정서 전달을 중심으로 높게 평가했다. 저음은 단순히 낮은 음을 낼 수 있는지를 넘어 낮은 음역에서도 소리가 지나치게 눌리거나 퍼지지 않고 중심과 말하듯 자연스러운 울림을 유지하는 능력을 반영해 매우 높게 배정했다. 고음은 폭발적인 파워만을 기준으로 삼기보다 발라드에서 필요한 선명도와 음정의 안정성을 기준으로 평가했다. 가성은 진성과의 대비가 크지 않으면서도 얇고 부드럽게 이어지는 질감, 그리고 작은 볼륨에서도 음악적인 선을 유지하는 점을 반영했다. 음색은 낮은 중역부터 중고역까지 일관되게 유지되는 부드럽고 따뜻한 캐릭터를 핵심 강점으로 보았다. 테크닉은 화려한 기교의 숫자보다 호흡 위치, 프레이징 길이, 발음의 강약, 음정 중심을 안정적으로 재현하는 능력을 반영했다. 감정은 소리를 크게 만드는 방식보다 가사의 의미와 문장 끝의 여운, 미세한 다이내믹 차이로 정서를 축적하는 능력에 높은 점수를 주었다. 전체적으로 강한 성량형이라기보다 안정된 중저음과 음색, 감정 해석을 결합해 곡의 분위기를 오래 끌고 가는 보컬 프로필이다."
+  },
+  {
+    "id": 2,
+    "name": "태연",
+    "country": "대한민국",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYbGtd2WJo08DE6cs3luKakgRobC10heX9CE20XegrdOo8JiQaa6m54CdW&s=10",
+    "high": 97,
+    "low": 86,
+    "falsetto": 89,
+    "tone": 97,
+    "technique": 92,
+    "emotion": 93,
+    "note": "태연은 고음역에서 음정 중심과 소리의 밀도를 동시에 유지하는 능력, 그리고 곡의 크기에 따라 발성 압력을 세밀하게 조절하는 능력을 핵심으로 평가했다. 고음 점수는 높은 음을 내는 것 자체보다 높은 위치에서 소리가 흔들리거나 과도하게 눌리지 않고 선명한 중심을 유지하는 점을 반영했다. 저음은 전체 프로필에서 상대적으로 낮지만, 이는 저음역에 약하다는 단정이라기보다 강점의 중심이 중고음과 표현 제어에 있다는 의미로 해석했다. 가성은 진성에서 갑자기 공기가 빠지는 전환보다 곡의 분위기에 맞춰 얇게 만들거나 존재감을 남기는 조절력을 기준으로 평가했다. 음색은 밝고 깨끗한 톤과 낮은 볼륨에서도 식별되는 목소리의 개성을 반영해 매우 높게 배정했다. 테크닉은 호흡, 레지스터 전환, 발음, 프레이징, 강약 조절을 종합해 평가했으며, 특히 큰 후렴과 섬세한 벌스 사이의 밀도 차이를 만드는 데 강점이 있는 프로필로 보았다. 감정은 과장된 표현보다 음색과 다이내믹의 작은 변화로 감정을 전달하는 능력을 반영했다. 결과적으로 높은 고음과 정교한 컨트롤, 선명한 음색을 동시에 갖춘 고음 중심의 표현형 보컬이다."
+  },
+  {
+    "id": 3,
+    "name": "이수현",
+    "country": "대한민국",
+    "image": "https://www.dizzotv.com/site/data/img_dir/2020/11/16/2020111680123_0.jpg",
+    "high": 96,
+    "low": 86,
+    "falsetto": 97,
+    "tone": 98,
+    "technique": 88,
+    "emotion": 91,
+    "note": "이수현은 맑고 청아한 음색을 중심축으로 삼으면서 중고음과 가성 영역에서 그 색을 크게 흔들지 않는 능력을 높게 평가했다. 고음은 높은 점수로 배정했지만 파워로 음을 밀어 올리는 방식보다 밝은 공명과 선명한 발음으로 고음을 깨끗하게 유지하는 특성을 중점적으로 반영했다. 저음은 상대적으로 낮은 편으로, 낮은 음역의 묵직함보다는 자신의 강점인 중고음의 투명한 질감을 살리는 쪽에 프로필이 맞춰져 있다. 가성은 매우 높은 점수로, 가벼운 레지스터에서도 소리가 흐려지지 않고 음색의 연속성을 유지하는 능력을 핵심으로 보았다. 음색은 한 소절만 들어도 구별되는 맑고 투명한 캐릭터와 모음의 선명함을 반영해 최고 수준으로 평가했다. 테크닉은 화려한 기교의 양보다 자연스러운 프레이징과 전달력을 중심으로 보아 비교적 낮게 배치했으며, 이는 기술적 역량이 부족하다는 뜻보다 표현의 핵심이 기교 과시보다 음색과 전달력에 있다는 의미에 가깝다. 감정은 과도하게 힘을 주지 않고 가사의 결을 선명하게 유지하는 방식으로 정서를 전달하는 점을 반영했다. 전체적으로 투명한 음색, 높은 가성 운용, 중고음의 선명도가 가장 강한 특징인 보컬이다."
+  },
+  {
+    "id": 4,
+    "name": "케이윌",
+    "country": "대한민국",
+    "image": "https://file2.nocutnews.co.kr/newsroom/image/2018/11/11/20181111134421221211_0_400_600.jpg",
+    "high": 95,
+    "low": 88,
+    "falsetto": 86,
+    "tone": 97,
+    "technique": 89,
+    "emotion": 94,
+    "note": "케이윌은 중저음의 두께와 고음에서의 압도적인 밀도를 연결하는 능력을 중심으로 평가했다. 저음은 아주 낮은 음을 내는 범위보다 중저음에서 소리가 가볍게 빠지지 않고 중심을 유지하는 안정감을 반영했다. 고음은 높은 점수로, 후렴의 절정에서 성량과 감정의 압력을 동시에 올리면서도 음정의 방향을 잃지 않는 힘을 주요 기준으로 삼았다. 가성은 다른 축보다 낮게 배정했는데, 이는 진성 기반의 밀도와 파워를 활용한 표현이 프로필의 중심이라는 의미다. 음색은 강한 성량을 사용해도 캐릭터가 쉽게 사라지지 않는 두께감과 고유한 질감을 반영했다. 테크닉은 호흡과 성량 운용, 음정 유지, 프레이징의 안정성을 종합하되 극단적인 기교형보다는 파워형이라는 점을 고려했다. 감정은 후렴으로 갈수록 서사를 크게 확장하는 능력과 가사의 비극적·서정적 결을 성량으로만 처리하지 않고 프레이징으로 끌어올리는 점을 높게 평가했다. 전체적으로 밀도 높은 중저음과 강한 고음, 개성 있는 음색을 이용해 클라이맥스를 만드는 파워 발라드형 보컬이다."
+  },
+  {
+    "id": 5,
+    "name": "오오모리 모토키",
+    "country": "일본",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScdIbSvqv6yplMZEfKXH0AbjauUHHzLzFoircxLV1dsw&s=10",
+    "high": 97,
+    "low": 90,
+    "falsetto": 99,
+    "tone": 95,
+    "technique": 98,
+    "emotion": 98,
+    "note": "오오모리 모토키는 넓은 표현 폭과 레지스터 변화, 빠른 프레이징을 동시에 다룰 수 있는 유연한 보컬을 중심으로 평가했다. 고음은 상위 음역에 올라가더라도 목소리의 캐릭터와 리듬감을 잃지 않는 점을 기준으로 높게 배정했다. 저음은 중저음에서도 지나치게 무겁게 만들지 않고 곡의 리듬과 발음을 살릴 수 있는 균형을 반영했다. 가성은 매우 높은 점수로, 진성의 힘을 빼는 단순한 전환을 넘어 곡의 색채 자체를 바꾸는 질감 변화와 자연스러운 연결을 주요 강점으로 봤다. 음색은 밝고 선명한 중심과 거칠거나 얇은 질감을 곡에 따라 바꿔 쓸 수 있는 개성을 반영했다. 테크닉은 호흡, 레지스터 전환, 빠른 음정 이동, 리듬의 선후 조절, 프레이징의 세밀한 변화까지 종합해 최고 수준으로 평가했다. 감정 역시 높은 점수로, 기술적인 변화가 단순한 과시로 끝나지 않고 곡의 상황과 분위기를 만드는 방향으로 연결되는 점을 반영했다. 전체적으로 높은 가성과 테크닉, 넓은 표현 스펙트럼이 두드러지는 고기능성 보컬 프로필이다."
+  },
+  {
+    "id": 6,
+    "name": "유우리",
+    "country": "일본",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv0bSzmUXGRPDLIZwTSXcCreqGjtXXnQroOdrWb8HeM3dgPmEVdLJk0Ss&s=10",
+    "high": 90,
+    "low": 90,
+    "falsetto": 89,
+    "tone": 99,
+    "technique": 92,
+    "emotion": 99,
+    "note": "유우리는 음역 자체의 극단적인 수치보다 음색과 감정 전달이 곡의 인상을 결정하는 힘을 중심으로 평가했다. 고음은 감정의 압력을 싣고도 후렴에서 에너지를 유지할 수 있는 수준으로 보아 높게 배정했다. 저음은 중음으로 연결되는 과정에서 소리가 지나치게 얇아지지 않는 안정감을 반영한 균형형 점수다. 가성은 프로필의 핵심 축은 아니지만 필요한 구간에서 질감을 부드럽게 바꾸고 여백을 만드는 정도의 활용력을 고려했다. 음색은 거칠고 가까운 질감과 부드러운 순간을 모두 만들 수 있는 개성, 그리고 첫 소절만으로도 화자의 정체성이 느껴지는 캐릭터를 반영해 매우 높게 평가했다. 테크닉은 극단적인 기교보다 호흡과 발음, 음정, 프레이징을 곡의 감정선에 맞춰 안정적으로 배치하는 능력을 기준으로 했다. 감정은 가장 높은 축으로, 목소리의 거친 결이나 강약 변화를 이용해 가사 속 인물의 심리와 장면을 직접 전달하는 능력을 핵심 강점으로 보았다. 전체적으로 기술을 전면에 내세우기보다 음색과 감정, 후렴의 에너지 상승으로 청자의 몰입을 만드는 보컬이다."
+  },
+  {
+    "id": 7,
+    "name": "이창섭",
+    "country": "대한민국",
+    "image": "https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/080/441/192/80441192_1761109156794_1_600x600.JPG",
+    "high": 94,
+    "low": 91,
+    "falsetto": 84,
+    "tone": 93,
+    "technique": 91,
+    "emotion": 95,
+    "note": "이창섭은 선명한 중음의 존재감과 고음에서의 직진성, 그리고 강약을 크게 벌려 무대의 에너지를 만드는 능력을 중심으로 평가했다. 고음은 후렴에서 성량과 압력을 확장하면서도 음정의 중심을 유지하는 힘을 반영해 높게 배정했다. 저음은 중저음에서 소리가 지나치게 가벼워지지 않고 단단한 중심을 만드는 능력을 기준으로 보았다. 가성은 진성에 비해 상대적으로 비중이 낮아 강한 직진성과 밀도 있는 발성이 프로필의 핵심으로 잡혀 있다. 음색은 힘을 실었을 때 드러나는 거친 질감과 선명한 캐릭터가 특징적이라는 점을 반영했다. 테크닉은 호흡, 성량 전환, 레지스터 운용, 프레이징의 안정성을 종합해 높은 수준으로 평가했다. 감정은 강한 후렴뿐 아니라 벌스에서 압력을 낮췄다가 다시 쌓는 대비를 통해 곡의 서사를 키우는 능력을 반영했다. 전체적으로 라이브에서 존재감이 커지고, 에너지 변화가 큰 편곡에서 강점을 발휘하는 파워·표현형 보컬이다."
+  },
+  {
+    "id": 8,
+    "name": "이승철",
+    "country": "대한민국",
+    "image": "https://img2.yna.co.kr/etc/inner/KR/2020/05/14/AKR20200514053500005_01_i_P4.jpg",
+    "high": 96,
+    "low": 94,
+    "falsetto": 83,
+    "tone": 96,
+    "technique": 94,
+    "emotion": 98,
+    "note": "이승철은 중저음의 안정된 중심과 고음에서의 직선적인 추진력을 함께 사용하는 정통 발라드·록 계열 보컬 프로필로 평가했다. 저음은 낮은 음역에서 소리의 밀도와 울림이 유지되는 점을 반영해 높게 배정했고, 고음은 긴 프레이즈와 클라이맥스에서 성량을 크게 확보하면서도 음정의 방향을 놓치지 않는 힘을 기준으로 평가했다. 가성은 진성 기반의 강한 표현에 비해 상대적으로 낮지만, 필요한 구간에서 질감 대비를 만드는 보조 수단으로 충분한 수준이다. 음색은 시간이 지나도 기억되는 선명한 보컬 컬러와 강한 중심음을 주요 자산으로 보았다. 테크닉은 호흡 배분, 긴 롱톤, 프레이즈의 안정성, 곡 후반의 체력 배분을 포함해 높은 점수를 주었다. 감정은 높은 음역으로 올라갈수록 가사의 긴장과 해소를 크게 만들어 내는 능력에 높은 가치를 두었다. 전체적으로 섬세한 장식보다 안정적인 중심음과 강한 클라이맥스로 곡의 이야기를 밀어붙이는 타입이다."
+  },
+  {
+    "id": 9,
+    "name": "임창정",
+    "country": "대한민국",
+    "image": "https://www.koreatimes.net/images/attach/118713/20190508-15054096.jpg",
+    "high": 95,
+    "low": 92,
+    "falsetto": 82,
+    "tone": 94,
+    "technique": 90,
+    "emotion": 99,
+    "note": "임창정은 음역의 넓이보다 노래 안에서 감정의 압력을 단계적으로 끌어올리는 능력을 중심으로 평가했다. 고음은 높은 음 자체보다 후렴에서 감정을 한 번에 밀어 올리면서도 가사와 멜로디의 중심을 유지하는 능력을 반영했다. 저음은 벌스에서 이야기를 시작할 때 충분한 중심과 밀도를 확보할 수 있는 수준으로 평가했다. 가성은 강한 진성 중심의 표현에 비해 비중이 낮아 상대적으로 낮은 점수를 부여했지만, 그만큼 직진성 있는 보컬 캐릭터가 뚜렷하다는 의미이기도 하다. 음색은 깨끗한 미성보다 거칠고 인간적인 결이 살아 있어 감정의 흔들림을 전달하기 좋다는 점을 반영했다. 테크닉은 호흡과 성량 조절, 프레이징, 롱톤을 종합해 높게 평가했으며, 특히 한 구절 안에서도 압력과 속도를 바꾸는 능력을 중요하게 봤다. 감정은 최고 수준으로, 가사의 상황과 화자의 심리를 목소리의 압력과 발음, 호흡 길이에 직접 반영하는 힘을 핵심 자산으로 평가했다. 전체적으로 ‘정확하게 잘 부르는 것’과 별개로 한 곡의 서사를 강하게 체감시키는 감정 중심의 보컬이다."
+  },
+  {
+    "id": 10,
+    "name": "백예린",
+    "country": "대한민국",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcTBQtfzMO7mGCvbxUKY4hhbzv32eEkthWtqkPuWEQ4BScuWXgz7Mj9gt9&s=10",
+    "high": 88,
+    "low": 84,
+    "falsetto": 96,
+    "tone": 99,
+    "technique": 95,
+    "emotion": 97,
+    "note": "백예린은 큰 성량이나 극단적인 고음보다 음색, 호흡, 프레이징의 질감을 세밀하게 조절하는 능력을 중심으로 평가했다. 고음은 강하게 밀어붙이는 파워보다 높은 음에서도 소리의 질감과 연결감을 유지하는 점을 반영해 중상위로 설정했다. 저음은 아주 낮은 구간의 깊이보다는 중저음에서 공기감과 음색의 개성을 잃지 않는 안정감을 기준으로 보았다. 가성은 높은 점수로, 진성과의 경계를 부드럽게 만들면서 곡에 공간감과 여운을 추가하는 표현 수단으로 활용되는 특성을 반영했다. 음색은 작은 볼륨에서도 바로 알아들을 수 있는 고유한 질감과 미세한 호흡 섞임을 포함해 가장 높은 축으로 평가했다. 테크닉은 빠른 기교의 양이 아니라 호흡 위치, 리듬의 미세한 밀고 당김, 프레이즈 끝 처리, 톤의 변화폭을 정교하게 관리하는 능력을 중심으로 보았다. 감정 역시 절제된 표현만으로 곡의 온도를 바꾸는 능력을 반영해 높게 평가했다. 전체적으로 소리를 크게 만드는 것보다 ‘어떻게 들리는가’를 정밀하게 설계하는 음색·표현형 보컬이다."
+  },
+  {
+    "id": 11,
+    "name": "이구치 사토루",
+    "country": "일본",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-bcZv9JhZr5cq98xm6xoGsLliUrHTnENKPlthF8oVktwcH5b-wehZbfQ&s=10",
+    "high": 93,
+    "low": 86,
+    "falsetto": 91,
+    "tone": 94,
+    "technique": 96,
+    "emotion": 92,
+    "note": "이구치 사토루는 선명한 발음과 리듬 중심의 프레이징, 그리고 빠른 전개 속에서 보컬의 움직임을 세밀하게 유지하는 능력을 중심으로 평가했다. 고음은 상위 음역에서도 발음이 뭉개지지 않고 소리의 선명도를 유지하는 능력을 반영해 높게 배정했다. 저음은 중음으로 넘어가는 연결이 자연스럽고 곡의 리듬을 유지할 수 있는 정도의 안정성을 기준으로 평가했다. 가성은 진성과 대비되는 질감을 만들고 곡의 장면을 전환하는 데 사용할 수 있는 유연성을 반영했다. 음색은 밴드 사운드 안에서도 보컬의 위치가 뚜렷하게 드러나는 선명도와 개성을 중심으로 높게 잡았다. 테크닉은 리듬 변화, 프레이즈 길이, 빠른 음정 이동, 레지스터 전환을 동시에 처리하는 능력을 주요 평가 대상으로 삼아 매우 높게 배정했다. 감정은 기술적인 정확성 위에서 발음의 에너지와 프레이징의 방향을 이용해 곡의 추진력을 만드는 능력을 반영했다. 전체적으로 정적인 보컬보다 속도감과 리듬 변화가 있는 편곡에서 실력이 더 선명하게 드러나는 테크닉 중심형 프로필이다."
+  },
+  {
+    "id": 12,
+    "name": "시미즈 이요리",
+    "country": "일본",
+    "image": "https://mblogthumb-phinf.pstatic.net/MjAxOTA1MDFfODMg/MDAxNTU2NzE2MzMxMjM4.e0T9wZqZrF_QURkQsLvIQIDeZXfUm-aakHJdMolzC1Mg.s0dx3H6vdpv13fVdDwkd5Lp9pSqY18T609gGaqlpP6gg.JPEG.nanamellong/Screenshot_20190501-220921_Instagram.jpg?type=w800",
+    "high": 89,
+    "low": 88,
+    "falsetto": 94,
+    "tone": 97,
+    "technique": 91,
+    "emotion": 96,
+    "note": "시미즈 이요리는 부드러운 중음과 가성의 질감, 그리고 과장되지 않은 다이내믹으로 곡의 분위기를 만드는 능력을 중심으로 평가했다. 고음은 절대적인 파워보다 편안한 범위에서 선명도와 음색의 통일감을 유지하는 능력을 기준으로 중상위로 배정했다. 저음은 낮은 음에서 목소리의 색이 갑자기 가벼워지지 않는 안정감을 반영했다. 가성은 진성과의 대비가 과도하게 벌어지지 않으면서 곡에 여백을 만드는 능력을 고려해 높게 평가했다. 음색은 따뜻하고 부드러운 결, 그리고 볼륨을 줄여도 사라지지 않는 개성 있는 톤을 핵심 강점으로 보았다. 테크닉은 호흡, 음정, 프레이징, 레지스터 연결을 안정적으로 유지하는 능력을 중심으로 평가했으며, 화려함보다는 재현성에 가치를 두었다. 감정은 큰 성량 없이도 작은 발음 변화와 호흡의 간격으로 장면의 분위기를 바꾸는 능력을 반영했다. 전체적으로 강한 고음보다 톤의 일관성과 섬세한 감정선을 통해 곡을 오래 끌고 가는 서정형 보컬이다."
+  },
+  {
+    "id": 13,
+    "name": "박효신",
+    "country": "대한민국",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DdJJvI5v4uirhrffRIQ3CP33CjQM3X6So8SKqxXDQg&s=10",
+    "high": 95,
+    "low": 96,
+    "falsetto": 97,
+    "tone": 100,
+    "technique": 97,
+    "emotion": 100,
+    "note": "박효신은 깊은 중저음에서 시작해 고음과 가성으로 올라갈 때도 음색의 연결감과 밀도를 크게 잃지 않는 점을 핵심 강점으로 평가했다. 저음은 낮은 음역에서 공명이 깊게 형성되고 소리가 단단하게 중심을 잡는 능력을 반영해 매우 높게 배정했다. 고음은 단순한 최고음보다 긴 프레이즈와 클라이맥스에서 음의 질감을 유지하며 감정을 함께 확장하는 능력을 기준으로 평가했다. 가성은 성량을 급격히 줄이는 효과보다 진성과 연속된 하나의 색처럼 들리게 만드는 연결성과 섬세한 강약을 중심으로 매우 높게 보았다. 음색은 중저음의 깊이, 중음의 질감, 고음의 밝기까지 서로 다른 영역이 하나의 고유한 캐릭터로 묶이는 점을 반영해 최고점으로 설정했다. 테크닉은 호흡 배분, 프레이징의 길이, 음량 변화, 레지스터 전환, 롱톤의 안정성을 종합해 높은 점수를 부여했다. 감정은 발성 자체가 곡의 서사와 결합하는 정도를 가장 중요하게 평가했으며, 작은 시작점에서 후반의 폭발적인 절정까지 감정을 단계적으로 설계할 수 있는 능력을 반영했다. 전체적으로 저음의 깊이와 고음의 확장, 섬세한 가성, 압도적인 음색과 서사적 감정 표현이 동시에 높은 완성도를 이루는 보컬 프로필이다."
+  },
+  {
+    "id": 14,
+    "name": "후지하라 사토시",
+    "country": "일본",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbJPjxwuo90KkOA9Rh9ONe_COrcaTwFGUvpTYxLzLiD6sXo8BBrJaPv4k&s=10",
+    "high": 99,
+    "low": 88,
+    "falsetto": 96,
+    "tone": 96,
+    "technique": 99,
+    "emotion": 97,
+    "note": "후지하라 사토시는 고음에서의 접근성과 레지스터 전환, 복잡한 멜로디와 리듬을 동시에 처리하는 기술적 유연성을 핵심으로 평가했다. 고음은 높은 음역을 단순히 찍는 능력보다 중음에서 상위 음역으로 올라가는 과정에서 소리의 중심과 발음, 리듬을 함께 유지하는 능력을 기준으로 최고 수준으로 배정했다. 저음은 그의 프로필에서 상대적 약점이라기보다 고음과 중고음의 활용 폭이 더 두드러진다는 점을 고려해 상대적으로 낮게 설정했다. 가성은 진성 또는 믹스 계열의 소리와 빠르게 교차하면서도 곡의 질감을 무너뜨리지 않는 전환 능력을 반영했다. 음색은 맑은 중심음과 순간적으로 힘을 더한 소리 사이의 변화 폭, 그리고 밴드 사운드에서도 보컬의 윤곽이 뚜렷한 점을 평가했다. 테크닉은 복잡한 리듬, 높은 음역, 전조와 멜로디 이동, 호흡 배분을 동시에 처리하는 능력을 가장 중요한 강점으로 보고 최고점에 가깝게 배정했다. 감정은 기술적으로 어려운 구간에서도 곡의 서사와 후렴의 고조감을 놓치지 않는 점을 반영했다. 전체적으로 고음과 기술 제어가 동시에 강하며, 빠르고 복잡한 팝·록 편곡에서 보컬의 움직임을 최대치로 활용하는 타입이다."
+  },
+  {
+    "id": 15,
+    "name": "우타다 히카루",
+    "country": "일본",
+    "image": "https://i.namu.wiki/i/E7W4_Qtr4eBRIDR7TjISB3A3tXiGEWNKQRmo_TNzu8r5HV5JTRHXmX70YKBaIwcuCwIm10ZAdyWZ4bC7NlXx6Q.webp",
+    "high": 92,
+    "low": 96,
+    "falsetto": 98,
+    "tone": 100,
+    "technique": 99,
+    "emotion": 99,
+    "note": "우타다 히카루는 큰 성량보다 목소리의 주파수 폭과 호흡, 리듬, 프레이징을 정밀하게 설계하는 능력을 중심으로 평가했다. 저음은 낮은 음역에서도 공기와 울림이 함께 살아 있어 목소리의 공간감이 유지되는 특성을 반영해 높게 배정했다. 고음은 강한 벨팅의 최고점 경쟁보다 상위 음역에서 소리의 결을 유지하고 멜로디의 일부로 자연스럽게 연결하는 능력을 기준으로 평가했다. 가성은 매우 높은 수준으로, 진성과 분리된 별개의 목소리라기보다 곡의 공간과 감정선을 확장하는 질감 변화의 수단으로 활용되는 점을 반영했다. 음색은 저음부터 고음의 배음까지 넓은 인상을 주는 고유한 질감과 말하듯 가까운 전달감을 핵심 자산으로 보아 최고점으로 설정했다. 테크닉은 호흡의 위치, 스트레이트 톤과 비브라토의 사용량, 리듬의 뒤·앞 배치, 프레이즈 말미의 처리처럼 작은 요소를 음악적으로 선택하는 능력을 종합해 최고 수준으로 평가했다. 감정은 대형 성량 없이도 숨과 발음, 침묵과 여운을 포함한 시간적 설계로 감정을 만들어내는 점을 높게 보았다. 전체적으로 음역의 크기보다 음색과 호흡, 리듬, 미세한 다이내믹을 통해 곡의 세계관을 만드는 섬세한 기술·표현형 보컬이다."
+  },
+  {
+    "id": 16,
+    "name": "이문세",
+    "country": "대한민국",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNohU8q6CtDHHHQfgpgaKoGFouzWTA7-tmBgnd2c9TKPKmqDEOGNchiXI9&s=10",
+    "high": 87,
+    "low": 95,
+    "falsetto": 88,
+    "tone": 100,
+    "technique": 91,
+    "emotion": 100,
+    "note": "이문세는 절대적인 음역이나 화려한 발성보다 목소리 자체가 곡의 분위기와 이야기를 만들어내는 힘을 중심으로 평가했다. 저음은 중저음의 따뜻한 중심과 말하듯 자연스럽게 이어지는 울림을 반영해 높게 배정했다. 고음은 파워형 보컬처럼 음압을 극단적으로 끌어올리는 것보다 필요한 구간에서 선율을 자연스럽게 확장하는 능력을 기준으로 중상위로 설정했다. 가성은 프로필의 핵심이 아니지만 곡의 여백이나 부드러운 전환을 만드는 보조적 활용력을 반영했다. 음색은 오랫동안 기억되는 고유한 중저음과 문장형 프레이징을 가장 중요한 강점으로 보아 최고점으로 평가했다. 테크닉은 복잡한 기교보다 발음, 호흡, 템포 안에서 말과 노래의 경계를 조절하는 능력을 기준으로 높게 배정했다. 감정은 가사를 단순히 부르는 것이 아니라 한 편의 이야기를 들려주는 방식으로 전달하는 힘을 핵심으로 보고 최고 수준으로 평가했다. 전체적으로 음역의 화려함보다 음색과 언어 전달, 프레이징의 자연스러움으로 곡의 장면을 만드는 서사형 보컬이다."
+  },
+  {
+    "id": 17,
+    "name": "임재범",
+    "country": "대한민국",
+    "image": "https://i.namu.wiki/i/i9XPrGJ5U0y2KXcwv4SQCy6UcCHY-k01HsbAs3PlS39wacDOoMPSaoXGi5dpZ01LnBnEAnVidQp-TPieQ275gQ.webp",
+    "high": 99,
+    "low": 97,
+    "falsetto": 90,
+    "tone": 100,
+    "technique": 94,
+    "emotion": 100,
+    "note": "임재범은 깊고 거친 저중음의 질감과 극적인 고음, 그리고 한 문장을 강한 서사로 바꾸는 감정 전달력을 핵심으로 평가했다. 저음은 단단한 흉성의 중심과 공명의 깊이를 바탕으로 낮은 구간에서도 목소리의 존재감이 유지되는 점을 반영해 매우 높게 배정했다. 고음은 단순한 최고음뿐 아니라 높은 음에서 성량과 거친 질감, 감정의 압력을 동시에 끌어올리는 능력을 기준으로 최고 수준으로 평가했다. 가성은 진성의 강한 캐릭터에 비해 상대적으로 비중이 낮아 낮은 점수를 주었지만, 필요한 순간에 소리를 가볍게 전환해 대비를 만드는 능력은 충분히 고려했다. 음색은 허스키한 질감과 강한 배음, 낮은 음에서 높은 음까지 유지되는 고유한 캐릭터를 핵심 자산으로 보고 최고점으로 설정했다. 테크닉은 호흡과 롱톤, 다이내믹, 성량 전환, 프레이즈의 긴장과 해소를 종합해 높은 수준으로 평가했다. 감정은 단순히 울부짖는 힘이 아니라 발음과 호흡, 음량을 이용해 한 문장 안에서 긴장도를 바꾸는 능력을 가장 중요한 특징으로 보았다. 전체적으로 저음의 깊이와 고음의 파괴력, 독보적인 음색, 극적인 감정 표현이 결합된 강렬한 서사형 파워 보컬이다."
+  },
+  {
+    "id": 18,
+    "name": "Vaundy",
+    "country": "일본",
+    "image": "https://lastfm-img.freetls.fastly.net/i/u/ar0/39398ab777e506f3574953cd68932dfe.jpg",
+    "high": 97,
+    "low": 92,
+    "falsetto": 96,
+    "tone": 99,
+    "technique": 98,
+    "emotion": 95,
+    "note": "Vaundy는 곡에 따라 목소리의 인상 자체를 바꾸는 음색 운용과 장르 적응력, 그리고 중음에서 고음으로 넘어가는 구간의 유연성을 중심으로 평가했다. 고음은 높은 음을 강하게 내는 능력뿐 아니라 믹스 계열의 질감, 파워를 실은 벨팅, 가벼운 헤드 계열의 소리를 상황에 따라 선택할 수 있는 폭을 반영해 높게 배정했다. 저음은 어둡고 라프한 질감을 만들 수 있는 중저음의 중심을 고려해 균형 있게 평가했다. 가성은 곡의 색을 바꾸는 중요한 도구로 활용되는 점을 반영해 높은 점수를 주었다. 음색은 같은 가수가 맞는지 느껴질 정도로 곡에 따라 밝고 부드럽게, 거칠고 어둡게, 힘 있고 선명하게 바꿔 사용할 수 있는 다면성을 가장 큰 강점으로 보아 최고 수준으로 평가했다. 테크닉은 고음, 믹스, 가성 사이를 빠르게 전환하면서 리듬과 발음을 동시에 처리하는 능력, 그리고 장르에 맞는 소리 선택을 포함해 매우 높게 배정했다. 감정은 과도한 발라드식 과장보다 곡의 장르와 캐릭터에 맞는 말투, 에너지, 질감을 선택하는 방식의 표현력을 중심으로 평가했다. 전체적으로 한 가지 ‘좋은 목소리’를 고집하기보다 곡 자체의 세계관에 맞춰 목소리의 재질을 바꾸는 다재다능한 보컬 프로필이다."
+  },
+  {
+    "id": 19,
+    "name": "타케나카 유다이",
+    "country": "일본",
+    "image": "https://pimg.mk.co.kr/news/cms/202509/11/20250911_01110127000001_L00.jpg",
+    "high": 99,
+    "low": 88,
+    "falsetto": 97,
+    "tone": 95,
+    "technique": 96,
+    "emotion": 96,
+    "note": "타케나카 유다이는 고음의 폭과 진성·가성 사이의 전환, 그리고 록 편곡에서 보컬의 에너지를 끝까지 전면에 유지하는 능력을 중심으로 평가했다. 고음은 높은 음역 자체가 넓고 밝은 하이톤을 안정적으로 활용하는 점을 핵심 강점으로 보아 최고 수준으로 배정했다. 저음은 고음 중심의 캐릭터에 비해 상대적으로 낮지만, 중저음에서 멜로디를 시작하고 다시 고음으로 연결하는 데 필요한 중심은 충분히 확보하는 것으로 평가했다. 가성은 높은 음역을 단순히 무겁게 밀어 올리는 대신 가벼운 레지스터와 진성 계열의 소리를 오가며 곡에 다른 층을 만드는 능력을 반영해 높게 평가했다. 음색은 맑고 선명한 하이톤을 중심으로 밴드 사운드 위에서도 보컬이 앞으로 뚫고 나오는 존재감을 주요 자산으로 보았다. 테크닉은 음역 전환, 고음 유지, 호흡 배분, 빠른 멜로디 진행을 종합해 높은 점수를 부여했다. 감정은 높은 음역의 힘을 단순한 과시로 끝내지 않고 후렴의 멜로디와 가사를 크게 확장하는 방향으로 활용하는 능력을 반영했다. 전체적으로 높은 음역과 가성 활용, 록 보컬 특유의 추진력이 결합된 하이톤 중심의 라이브형 보컬이다."
+  }
+];
+</script>
+
+<script>
+/*
+  데이터 레이어: 기본 데이터는 HTML의 DEFAULT_ARTIST_DB 배열에서 읽고,
+  실제 편집 데이터는 브라우저 로컬 저장소에 저장합니다. 외부 JS 파일은 사용하지 않습니다.
+*/
+const LOCAL_KEY='VOCAL_INDEX_DB';
+const AXES=[
+  {key:'high', label:'고음', cls:'crimson', angle:-90},
+  {key:'falsetto', label:'가성', cls:'sky', angle:-30},
+  {key:'tone', label:'음색', cls:'gold', angle:30},
+  {key:'emotion', label:'감정', cls:'yellow', angle:90},
+  {key:'low', label:'저음', cls:'lime', angle:150},
+  {key:'technique', label:'테크닉', cls:'purple', angle:210}
+];
+let storageMode='local';
+let memoryRows=[];
+let artists=[], selectedForMenu=null, compareMode=false, selected=[] , editingId=null;
+const $=id=>document.getElementById(id);
+
+// 단일 HTML 배포용 저장 계층. localStorage를 사용할 수 없는 file://·사생활 보호 환경에서도
+// 메모리 저장소로 즉시 동작하도록 폴백합니다. 따라서 초기 화면은 저장소 오류 때문에 멈추지 않습니다.
+let storageAvailable=false;
+try{
+  const probe='__vocal_index_probe__';
+  localStorage.setItem(probe,'1'); localStorage.removeItem(probe);
+  storageAvailable=true;
+}catch(_e){ storageAvailable=false; }
+try{
+  if(storageAvailable){
+    const raw=localStorage.getItem(LOCAL_KEY);
+    const parsed=raw?JSON.parse(raw):[];
+    memoryRows=Array.isArray(parsed)?parsed:[];
+  }
+}catch(_e){ storageAvailable=false; memoryRows=[]; }
+function localRows(){ return Array.isArray(memoryRows)?memoryRows.map(x=>({...x})):[]; }
+function saveLocalRows(rows){
+  memoryRows=Array.isArray(rows)?rows.map(x=>({...x})):[];
+  if(storageAvailable){ try{ localStorage.setItem(LOCAL_KEY,JSON.stringify(memoryRows)); }catch(_e){ storageAvailable=false; } }
+}
+function getAll(){ return Promise.resolve(localRows()); }
+function putArtist(a){
+  const rows=localRows();
+  let record={...a};
+  if(record.id===undefined||record.id===null){record.id=rows.reduce((m,x)=>Math.max(m,Number(x.id)||0),0)+1}
+  const idx=rows.findIndex(x=>Number(x.id)===Number(record.id));
+  if(idx>=0)rows[idx]=record; else rows.push(record);
+  saveLocalRows(rows);
+  return Promise.resolve(record.id);
+}
+function deleteArtist(id){ saveLocalRows(localRows().filter(x=>Number(x.id)!==Number(id))); return Promise.resolve(); }
+function replaceAll(rows){ saveLocalRows(rows.map((x,i)=>({...x,id:x.id??(i+1)}))); return Promise.resolve(); }
+
+function avg(a){return Math.round((a.high+a.low+a.falsetto+a.tone+a.technique+a.emotion)/6)}
+function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function point(cx,cy,r,angle){const a=angle*Math.PI/180;return [cx+Math.cos(a)*r,cy+Math.sin(a)*r]}
+function polygonPoints(a,r){return AXES.map(x=>point(115,107,r*a[x.key]/100,x.angle).join(',')).join(' ')}
+function gridPolygon(r){return AXES.map(x=>point(115,107,r,x.angle).join(',')).join(' ')}
+function radarSVG(a,large=false){const radii=[30,55,80];const lines=AXES.map(x=>{const p=point(115,107,80,x.angle);return `<line x1="115" y1="107" x2="${p[0]}" y2="${p[1]}" class="axis ${x.cls}"/>`}).join('');const dots=AXES.map(x=>{const p=point(115,107,80*a[x.key]/100,x.angle);return `<circle cx="${p[0]}" cy="${p[1]}" r="3.2" class="dot ${x.cls}"/>`}).join('');return `<svg viewBox="0 0 230 214" aria-label="${esc(a.name)} 보컬 스탯 레이더 차트"><style>.grid{fill:none;stroke:#c8c8c2;stroke-width:1}.axis{stroke:#c8c8c2;stroke-width:1}.axis.crimson,.dot.crimson{stroke:#c73555;fill:#c73555}.axis.lime,.dot.lime{stroke:#9ccd68;fill:#9ccd68}.axis.sky,.dot.sky{stroke:#67b9e8;fill:#67b9e8}.axis.gold,.dot.gold{stroke:#e5a43e;fill:#e5a43e}.axis.purple,.dot.purple{stroke:#a47be5;fill:#a47be5}.axis.yellow,.dot.yellow{stroke:#ead04f;fill:#ead04f}.area{fill:rgba(110,88,180,.18);stroke:#4f5260;stroke-width:2}</style>${radii.map(r=>`<polygon class="grid" points="${gridPolygon(r)}"/>`).join('')}${lines}<polygon class="area" points="${polygonPoints(a,80)}"/>${dots}</svg>`}
+function labelHTML(a,key,position){const axis=AXES.find(x=>x.key===key);return `<div class="r-label ${position} c-${axis.cls}">${axis.label}<b>${a[key]}</b></div>`}
+function statRadar(a){return `<div class="radar-wrap">${radarSVG(a)}${labelHTML(a,'high','r-top')}${labelHTML(a,'falsetto','r-ur')}${labelHTML(a,'tone','r-lr')}${labelHTML(a,'emotion','r-bot')}${labelHTML(a,'low','r-ll')}${labelHTML(a,'technique','r-ul')}</div>`}
+async function centerFace(img){
+  try{
+    if(!('FaceDetector' in window)) return;
+    if(!img.naturalWidth || !img.naturalHeight) return;
+    const detector=new FaceDetector({fastMode:true,maxDetectedFaces:4});
+    const faces=await detector.detect(img);
+    if(!faces.length) return;
+    const face=faces.sort((a,b)=>(b.boundingBox.width*b.boundingBox.height)-(a.boundingBox.width*a.boundingBox.height))[0];
+    const box=face.boundingBox;
+    const cx=(box.x+box.width/2)/img.naturalWidth*100;
+    const cy=(box.y+box.height/2)/img.naturalHeight*100;
+    // 카드의 상당 부분을 얼굴이 차지하도록 강하게 확대합니다. 몸/배경은 적극적으로 잘립니다.
+    const faceRatio=Math.max(box.width/img.naturalWidth,box.height/img.naturalHeight);
+    const scale=Math.max(1.8,Math.min(3.0,0.76/Math.max(faceRatio,0.06)));
+    img.style.setProperty('--face-x',`${Math.max(0,Math.min(100,cx))}%`);
+    img.style.setProperty('--face-y',`${Math.max(0,Math.min(100,cy))}%`);
+    img.style.setProperty('--face-scale',scale.toFixed(2));
+  }catch(_e){ /* Face Detection 미지원/외부 이미지 제한 시 중앙 크롭 */ }
+}
+function cardHTML(a){const isSelected=selected.includes(a.id);return `<div class="artist-wrap ${isSelected?'selected':''}" data-id="${a.id}"><button class="artist-card" data-id="${a.id}" aria-label="${esc(a.name)} 보컬 카드"><div class="hex-shell"><div class="hex"><img class="portrait" src="${esc(a.image)}" alt="${esc(a.name)} 사진" onload="centerFace(this)" onerror="this.style.display='none'"/><div class="shade"></div><div class="score-chip">${avg(a)}</div></div></div></button><div class="artist-name">${esc(a.name)}</div><div class="artist-country">${esc(a.country)}</div><div class="stat-pop"><div class="stat-head"><strong>${esc(a.name)} · VOICE PROFILE</strong><span>${avg(a)}/100</span></div>${statRadar(a)}</div></div>`}
+function sortArtists(list){
+  const mode=$('sortSelect')?.value||'overall';
+  const stat=$('statSelect')?.value||'high';
+  return [...list].sort((a,b)=>{
+    if(mode==='country') return String(a.country||'').localeCompare(String(b.country||''),'ko') || String(a.name||'').localeCompare(String(b.name||''),'ko');
+    if(mode==='stat') return (Number(b[stat])||0)-(Number(a[stat])||0) || avg(b)-avg(a);
+    return avg(b)-avg(a) || String(a.name||'').localeCompare(String(b.name||''),'ko');
+  });
+}
+function render(){
+  const ordered=sortArtists(artists);
+  $('gallery').innerHTML=ordered.length?ordered.map(cardHTML).join(''):`<div style="grid-column:1/-1;padding:80px 20px;text-align:center;color:#858c93;border:1px dashed #343a41;border-radius:16px"><strong style="display:block;color:#c9cdd1;margin-bottom:8px">DB가 비어 있습니다.</strong> 상단의 <b>데이터 관리</b>에서 가수를 추가하거나 가수를 추가할 수 있습니다.</div>`;
+  document.querySelectorAll('.artist-card').forEach(card=>card.addEventListener('click',()=>{
+    const id=Number(card.dataset.id);
+    if(compareMode){toggleSelection(id);return;}
+    selectedForMenu=artists.find(a=>a.id===id);
+    const r=card.getBoundingClientRect();
+    $('actionMenu').style.left=Math.min(window.innerWidth-205,r.right+12)+'px';
+    $('actionMenu').style.top=Math.min(window.innerHeight-100,r.top+55)+'px';
+    $('actionMenu').classList.add('show');
+  }));
+  updateCompareUI();
+}
+function toggleSelection(id){
+  if(selected.includes(id)) selected=selected.filter(x=>x!==id);
+  else if(selected.length<2) selected=[...selected,id];
+  render();
+}
+function updateCompareUI(){
+  const count=selected.length;
+  $('selectionTipText').textContent=`비교할 카드를 클릭하세요 · 최대 2명 · 현재 ${count}명 선택`;
+  $('selectionTip').classList.toggle('show',compareMode);
+  $('compareNowBtn').disabled=count!==2;
+}
+function enterCompareMode(){
+  compareMode=true;
+  $('actionMenu').classList.remove('show');
+  selected=[];
+  if(selectedForMenu) selected.push(selectedForMenu.id);
+  render();
+}
+function cancelCompareMode(){compareMode=false;selected=[];$('selectionTip').classList.remove('show');render()}
+function compareProfileText(a){
+  const vals=AXES.map(x=>({label:x.label,value:Number(a[x.key])||0})).sort((x,y)=>y.value-x.value);
+  const lead=vals[0], second=vals[1], low=vals[vals.length-1];
+  return `${a.name}은(는) ${lead.label}(${lead.value})과 ${second.label}(${second.value})에서 상대적으로 강한 프로필을 보입니다. ${low.label}은 ${low.value}로 다른 축보다 낮지만, 이는 절대적인 약점이라기보다 현재 입력된 6개 지표 안에서의 상대적 위치입니다. ${a.note||'등록된 추가 설명이 없습니다.'}`;
+}
+function openCompare(){
+  if(selected.length!==2)return;
+  const chosen=selected.map(id=>artists.find(a=>a.id===id)).filter(Boolean);
+  $('compareGrid').innerHTML=chosen.map(a=>`<article class="compare-card"><div class="compare-top"><div class="compare-photo" style="background-image:url('${esc(a.image)}')"></div><div class="compare-title"><h3>${esc(a.name)}</h3><div class="compare-country">${esc(a.country)}</div><div class="compare-score">${avg(a)}<small style="font-size:12px;color:#85898e;font-weight:800"> / 100</small></div></div></div><div class="compare-radar">${statRadar(a)}</div><div class="compare-detail"><strong>상세 설명</strong>${esc(compareProfileText(a))}</div></article>`).join('');
+  $('compareModal').classList.add('show');
+  compareMode=false;
+  $('selectionTip').classList.remove('show');
+}
+function resetForm(){editingId=null;$('artistForm').reset();$('formTitle').textContent='가수 추가'}
+function fillForm(a){editingId=a.id;$('formTitle').textContent='가수 수정';$('fName').value=a.name||'';$('fCountry').value=a.country||'';$('fImage').value=a.image||'';$('fNote').value=a.note||'';$('sHigh').value=a.high;$('sLow').value=a.low;$('sFalsetto').value=a.falsetto;$('sTone').value=a.tone;$('sTechnique').value=a.technique;$('sEmotion').value=a.emotion}
+function val(id){return Math.max(0,Math.min(100,Number($(id).value)||0))}
+function renderDBList(){$('dbList').innerHTML=artists.length?artists.map(a=>`<div class="db-row"><div class="meta"><strong>${esc(a.name)}</strong><small>${esc(a.country)} · 평균 ${avg(a)}</small></div><div class="row-actions"><button data-edit="${a.id}">수정</button><button class="danger" data-delete="${a.id}">삭제</button></div></div>`).join(''):`<div class="empty">저장된 가수가 없습니다.</div>`;document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>fillForm(artists.find(a=>a.id===Number(b.dataset.edit))));document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=async()=>{const a=artists.find(x=>x.id===Number(b.dataset.delete));if(a&&confirm(`${a.name}을(를) 삭제할까요?`)){await deleteArtist(a.id);selected=selected.filter(x=>x!==a.id);await refresh();}})}
+async function refresh(){artists=await getAll();$('dbStatus').textContent=`HTML 내부 DB · 브라우저 저장소 ${artists.length}명`;render();renderDBList()}
+
+function mergeDefaults(){
+  const defaults=readDefaultDB();
+  const current=localRows();
+  const existingNames=new Set(current.map(x=>String(x.name||'').trim().toLowerCase()));
+  const additions=defaults.filter(x=>x.name && !existingNames.has(String(x.name).trim().toLowerCase()));
+  if(!current.length){
+    const seeded=defaults.map((x,i)=>({...x,id:x.id??(i+1)}));
+    saveLocalRows(seeded);
+    return seeded;
+  }
+  if(additions.length){
+    const merged=[...current,...additions.map((x,i)=>({...x,id:x.id??(Math.max(0,...current.map(y=>Number(y.id)||0))+i+1)}))];
+    saveLocalRows(merged);
+    return merged;
+  }
+  return current;
+}
+
+$('artistForm').addEventListener('submit',async e=>{e.preventDefault();const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};if(editingId)record.id=editingId;await putArtist(record);resetForm();await refresh()});
+$('cancelEditBtn').onclick=resetForm;$('newArtistBtn').onclick=()=>{resetForm();$('fName').focus()};$('manageBtn').onclick=async()=>{$('manageModal').classList.add('show');await refresh()};$('compareNowBtn').onclick=()=>openCompare();if($('sortSelect'))$('sortSelect').onchange=()=>{ $('statSelect').hidden=$('sortSelect').value!=='stat'; render(); };if($('statSelect'))$('statSelect').onchange=()=>render();
+$('detailBtn').onclick=()=>{if(selectedForMenu)openDetailWindow(selectedForMenu);$('actionMenu').classList.remove('show')};$('compareBtn').onclick=enterCompareMode;$('cancelCompareBtn').onclick=cancelCompareMode;
+document.addEventListener('click',e=>{if(!$('actionMenu').contains(e.target)&&!e.target.closest('.artist-card'))$('actionMenu').classList.remove('show')});
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove('show'));
+$('compareModal').addEventListener('click',e=>{if(e.target===$('compareModal'))$('compareModal').classList.remove('show')});$('manageModal').addEventListener('click',e=>{if(e.target===$('manageModal'))$('manageModal').classList.remove('show')});
+function analysisProfile(a){
+  const vals=AXES.map(x=>({label:x.label,key:x.key,value:Number(a[x.key])||0}));
+  const sorted=[...vals].sort((x,y)=>y.value-x.value);
+  const strongest=sorted.slice(0,2).map(x=>`${x.label}(${x.value})`).join(', ');
+  const weakest=sorted.slice(-2).reverse().map(x=>`${x.label}(${x.value})`).join(', ');
+  const balance=Math.max(...vals.map(v=>v.value))-Math.min(...vals.map(v=>v.value));
+  const avgScore=avg(a);
+  let verdict='전 영역이 비교적 고르게 형성된 타입입니다.';
+  if(balance>=25) verdict='특정 영역에 강점이 뚜렷한 타입으로, 강점이 음악적 캐릭터를 크게 만드는 프로필입니다.';
+  else if(avgScore>=90) verdict='높은 평균점과 안정적인 분포가 함께 나타나는 상위권 균형형 프로필입니다.';
+  else if(avgScore>=80) verdict='핵심 역량이 전반적으로 안정적이며 일부 영역의 추가 확장이 기대되는 프로필입니다.';
+  const getText=(key,v)=>{
+    const t={
+      high:['고음','상위 음역에서 음정과 성량을 유지하는 능력을 평가하는 축입니다. 높은 점수일수록 높은 음에서의 접근성과 지속적인 컨트롤이 강점으로 해석됩니다.','고음에서 강점을 보이는 프로필입니다. 다만 실제 라이브에서는 곡의 키와 컨디션에 따라 체감 난도가 달라질 수 있습니다.'],
+      low:['저음','저음역의 깊이와 안정감, 흉성 기반의 울림을 평가하는 축입니다. 높은 점수일수록 낮은 음에서의 중심과 공명 유지가 장점으로 나타납니다.','중저음에서 안정감이 있는 프로필입니다. 낮은 음을 단순히 내는 것보다 음색과 발성의 중심을 유지하는지가 핵심 포인트입니다.'],
+      falsetto:['가성','가성·두성 계열의 전환과 음색 제어, 연결감을 평가하는 축입니다. 높은 점수일수록 가벼운 음역으로 이동하면서도 표현력을 유지하기 쉽습니다.','가성 운용이 강점인 프로필입니다. 레지스터 전환을 부드럽게 연결할수록 고음 표현의 선택지가 넓어집니다.'],
+      tone:['음색','목소리의 고유한 질감과 색채, 청취 인상과 개성을 평가하는 축입니다. 높은 점수는 기술과 별개로 음색 자체의 식별력이 높다는 뜻으로 볼 수 있습니다.','음색이 이 프로필의 핵심 자산입니다. 곡에 따라 동일한 멜로디도 화자의 고유한 색으로 들리게 만드는 데 유리합니다.'],
+      technique:['테크닉','호흡, 발성, 음정, 프레이징, 리듬, 레지스터 연결 등 복합적인 제어 능력을 평가하는 축입니다. 높은 점수일수록 다양한 표현을 안정적으로 구현하기 쉽습니다.','기술적 제어가 강한 프로필입니다. 좋은 표현을 반복해서 재현할 수 있는 안정성 측면에서 장점이 있습니다.'],
+      emotion:['감정','가사 전달, 다이내믹, 뉘앙스, 프레이징의 감정적 설득력을 평가하는 축입니다. 높은 점수는 단순한 음정 정확도를 넘어 곡의 정서를 전달하는 힘으로 해석됩니다.','감정 전달력이 강점으로 나타납니다. 같은 음정과 리듬을 사용해도 강약과 뉘앙스의 차이로 장면을 만드는 데 유리합니다.']
+    };
+    return t[key]||['','', ''];
+  };
+  return {vals,strongest,weakest,balance,avgScore,verdict,getText};
+}
+function openDetailWindow(a){
+  const p=analysisProfile(a);
+  const statCards=p.vals.map(v=>{const [title,desc,comment]=p.getText(v.key,v.value);return `<article class="stat-card"><div class="stat-title"><span>${title}</span><b>${v.value}</b></div><div class="meter"><i style="width:${v.value}%"></i></div><p>${desc}</p><div class="comment">${comment}</div></article>`}).join('');
+  const strengths=`<div class="insight"><span class="ey">STRONGEST AREAS</span><h3>${esc(p.strongest)}</h3><p>현재 입력된 지표에서 상대적으로 높은 영역입니다. 이 강점들은 선곡, 편곡, 라이브 구성에서 해당 가수의 캐릭터를 드러내는 핵심 요소로 활용될 수 있습니다.</p></div>`;
+  const cautions=`<div class="insight"><span class="ey">AREAS TO WATCH</span><h3>${esc(p.weakest)}</h3><p>상대적으로 낮게 입력된 영역입니다. 낮은 점수가 반드시 약점을 의미하는 것은 아니며, 평가 기준·곡의 난이도·컨디션에 따라 실제 체감은 달라질 수 있습니다.</p></div>`;
+  const pointy='polygon(50% 0%, 93.30127% 25%, 93.30127% 75%, 50% 100%, 6.69873% 75%, 6.69873% 25%)';
+  const html=`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(a.name)} — 상세 보컬 분석</title><style>
+  :root{--bg:#111316;--panel:#1b1e22;--paper:#f4f4ef;--muted:#9399a0;--line:#343941;--crimson:#c73555;--lime:#9ccd68;--sky:#67b9e8;--gold:#e5a43e;--purple:#a47be5;--yellow:#ead04f}
+  *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#262a2f 0,#111316 48%,#0b0d0f 100%);color:#f4f5f3;font-family:Inter,Pretendard,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:1080px;margin:auto;padding:54px 24px 80px}.ey{font-size:10px;letter-spacing:.24em;color:#7f858c}.hero{display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:center;margin:22px 0 34px}.photo{width:250px;aspect-ratio:.8660254038/1;clip-path:${pointy};background:#2a2e34 url('${esc(a.image)}') center/cover no-repeat;border:1px solid rgba(255,255,255,.22);box-shadow:0 0 0 1px rgba(255,255,255,.05),0 0 40px rgba(255,255,255,.08)}h1{margin:0;font-size:52px;letter-spacing:-.055em}.country{margin-top:8px;color:#9298a0}.avg{font-size:54px;font-weight:950;margin-top:18px;line-height:1}.avg small{font-size:15px;color:#828890;font-weight:700}.summary{margin-top:18px;max-width:640px;color:#b9bec4;line-height:1.8}.insights{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}.insight{background:#191c20;border:1px solid var(--line);border-radius:14px;padding:18px}.insight h3{margin:8px 0 8px;font-size:21px}.insight p{margin:0;color:#aab0b6;line-height:1.75;font-size:13px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}.stat-card{background:#f3f3ee;color:#191b1e;border-radius:14px;padding:18px}.stat-title{display:flex;align-items:center;justify-content:space-between;font-weight:950}.stat-title b{font-size:24px}.meter{height:7px;border-radius:999px;background:#deded8;margin:12px 0 15px;overflow:hidden}.meter i{display:block;height:100%;background:linear-gradient(90deg,#5b5f65,#151719);border-radius:inherit}.stat-card p{margin:0;color:#64696e;line-height:1.65;font-size:12px}.comment{margin-top:12px;padding-top:12px;border-top:1px solid #deded8;color:#34383d;font-size:12px;line-height:1.65;font-weight:700}.method{margin-top:22px;padding:17px;border:1px dashed #3a4047;border-radius:12px;color:#8e949b;line-height:1.7;font-size:11px}.foot{margin-top:34px;color:#666d74;font-size:10px}@media(max-width:760px){.hero{grid-template-columns:1fr;gap:20px}.photo{width:180px}.stats,.insights{grid-template-columns:1fr}h1{font-size:38px}.avg{font-size:44px}}
+  </style></head><body><div class="wrap"><div class="ey">VOCAL INDEX / DETAIL ANALYSIS</div><section class="hero"><div class="photo"></div><div><h1>${esc(a.name)}</h1><div class="country">${esc(a.country)}</div><div class="avg">${p.avgScore}<small> / 100 overall</small></div><div class="summary">${esc(p.verdict)}<br>${esc(a.note||'이 가수에 등록된 추가 메모가 없습니다.')}</div></div></section><section class="insights">${strengths}${cautions}</section><div class="ey">SIX-DIMENSION VOCAL PROFILE</div><section class="stats">${statCards}</section><div class="method"><b>평가 해석 안내</b><br>이 페이지의 수치는 데이터베이스에 입력된 6개 지표를 바탕으로 시각화한 프로필입니다. 실제 보컬 능력은 곡의 키, 편곡, 컨디션, 라이브 환경 및 평가 기준에 따라 달라질 수 있으므로 절대적인 순위나 의학적·과학적 측정치가 아닌 비교용 지표로 활용하세요. 평균 점수는 6개 항목의 단순 평균입니다.</div><div class="foot">VOCAL INDEX · ${esc(a.name)} · ${new Date().getFullYear()}</div></div></body></html>`;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const w=window.open(url,'_blank','noopener,noreferrer,width=1100,height=900');if(!w){alert('브라우저에서 팝업이 차단되어 있습니다. 팝업 허용 후 다시 시도해주세요.');}else{w.focus();setTimeout(()=>URL.revokeObjectURL(url),60000);}
+}
+
+function readDefaultDB(){
+  return Array.isArray(DEFAULT_ARTIST_DB) ? DEFAULT_ARTIST_DB.map(x=>({...x})) : [];
+}
+
+function boot(){
+  try{
+    artists=mergeDefaults();
+    render();
+    renderDBList();
+    $('dbStatus').textContent=`HTML DB · ${artists.length}명 로드 완료${storageAvailable?'':' · 브라우저 임시 저장'}`;
+  }catch(err){
+    console.error('SINGERS COMPARE boot failed:',err);
+    artists=readDefaultDB().map((row,i)=>({...row,id:row.id??(i+1)}));
+    render();
+    renderDBList();
+    $('dbStatus').textContent=`기본 DB · ${artists.length}명`;
+  }
+}
+
+boot();
+</script>
+</body>
+</html>
