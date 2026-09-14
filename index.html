@@ -592,16 +592,23 @@ async function publishCurrentDBToServer(){
       body:JSON.stringify({artists:artists.map(x=>({...x}))})
     });
     const data=await r.json().catch(()=>({}));
-    if(!r.ok) throw new Error(data.error||`서버 반영 실패 (${r.status})`);
+    if(!r.ok){
+      const detail=data.detail?` · ${data.detail}`:'';
+      const error=new Error((data.error||`서버 반영 실패 (${r.status})`)+detail);
+      error.httpStatus=r.status;
+      throw error;
+    }
     $('serverSyncInfo').textContent='✓ GitHub DB 반영 완료 · Cloudflare Pages 자동 배포 중';
   }catch(err){
     console.error(err);
     $('serverSyncInfo').textContent='실패: '+(err.message||'알 수 없는 오류');
-    if(/401|403/.test(err.message||'')){
+    // 실제 인증 만료인 경우에만 로그아웃 처리합니다.
+    // Worker가 GitHub에서 403을 받은 경우에는 관리자 창을 닫지 않습니다.
+    if(Number(err.httpStatus)===401){
       adminSession='';
       $('publishServerBtn').disabled=true;
-      $('manageModal').classList.remove('show');
-      openAdminLogin();
+      $('manageBtn').textContent='관리자 로그인';
+      $('serverSyncInfo').textContent='관리자 인증이 만료되었습니다. 다시 로그인해주세요.';
     }
   }finally{
     btn.disabled=!adminSession;
