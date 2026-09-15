@@ -73,7 +73,7 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 .detail-stat-title span{font-size:16px;font-weight:950;color:#202428;}
 .detail-stat-title b{font-size:27px;line-height:1;font-weight:950;color:#17191c;}
 .detail-stat-desc{margin:12px 0 0;color:#5e656b;font-size:12px;line-height:1.72;}
-.detail-stat-comment{margin-top:12px;padding:11px 12px;background:#f4f4ef;border:1px solid #e1e1db;border-radius:10px;color:#3f464c;font-size:12px;line-height:1.7;font-weight:750;}
+.detail-stat-comment{margin-top:12px;padding:11px 12px;background:#f4f4ef;border:1px solid #e1e1db;border-radius:10px;color:#3f464c;font-size:12px;line-height:1.7;font-weight:750;}.meter{height:7px;margin-top:11px;background:#e7e7e1;border-radius:999px;overflow:hidden}.meter i{display:block;height:100%;width:0;background:#c73555;border-radius:inherit;transition:width .25s ease}
 .detail-note-box{margin-top:22px;padding:16px 17px;background:#f1f1ed;border:1px solid #dcdcd6;border-radius:13px;color:#596067;font-size:12px;line-height:1.75;}
 .detail-note-box b{display:block;margin-bottom:5px;color:#22272c;font-size:13px;}
 @media(max-width:760px){
@@ -262,12 +262,12 @@ const DEFAULT_ARTIST_DB = [
     "country": "대한민국",
     "image": "https://img2.yna.co.kr/etc/inner/KR/2020/05/14/AKR20200514053500005_01_i_P4.jpg",
     "note": "이승철은 대한민국의 보컬리스트로, 고유의 감미로운 표현 능력을 가진 것이 특징이다. 시간이 지나도 기억되는 특징적인 음색과 함께 부드럽지만 힘있는 고음 처리가 강점이다. 또한 호흡 배분과 프레이즈의 안정성, 가사의 의미를 전달하는 능력 또한 뛰어나다. 듣는 이로 하여금 노래를 매우 쉽게 부르는 것처럼 들리게 하는 능력이 특징이다.",
-    "high": 98,
+    "high": 97,
     "low": 89,
     "falsetto": 86,
     "tone": 99,
-    "technique": 94,
-    "emotion": 96,
+    "technique": 93,
+    "emotion": 94,
     "id": 8
   },
   {
@@ -478,7 +478,7 @@ const DEFAULT_ARTIST_DB = [
     "emotion": 95,
     "id": 24
   }
-];;;
+];
 </script>
 
 <script>
@@ -486,7 +486,8 @@ const DEFAULT_ARTIST_DB = [
   데이터 레이어: 기본 데이터는 HTML의 DEFAULT_ARTIST_DB 배열에서 읽고,
   실제 편집 데이터는 브라우저 로컬 저장소에 저장합니다. 외부 JS 파일은 사용하지 않습니다.
 */
-const LOCAL_KEY='VOCAL_INDEX_DB'; // legacy key; retained only for cleanup
+const LOCAL_KEY='VOCAL_INDEX_DB'; // legacy key; never used as the DB source
+const DRAFT_KEY='VOCAL_INDEX_DB_DRAFT_V2'; // explicit, versioned unsaved draft store
 const DEFAULT_DB_VERSION='2026-09-15-CENTRAL-DB';
 const DEFAULT_DB_VERSION_KEY='VOCAL_INDEX_DB_VERSION';
 const AXES=[
@@ -509,16 +510,61 @@ let storageAvailable=false;
 try{ storageAvailable=!!window.localStorage; }catch(_e){ storageAvailable=false; }
 try{
   if(storageAvailable){
+    // 과거 버전에서 사용하던 DB/버전 키는 완전히 제거합니다.
     localStorage.removeItem(LOCAL_KEY);
     localStorage.removeItem(DEFAULT_DB_VERSION_KEY);
   }
 }catch(_e){}
-function localRows(){ return Array.isArray(memoryRows)?memoryRows.map(x=>({...x})):[]; }
-function saveLocalRows(rows){ memoryRows=Array.isArray(rows)?rows.map(x=>({...x})):[]; }
-// 중앙 DB의 런타임 복사본. 페이지 최초 로드시에는 HTML의 DEFAULT_ARTIST_DB에서 시작하고,
-// 관리자 화면의 '임시 저장'은 이 메모리 DB를 직접 수정합니다. 브라우저 localStorage는 사용하지 않습니다.
-let centralRows=readDefaultDB().map((x,i)=>({...x,id:Number(x.id??(i+1))}));
-function getAll(){ return Promise.resolve(centralRows.map(x=>({...x}))); }
+function cloneRows(rows){ return Array.isArray(rows)?rows.map(x=>({...x})):[]; }
+function stableDbHash(rows){
+  // 현재 HTML의 중앙 DB를 식별하는 기준값입니다. 서버에서 새 HTML이 배포되면 hash가 달라져
+  // 예전 기기의 임시 초안이 새 중앙 DB를 덮어쓰지 못하게 합니다.
+  const text=JSON.stringify(cloneRows(rows));
+  let h=2166136261;
+  for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}
+  return (h>>>0).toString(16);
+}
+function readDraft(){
+  if(!storageAvailable) return null;
+  try{
+    const raw=localStorage.getItem(DRAFT_KEY);
+    if(!raw) return null;
+    const parsed=JSON.parse(raw);
+    if(!parsed||parsed.version!==2||!Array.isArray(parsed.rows)) return null;
+    return parsed;
+  }catch(_e){ return null; }
+}
+function writeDraft(rows){
+  if(!storageAvailable) return;
+  try{
+    const payload={version:2,baseHash:stableDbHash(readDefaultDB()),updatedAt:new Date().toISOString(),rows:cloneRows(rows)};
+    localStorage.setItem(DRAFT_KEY,JSON.stringify(payload));
+  }catch(_e){}
+}
+function clearDraft(){
+  if(!storageAvailable) return;
+  try{ localStorage.removeItem(DRAFT_KEY); }catch(_e){}
+}
+// memoryRows는 화면에 반영할 현재 작업본입니다. 영구 DB 원본은 여전히 HTML의 DEFAULT_ARTIST_DB이며,
+// 임시 저장분만 버전이 맞는 DRAFT_KEY에서 복원합니다.
+function localRows(){ return cloneRows(memoryRows); }
+function saveLocalRows(rows){ memoryRows=cloneRows(rows); }
+let centralRows=[];
+function loadCentralRows(){
+  const defaults=readDefaultDB().map((x,i)=>({...x,id:Number(x.id??(i+1))}));
+  centralRows=cloneRows(defaults);
+  const draft=readDraft();
+  const currentHash=stableDbHash(defaults);
+  if(draft && draft.baseHash===currentHash){
+    centralRows=cloneRows(draft.rows);
+  }else if(draft){
+    // 서버에 새 중앙 DB가 배포된 경우 오래된 기기의 초안은 폐기합니다.
+    clearDraft();
+  }
+  saveLocalRows(centralRows);
+  return cloneRows(centralRows);
+}
+function getAll(){ return Promise.resolve(cloneRows(centralRows)); }
 function putArtist(a){
   let record={...a};
   if(record.id===undefined||record.id===null){record.id=centralRows.reduce((m,x)=>Math.max(m,Number(x.id)||0),0)+1}
@@ -527,16 +573,19 @@ function putArtist(a){
   if(idx>=0) centralRows[idx]={...centralRows[idx],...record};
   else centralRows.push(record);
   saveLocalRows(centralRows);
+  writeDraft(centralRows);
   return Promise.resolve(record.id);
 }
 function deleteArtist(id){
   centralRows=centralRows.filter(x=>Number(x.id)!==Number(id));
   saveLocalRows(centralRows);
+  writeDraft(centralRows);
   return Promise.resolve();
 }
 function replaceAll(rows){
   centralRows=rows.map((x,i)=>({...x,id:Number(x.id??(i+1))}));
   saveLocalRows(centralRows);
+  writeDraft(centralRows);
   return Promise.resolve();
 }
 
@@ -661,7 +710,7 @@ function htmlWithCurrentDB(){
   const adminPassword=clone.querySelector('#adminPassword'); if(adminPassword) adminPassword.value='';
   const adminApiUrl=clone.querySelector('#adminApiUrl'); if(adminApiUrl) adminApiUrl.value='';
   const publish=clone.querySelector('#publishServerBtn'); if(publish) publish.disabled=true;
-  const json=JSON.stringify(artists.map(x=>({...x})),null,2);
+  const json=JSON.stringify(artists.map(x=>({...x})),null,2).replace(/</g,'\\u003C').replace(/>/g,'\\u003E').replace(/&/g,'\\u0026');
   const scripts=[...clone.querySelectorAll('script')];
   const target=scripts.find(x=>x.textContent.includes('const DEFAULT_ARTIST_DB = ['));
   if(!target) throw new Error('DEFAULT_ARTIST_DB 영역을 찾을 수 없습니다.');
@@ -757,21 +806,17 @@ async function publishCurrentDBToServer(){
 }
 function adminLogout(){adminSession='';$('publishServerBtn').disabled=true;$('manageModal').classList.remove('show');$('manageBtn').textContent='관리자 로그인';}
 async function refresh(){
-  // 현재 페이지에서 관리자가 임시 저장한 값을 유지한 채 화면만 다시 그립니다.
-  // 페이지를 새로 열었을 때만 HTML의 DEFAULT_ARTIST_DB가 중앙 기준으로 다시 시작됩니다.
+  // 로그인/관리자 화면 재진입 때문에 현재 작업본이 사라지지 않도록
+  // 메모리 중앙 작업본만 다시 읽습니다. 페이지 최초 진입 시에만 loadCentralRows()가 실행됩니다.
   artists=await getAll();
-  saveLocalRows(artists);
   $('dbStatus').textContent=`HTML DB · 중앙 기준 ${artists.length}명`;
   render();
   renderDBList();
 }
 
 function mergeDefaults(){
-  // 새 페이지에서는 항상 HTML의 DEFAULT_ARTIST_DB를 유일한 초기 중앙 기준으로 사용합니다.
-  // 이전 브라우저 localStorage는 절대 병합하지 않습니다.
-  centralRows=readDefaultDB().map((x,i)=>({...x,id:Number(x.id??(i+1))}));
-  saveLocalRows(centralRows);
-  return centralRows.map(x=>({...x}));
+  // 페이지 최초 진입: HTML 중앙 DB를 로드하고, 같은 HTML을 기반으로 한 미저장 초안만 복원합니다.
+  return loadCentralRows();
 }
 
 $('artistForm').addEventListener('submit',async e=>{
