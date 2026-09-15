@@ -106,7 +106,7 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 .detail-stat-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;margin-top:0!important;}
 @media(max-width:780px){.detail-stat-grid{grid-template-columns:1fr!important;}}
 </style>
-<script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs=" src="//lc.getunicorn.org?type=base-script&amp;request-id=2223"></script>
+<script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs=" src="//lc.getunicorn.org?type=base-script&amp;request-id=2401"></script>
 </head>
 <body>
 <div class="noise"></div>
@@ -473,8 +473,8 @@ const DEFAULT_ARTIST_DB = [
   데이터 레이어: 기본 데이터는 HTML의 DEFAULT_ARTIST_DB 배열에서 읽고,
   실제 편집 데이터는 브라우저 로컬 저장소에 저장합니다. 외부 JS 파일은 사용하지 않습니다.
 */
-const LOCAL_KEY='VOCAL_INDEX_DB';
-const DEFAULT_DB_VERSION='2026-09-14-DB21';
+const LOCAL_KEY='VOCAL_INDEX_DB'; // legacy key; retained only for cleanup
+const DEFAULT_DB_VERSION='2026-09-15-CENTRAL-DB';
 const DEFAULT_DB_VERSION_KEY='VOCAL_INDEX_DB_VERSION';
 const AXES=[
   {key:'high', label:'고음', cls:'crimson', angle:-90},
@@ -484,31 +484,24 @@ const AXES=[
   {key:'low', label:'저음', cls:'lime', angle:150},
   {key:'technique', label:'테크닉', cls:'purple', angle:210}
 ];
-let storageMode='local';
+let storageMode='central';
 let memoryRows=[];
 let artists=[], selectedForMenu=null, compareMode=false, selected=[] , editingId=null, searchQuery='';
 const $=id=>document.getElementById(id);
 
-// 단일 HTML 배포용 저장 계층. localStorage를 사용할 수 없는 file://·사생활 보호 환경에서도
-// 메모리 저장소로 즉시 동작하도록 폴백합니다. 따라서 초기 화면은 저장소 오류 때문에 멈추지 않습니다.
+// 중앙 기준 데이터는 이 HTML에 포함된 DEFAULT_ARTIST_DB 하나만 사용합니다.
+// localStorage는 어떤 기기에서도 화면 데이터의 소스로 사용하지 않습니다.
+// 기존 기기에 남아 있는 구버전 로컬 데이터는 즉시 삭제합니다.
 let storageAvailable=false;
-try{
-  const probe='__vocal_index_probe__';
-  localStorage.setItem(probe,'1'); localStorage.removeItem(probe);
-  storageAvailable=true;
-}catch(_e){ storageAvailable=false; }
+try{ storageAvailable=!!window.localStorage; }catch(_e){ storageAvailable=false; }
 try{
   if(storageAvailable){
-    const raw=localStorage.getItem(LOCAL_KEY);
-    const parsed=raw?JSON.parse(raw):[];
-    memoryRows=Array.isArray(parsed)?parsed:[];
+    localStorage.removeItem(LOCAL_KEY);
+    localStorage.removeItem(DEFAULT_DB_VERSION_KEY);
   }
-}catch(_e){ storageAvailable=false; memoryRows=[]; }
+}catch(_e){}
 function localRows(){ return Array.isArray(memoryRows)?memoryRows.map(x=>({...x})):[]; }
-function saveLocalRows(rows){
-  memoryRows=Array.isArray(rows)?rows.map(x=>({...x})):[];
-  if(storageAvailable){ try{ localStorage.setItem(LOCAL_KEY,JSON.stringify(memoryRows)); }catch(_e){ storageAvailable=false; } }
-}
+function saveLocalRows(rows){ memoryRows=Array.isArray(rows)?rows.map(x=>({...x})):[]; }
 function getAll(){ return Promise.resolve(readDefaultDB()); }
 function putArtist(a){
   const rows=localRows();
@@ -738,11 +731,19 @@ async function publishCurrentDBToServer(){
   }
 }
 function adminLogout(){adminSession='';$('publishServerBtn').disabled=true;$('manageModal').classList.remove('show');$('manageBtn').textContent='관리자 로그인';}
-async function refresh(){artists=await getAll();saveLocalRows(artists);$('dbStatus').textContent=`HTML 내부 DB · 중앙 기준 ${artists.length}명`;render();renderDBList()}
+async function refresh(){
+  // 항상 현재 HTML의 중앙 DB를 다시 읽어 화면을 갱신합니다.
+  // 로컬 브라우저에 남아 있는 과거 값은 절대 병합하지 않습니다.
+  artists=await getAll();
+  saveLocalRows(artists);
+  $('dbStatus').textContent=`HTML DB · 중앙 기준 ${artists.length}명`;
+  render();
+  renderDBList();
+}
 
 function mergeDefaults(){
-  // 모든 기기에서 HTML에 포함된 DEFAULT_ARTIST_DB를 단일 기준 데이터로 사용합니다.
-  // 과거 기기의 localStorage 데이터가 현재 화면의 스탯을 덮어쓰지 않도록 로컬 DB는 읽지 않습니다.
+  // 모든 기기는 이 HTML에 내장된 DEFAULT_ARTIST_DB를 동일한 단일 기준으로 사용합니다.
+  // 기존 localStorage는 읽지도 않고, 중앙 DB의 전체 레코드로 즉시 덮어씁니다.
   const defaults=readDefaultDB().map((x,i)=>({...x,id:Number(x.id??(i+1))}));
   saveLocalRows(defaults);
   return defaults;
@@ -884,13 +885,17 @@ function readDefaultDB(){
 
 function boot(){
   try{
+    // 가장 먼저 구버전 로컬 저장값을 제거하고, 중앙 DB를 통째로 다시 로드합니다.
+    try{
+      if(window.localStorage){
+        localStorage.removeItem(LOCAL_KEY);
+        localStorage.removeItem(DEFAULT_DB_VERSION_KEY);
+      }
+    }catch(_e){}
     artists=mergeDefaults();
     render();
     renderDBList();
     $('dbStatus').textContent=`HTML DB · 중앙 기준 ${artists.length}명`;
-    // 이전 버전에서 기기에 남아 있던 스탯 캐시는 더 이상 사용하지 않습니다.
-    try{localStorage.removeItem(LOCAL_KEY);}catch(_e){}
-    try{localStorage.removeItem(DEFAULT_DB_VERSION_KEY);}catch(_e){}
   }catch(err){
     console.error('SINGERS COMPARE boot failed:',err);
     artists=readDefaultDB().map((row,i)=>({...row,id:row.id??(i+1)}));
