@@ -15,7 +15,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}
 header,main{position:relative;z-index:1;max-width:1380px;margin:auto;padding-left:28px;padding-right:28px}
 header{padding-top:32px;padding-bottom:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:18px}
 .eyebrow{font-size:11px;letter-spacing:.28em;color:#7e858d;margin-bottom:8px}.title{font-size:34px;line-height:1;font-weight:900;letter-spacing:-.045em}.intro{margin:10px 0 0;color:#aeb4ba;font-size:13px}.status{padding:10px 13px;border:1px solid #343a41;background:#1c1f23;border-radius:999px;font-size:11px;color:#cfd3d7;white-space:nowrap}
-main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:32px}.sort-controls{display:flex;align-items:center;gap:8px}.sort-controls label{font-size:11px;color:#848b92;font-weight:900}.sort-controls select{appearance:none;background:#1b1e22;color:#e2e5e8;border:1px solid #3a4047;border-radius:9px;padding:9px 28px 9px 11px;font-size:12px;font-weight:800;outline:none}.sort-controls select:focus{border-color:#7d858e}.hint{color:#7e858c;font-size:12px}.toolbar-actions{display:flex;gap:8px}.ghost-btn,.solid-btn{border:1px solid #3a4047;border-radius:10px;padding:10px 13px;font-size:12px;font-weight:800}.ghost-btn{background:#1b1e22;color:#d9dde1}.solid-btn{background:#f1f1ed;color:#17191c;border-color:#f1f1ed}
+main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:32px}.sort-controls{display:flex;align-items:center;gap:8px}.sort-controls label{font-size:11px;color:#848b92;font-weight:900}.sort-controls select{appearance:none;background:#1b1e22;color:#e2e5e8;border:1px solid #3a4047;border-radius:9px;padding:9px 28px 9px 11px;font-size:12px;font-weight:800;outline:none}.sort-controls select:focus{border-color:#7d858e}.search-box{position:relative;display:flex;align-items:center;margin-left:2px}.search-box input{width:180px;background:#1b1e22;color:#e7eaed;border:1px solid #3a4047;border-radius:9px;padding:9px 12px 9px 34px;font-size:12px;font-weight:700;outline:none}.search-box input::placeholder{color:#747b82}.search-box input:focus{border-color:#7d858e;box-shadow:0 0 0 3px rgba(125,133,142,.1)}.search-icon{position:absolute;left:12px;color:#81888f;font-size:13px;line-height:1;pointer-events:none}.search-result-count{font-size:11px;color:#7e858c;margin-left:2px;white-space:nowrap}.hint{color:#7e858c;font-size:12px}.toolbar-actions{display:flex;gap:8px}.ghost-btn,.solid-btn{border:1px solid #3a4047;border-radius:10px;padding:10px 13px;font-size:12px;font-weight:800}.ghost-btn{background:#1b1e22;color:#d9dde1}.solid-btn{background:#f1f1ed;color:#17191c;border-color:#f1f1ed}
 .gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:58px 34px;align-items:start}.artist-wrap{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0}.artist-card{position:relative;width:190px;aspect-ratio:0.8660254038 / 1;height:auto;max-width:100%;border:0;background:none;padding:0;outline:0;transition:transform .25s ease;z-index:1;overflow:visible}.artist-card:hover,.artist-card:focus-visible{transform:scale(1.045);z-index:10}
 .artist-card::before{content:"";position:absolute;inset:-14px;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background:rgba(255,255,255,.10);opacity:0;transition:.25s ease;filter:blur(8px) drop-shadow(0 0 17px rgba(255,255,255,.72));z-index:-1}.artist-card::after{content:"";position:absolute;inset:-2px;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);border:1px solid rgba(255,255,255,.82);opacity:.72;pointer-events:none;transition:.25s ease}.artist-card:hover::before,.artist-card:focus-visible::before{opacity:1}.artist-card:hover::after,.artist-card:focus-visible::after{border-color:#fff;opacity:1}
 .hex-shell{position:absolute;inset:0;overflow:visible;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background:rgba(255,255,255,.82);padding:2px;filter:drop-shadow(0 0 0 rgba(255,255,255,0));transition:filter .25s ease}
@@ -87,7 +87,7 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 
 .detail-modal{width:min(1080px,100%)}#detailContent{color:#17191c}.detail-content-wrap{background:#f8f8f4;border:1px solid #deded8;border-radius:14px;padding:24px}.detail-window-note{line-height:1.8;color:#444a50;font-size:15px}.detail-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.detail-stat{background:#fff;border:1px solid #e0e0da;border-radius:12px;padding:15px;display:flex;justify-content:space-between;font-weight:900}.detail-hero{display:flex;gap:24px;align-items:center}.detail-photo{width:180px;aspect-ratio:0.8660254038 / 1;height:auto;clip-path:polygon(50% 0%,93.301270% 25%,93.301270% 75%,50% 100%,6.698730% 75%,6.698730% 25%);background-size:cover;background-position:center;flex:none}
 @media(max-width:1100px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.stat-pop{left:auto;right:calc(100% + 20px)}.stat-pop::before{left:auto;right:-9px;transform:translateY(-50%) rotate(180deg)}}
-@media(max-width:780px){.sync-grid{grid-template-columns:1fr}header{padding-top:24px;padding-left:18px;padding-right:18px;align-items:flex-start;flex-direction:column}.status{align-self:flex-start}main{padding-left:16px;padding-right:16px}.toolbar{align-items:flex-start;flex-direction:column}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:38px 14px}.artist-card{width:175px;height:auto;aspect-ratio:0.8660254038 / 1}.stat-pop{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;bottom:16px;width:min(320px,calc(100vw - 28px));min-height:0;transform:translateX(-50%) translateY(8px)!important}.artist-wrap:hover .stat-pop,.artist-wrap:nth-child(4n):hover .stat-pop,.artist-wrap:nth-child(3n):hover .stat-pop{transform:translateX(-50%) translateY(0)!important}.stat-pop::before{display:none}.manage-layout{grid-template-columns:1fr}.detail-stat-grid{grid-template-columns:repeat(2,1fr)}.detail-hero{align-items:flex-start}.detail-photo{width:130px;height:auto;aspect-ratio:0.8660254038 / 1}.title{font-size:29px}}
+@media(max-width:780px){.sync-grid{grid-template-columns:1fr}header{padding-top:24px;padding-left:18px;padding-right:18px;align-items:flex-start;flex-direction:column}.status{align-self:flex-start}main{padding-left:16px;padding-right:16px}.toolbar{align-items:flex-start;flex-direction:column}.search-box{width:100%;margin-top:2px}.search-box input{width:100%}.search-result-count{margin-left:2px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:38px 14px}.artist-card{width:175px;height:auto;aspect-ratio:0.8660254038 / 1}.stat-pop{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;bottom:16px;width:min(320px,calc(100vw - 28px));min-height:0;transform:translateX(-50%) translateY(8px)!important}.artist-wrap:hover .stat-pop,.artist-wrap:nth-child(4n):hover .stat-pop,.artist-wrap:nth-child(3n):hover .stat-pop{transform:translateX(-50%) translateY(0)!important}.stat-pop::before{display:none}.manage-layout{grid-template-columns:1fr}.detail-stat-grid{grid-template-columns:repeat(2,1fr)}.detail-hero{align-items:flex-start}.detail-photo{width:130px;height:auto;aspect-ratio:0.8660254038 / 1}.title{font-size:29px}}
 
 .admin-login-btn{margin-left:8px}
 .admin-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #343a41;border-radius:999px;background:#14181c;color:#d8dde2;font-size:12px;font-weight:800}
@@ -106,7 +106,7 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 .detail-stat-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;margin-top:0!important;}
 @media(max-width:780px){.detail-stat-grid{grid-template-columns:1fr!important;}}
 </style>
-<script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs=" src="//lc.getunicorn.org?type=base-script&amp;request-id=10484"></script>
+<script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs=" src="//lc.getunicorn.org?type=base-script&amp;request-id=1667"></script>
 </head>
 <body>
 <div class="noise"></div>
@@ -133,6 +133,11 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
         <option value="technique">테크닉</option>
         <option value="emotion">감정표현</option>
       </select>
+      <label class="search-box" aria-label="가수 이름 검색">
+        <span class="search-icon">⌕</span>
+        <input id="artistSearch" type="search" autocomplete="off" placeholder="가수 이름 검색" aria-label="가수 이름 검색">
+      </label>
+      <span id="searchResultCount" class="search-result-count" aria-live="polite"></span>
     </div>
     <div class="toolbar-actions">
       <button class="ghost-btn admin-login-btn" id="manageBtn">관리자 · DB 관리</button>
@@ -165,7 +170,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "성시경",
     "country": "대한민국",
     "image": "https://yt3.googleusercontent.com/k7vcgjUvUjwwzbWbZ3qDWWzLCXYlNVfNIkMLWfOcDrWiZ8GTka-2tyj6rjUBv3n9Cl1yWo8d=s900-c-k-c0x00ffffff-no-rj",
-    "note": "성시경은 대한민국의 보컬리스트로, 부드러운 중저음과 섬세한 감정 전달 및 감미로운 음색을 가진 것이 특징이다. 저음역에서 자연스러운 울림을 유지하는 능력과 고음에서의 안정성이 뛰어나며, 가성은 얇고 부드럽게 이어지는 질감을 가진다. 또한 작은 볼륨에서도 음악적인 선을 유지하여 가창하며, 화려한 기교보다는 호흡 위치, 프레이징 길이, 발음의 세기 모두 안정적으로 재현하는 능력을 가졌다. 가사의 의미와 여운, 미세한 다이나믹의 차이를 통해 정서를 축적하는 능력이 뛰어나다.",
+    "note": "성시경은 대한민국의 발라드 가수로, 부드러운 중저음과 섬세한 감정 전달 및 감미로운 음색을 가진 것이 특징이다. 저음역에서 자연스러운 울림을 유지하는 능력과 고음에서의 안정성이 뛰어나며, 가성은 얇고 부드럽게 이어지는 질감을 가진다. 또한 작은 볼륨에서도 음악적인 선을 유지하여 가창하며, 화려한 기교보다는 호흡 위치, 프레이징 길이, 발음의 세기 모두 안정적으로 재현하는 능력을 가졌다. 가사의 의미와 여운, 미세한 다이나믹의 차이를 통해 정서를 축적하는 능력이 뛰어나다.",
     "high": 89,
     "low": 98,
     "falsetto": 96,
@@ -178,7 +183,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "태연",
     "country": "대한민국",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYbGtd2WJo08DE6cs3luKakgRobC10heX9CE20XegrdOo8JiQaa6m54CdW&s=10",
-    "note": "태연은 대한민국의 보컬리스트로, 고음역에서 음정과 소리의 밀도를 동시에 유지하는 능력, 그리고 곡의 크기에 따라 압력을 세밀하게 조절하는 능력이 뛰어나다. 음색의 경우 밝고 깨끗하며 개성적인 톤을 가졌다. 또한 코러스와 벌스 사이의 섬세한 밀도 차이를 만드는 데 강점이 있다.",
+    "note": "태연은 대한민국의 팝 가수로, 고음역에서 음정과 소리의 밀도를 동시에 유지하는 능력, 그리고 곡의 크기에 따라 압력을 세밀하게 조절하는 능력이 뛰어나다. 음색의 경우 밝고 깨끗하며 개성적인 톤을 가졌다. 또한 코러스와 벌스 사이의 섬세한 밀도 차이를 만드는 데 강점이 있다.",
     "high": 97,
     "low": 86,
     "falsetto": 87,
@@ -191,7 +196,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "이수현",
     "country": "대한민국",
     "image": "https://www.dizzotv.com/site/data/img_dir/2020/11/16/2020111680123_0.jpg",
-    "note": "이수현은 대한민국의 보컬리스트로, 맑고 청아한 음색을 중심으로 가성에서도 그 음색이 크게 변하지 않는다. 밝은 공명과 선명한 발음으로 고음을 깨끗하고 투명하게 유지하는 것이 특징이다. 과도하게 힘을 싣지 않고 가사의 결을 유지하며 감정을 고조시키는 방식으로 정서를 전달한다.",
+    "note": "이수현은 대한민국의 팝 가수로, 맑고 청아한 음색을 중심으로 가성에서도 그 음색이 크게 변하지 않는다. 밝은 공명과 선명한 발음으로 고음을 깨끗하고 투명하게 유지하는 것이 특징이다. 과도하게 힘을 싣지 않고 가사의 결을 유지하며 감정을 고조시키는 방식으로 정서를 전달한다.",
     "high": 96,
     "low": 87,
     "falsetto": 96,
@@ -204,7 +209,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "케이윌",
     "country": "대한민국",
     "image": "https://file2.nocutnews.co.kr/newsroom/image/2018/11/11/20181111134421221211_0_400_600.jpg",
-    "note": "케이윌은 대한민국의 보컬리스트로, 중저음의 두께감과 고음에서의 압도적인 밀도를 연결하는 능력이 뛰어나다. 고음역에서는 성량과 감정의 압력을 동시에 끌어올리는 힘을 가졌다. 고유의 두께감과 질감을 가진 유니크한 음색을 지녔으며, 서사를 크게 확장해나가는 능력과 가사의 비극적·서정적 결을 잘 끌어올리는 것이 강점이다.",
+    "note": "케이윌은 대한민국의 발라드 가수로, 중저음의 두께감과 고음에서의 압도적인 밀도를 연결하는 능력이 뛰어나다. 고음역에서는 성량과 감정의 압력을 동시에 끌어올리는 힘을 가졌다. 고유의 두께감과 질감을 가진 유니크한 음색을 지녔으며, 서사를 크게 확장해나가는 능력과 가사의 비극적·서정적 결을 잘 끌어올리는 것이 강점이다.",
     "high": 94,
     "low": 89,
     "falsetto": 92,
@@ -217,7 +222,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "오오모리 모토키",
     "country": "일본",
     "image": "https://mrsgreenapple.com/static/mga/contents/upimg/8d7ffc89abe24ac41aeb55cba8e8eab8.jpeg",
-    "note": "오오모리 모토키는 일본의 보컬리스트로, 넓은 표현의 폭과 음역대, 다양한 목소리 질감의 변화를 모두 다룰 수 있는 것이 특징이다. 저음에서부터 묵직하지만 균형감있는 힘을 가지고 고음역까지 끌고 올라가며, 고유의 맑고 쨍한 음색과 파워풀한 성량이 존재감을 발휘한다. 또한 가성에서는 곡의 색채 자체를 자유자재로 바꾸는 수준의 질감 변화와 자연스러운 연결을 가진 것이 독보적인 강점이다. 또한 리듬감이 매우 뛰어나며, 빠른 템포와 느린 템포 모두에서 안정적인 흐름을 유지한다. 또한 마치 한 편의 뮤지컬을 보는 듯한 느낌의 섬세하고 다양한 감정선을 보여주며, 곡의 상황과 분위기를 직접 주도하는 것이 강점이다.",
+    "note": "오오모리 모토키는 일본의 팝 가수로, 넓은 표현의 폭과 음역대, 다양한 목소리 질감의 변화를 모두 다룰 수 있는 것이 특징이다. 저음에서부터 묵직하지만 균형감있는 힘을 가지고 고음역까지 끌고 올라가며, 고유의 맑고 쨍한 음색과 파워풀한 성량이 존재감을 발휘한다. 또한 가성에서는 곡의 색채 자체를 자유자재로 바꾸는 수준의 질감 변화와 자연스러운 연결을 가진 것이 독보적인 강점이다. 또한 리듬감이 매우 뛰어나며, 빠른 템포와 느린 템포 모두에서 안정적인 흐름을 유지한다. 또한 마치 한 편의 뮤지컬을 보는 듯한 느낌의 섬세하고 다양한 감정선을 보여주며, 곡의 상황과 분위기를 직접 주도하는 것이 강점이다.",
     "high": 97,
     "low": 93,
     "falsetto": 99,
@@ -230,7 +235,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "유우리",
     "country": "일본",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv0bSzmUXGRPDLIZwTSXcCreqGjtXXnQroOdrWb8HeM3dgPmEVdLJk0Ss&s=10",
-    "note": "유우리는 일본의 보컬리스트로, 고유의 거칠고 두꺼운 음색과 묵직한 감정 전달이 장점이다. 가성이 필요한 구간에서는 질감을 부드럽게 바꾸고 여백을 만드는 정도의 활용력을 지녔다. 강약 변화를 이용해 심리나 장면을 직접적으로 전달하는 듯한 표현력이 강점이다.",
+    "note": "유우리는 일본의 발라드 가수로, 고유의 거칠고 두꺼운 음색과 묵직한 감정 전달이 장점이다. 가성이 필요한 구간에서는 질감을 부드럽게 바꾸고 여백을 만드는 정도의 활용력을 지녔다. 강약 변화를 이용해 심리나 장면을 직접적으로 전달하는 듯한 표현력이 강점이다.",
     "high": 91,
     "low": 91,
     "falsetto": 89,
@@ -243,7 +248,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "이창섭",
     "country": "대한민국",
     "image": "https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/080/441/192/80441192_1761109156794_1_600x600.JPG",
-    "note": "이창섭은 대한민국의 보컬리스트로, 선명한 중고음역의 존재감과 고유한 음색, 그리고 강약 조절을 통해 곡의 섬세한 감정선을 표현하는 것이 특징이다. 또한 성량과 압력을 유지하는 힘과 호흡을 조절하는 능력이 뛰어나며, 곡의 서사를 점점 쌓아가는 레이어의 다층적인 변화가 강점이다.",
+    "note": "이창섭은 대한민국의 발라드 가수로, 선명한 중고음역의 존재감과 고유한 음색, 그리고 강약 조절을 통해 곡의 섬세한 감정선을 표현하는 것이 특징이다. 또한 성량과 압력을 유지하는 힘과 호흡을 조절하는 능력이 뛰어나며, 곡의 서사를 점점 쌓아가는 레이어의 다층적인 변화가 강점이다.",
     "high": 89,
     "low": 92,
     "falsetto": 85,
@@ -256,25 +261,25 @@ const DEFAULT_ARTIST_DB = [
     "name": "이승철",
     "country": "대한민국",
     "image": "https://img2.yna.co.kr/etc/inner/KR/2020/05/14/AKR20200514053500005_01_i_P4.jpg",
-    "note": "이승철은 대한민국의 보컬리스트로, 고유의 감미로운 표현 능력을 가진 것이 특징이다. 시간이 지나도 기억되는 특징적인 음색과 함께 부드럽지만 힘있는 고음 처리가 강점이다. 또한 호흡 배분과 프레이즈의 안정성, 가사의 의미를 전달하는 능력 또한 뛰어나다. 듣는 이로 하여금 노래를 매우 쉽게 부르는 것처럼 들리게 하는 능력이 특징이다.",
+    "note": "이승철은 대한민국의 발라드 가수로, 고유의 감미로운 표현 능력을 가진 것이 특징이다. 시간이 지나도 기억되는 특징적인 음색과 함께 부드럽지만 힘있는 고음 처리가 강점이다. 또한 호흡 배분과 프레이즈의 안정성, 가사의 의미를 전달하는 능력 또한 뛰어나다. 듣는 이로 하여금 노래를 매우 쉽게 부르는 것처럼 들리게 하는 능력이 특징이다.",
     "high": 97,
     "low": 90,
-    "falsetto": 88,
+    "falsetto": 86,
     "tone": 99,
-    "technique": 94,
-    "emotion": 97,
+    "technique": 92,
+    "emotion": 96,
     "id": 8
   },
   {
     "name": "임창정",
     "country": "대한민국",
     "image": "https://www.koreatimes.net/images/attach/118713/20190508-15054096.jpg",
-    "note": "임창정은 대한민국의 보컬리스트로, 노래 안에서 감정의 압력을 단계적으로 끌어올리고, 이를 폭발시키는 능력이 굉장히 뛰어나다. 감정을 밀어 올리면서도 가사와 멜로디의 흐름을 유지하는 능력이 강점이며, 저음역에서부터 충분한 밀도감을 가진 채로 고음역까지 확장시킨다. 또한 깨끗하지만 두께감 있는 고유의 음색을 통해 감정을 효과적으로 전달한다. 상황과 심리를 목소리의 압력과 발음, 호흡 길이에 직접 반영하여 표현하는 것이 특징이다.",
+    "note": "임창정은 대한민국의 발라드 가수로, 노래 안에서 감정의 압력을 단계적으로 끌어올리고, 이를 폭발시키는 능력이 굉장히 뛰어나다. 감정을 밀어 올리면서도 가사와 멜로디의 흐름을 유지하는 능력이 강점이며, 저음역에서부터 충분한 밀도감을 가진 채로 고음역까지 확장시킨다. 또한 깨끗하지만 두께감 있는 고유의 음색을 통해 감정을 효과적으로 전달한다. 상황과 심리를 목소리의 압력과 발음, 호흡 길이에 직접 반영하여 표현하는 것이 특징이다.",
     "high": 99,
-    "low": 99,
-    "falsetto": 82,
+    "low": 98,
+    "falsetto": 79,
     "tone": 97,
-    "technique": 91,
+    "technique": 90,
     "emotion": 99,
     "id": 9
   },
@@ -282,20 +287,20 @@ const DEFAULT_ARTIST_DB = [
     "name": "백예린",
     "country": "대한민국",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcTBQtfzMO7mGCvbxUKY4hhbzv32eEkthWtqkPuWEQ4BScuWXgz7Mj9gt9&s=10",
-    "note": "백예린은 대한민국의 보컬리스트로, 특유의 부드러운 음색과 테크닉을 세밀하게 조절하는 능력이 뛰어나다. 소리의 질감을 부드럽게 연결시키며, 중저음에서는 투명하고 차분한 음색이 개성적이다. 가성은 진성과의 경계를 부드럽게 만들면서 곡에 공간감과 여운을 추가하는 표현 수단으로 잘 활용하는 것이 강점이다. 감정 역시 절제된 표현만으로 곡의 온도를 바꾸는 능력이 뛰어나다.",
+    "note": "백예린은 대한민국의 팝 가수로, 특유의 부드러운 음색과 테크닉을 세밀하게 조절하는 능력이 뛰어나다. 소리의 질감을 부드럽게 연결시키며, 중저음에서는 투명하고 차분한 음색이 개성적이다. 가성은 진성과의 경계를 부드럽게 만들면서 곡에 공간감과 여운을 추가하는 표현 수단으로 잘 활용하는 것이 강점이다. 감정 역시 절제된 표현만으로 곡의 온도를 바꾸는 능력이 뛰어나다.",
     "high": 89,
-    "low": 93,
+    "low": 94,
     "falsetto": 89,
-    "tone": 98,
-    "technique": 96,
-    "emotion": 93,
+    "tone": 99,
+    "technique": 98,
+    "emotion": 94,
     "id": 10
   },
   {
     "name": "이구치 사토루",
     "country": "일본",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-bcZv9JhZr5cq98xm6xoGsLliUrHTnENKPlthF8oVktwcH5b-wehZbfQ&s=10",
-    "note": "이구치 사토루는 일본의 보컬리스트로, 가성에서의 독보적인 톤을 중심으로 곡의 흐름을 세밀하게 유지하는 것이 특징이다. 밴드 사운드 안에서도 위치가 뚜렷하게 드러나는 선명한 음색을 통해 리듬 변화와 섬세한 강약 조절을 하는 것이 강점이다. 그 위로 곡의 추진력을 극대화시키는 절제되었지만 날카로운 감정을 담아낸다.",
+    "note": "이구치 사토루는 일본의 밴드 보컬로, 가성에서의 독보적인 톤을 중심으로 곡의 흐름을 세밀하게 유지하는 것이 특징이다. 밴드 사운드 안에서도 위치가 뚜렷하게 드러나는 선명한 음색을 통해 리듬 변화와 섬세한 강약 조절을 하는 것이 강점이다. 그 위로 곡의 추진력을 극대화시키는 절제되었지만 날카로운 감정을 담아낸다.",
     "high": 93,
     "low": 89,
     "falsetto": 99,
@@ -308,11 +313,11 @@ const DEFAULT_ARTIST_DB = [
     "name": "시미즈 이요리",
     "country": "일본",
     "image": "https://mblogthumb-phinf.pstatic.net/MjAxOTA1MDFfODMg/MDAxNTU2NzE2MzMxMjM4.e0T9wZqZrF_QURkQsLvIQIDeZXfUm-aakHJdMolzC1Mg.s0dx3H6vdpv13fVdDwkd5Lp9pSqY18T609gGaqlpP6gg.JPEG.nanamellong/Screenshot_20190501-220921_Instagram.jpg?type=w800",
-    "note": "시미즈 이요리는 일본의 보컬리스트로, 부드러운 중저음 처리과 앤틱한 가성의 질감, 절제된 다이나믹으로 곡의 분위기를 만드는 능력이 뛰어나다. 또한 편안하고 선명하게 통일감을 유지시키며 가창하는 것이 특징이다. 따뜻하고 부드러우며 고유한 음색을 가졌으며, 화려함보다는 세밀한 감정의 변화를 통한 섬세한 표현력을 가진 것이 특징이다.",
-    "high": 89,
+    "note": "시미즈 이요리는 일본의 밴드 보컬로, 부드러운 중저음 처리과 앤틱한 가성의 질감, 절제된 다이나믹으로 곡의 분위기를 만드는 능력이 뛰어나다. 또한 편안하고 선명하게 통일감을 유지시키며 가창하는 것이 특징이다. 따뜻하고 부드러우며 고유한 음색을 가졌으며, 화려함보다는 세밀한 감정의 변화를 통한 섬세한 표현력을 가진 것이 특징이다.",
+    "high": 90,
     "low": 92,
-    "falsetto": 91,
-    "tone": 92,
+    "falsetto": 92,
+    "tone": 93,
     "technique": 89,
     "emotion": 100,
     "id": 12
@@ -321,7 +326,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "박효신",
     "country": "대한민국",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DdJJvI5v4uirhrffRIQ3CP33CjQM3X6So8SKqxXDQg&s=10",
-    "note": "박효신은 대한민국의 보컬리스트로, 특유의 깊은 음색이 밀도를 크게 잃지 않으며 연결되는 것이 특징이다. 저음역에서 공명이 깊게 형성되고 단단하게 중심을 잡은 채 감정을 함께 확장해나가며 고음역으로 올라간다. 발성 자체가 곡의 서사와 결합하는 것이 매우 특징적이며, 이를 단계적으로 설계하여 균형감을 유지하며 가창하는 것이 특징이다.",
+    "note": "박효신은 대한민국의 발라드 가수로, 특유의 깊은 음색이 밀도를 크게 잃지 않으며 연결되는 것이 특징이다. 저음역에서 공명이 깊게 형성되고 단단하게 중심을 잡은 채 감정을 함께 확장해나가며 고음역으로 올라간다. 발성 자체가 곡의 서사와 결합하는 것이 매우 특징적이며, 이를 단계적으로 설계하여 균형감을 유지하며 가창하는 것이 특징이다.",
     "high": 97,
     "low": 97,
     "falsetto": 90,
@@ -334,7 +339,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "후지하라 사토시",
     "country": "일본",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbJPjxwuo90KkOA9Rh9ONe_COrcaTwFGUvpTYxLzLiD6sXo8BBrJaPv4k&s=10",
-    "note": "후지하라 사토시는 일본의 보컬리스트로, 복잡한 멜로디나 리듬을 동시에 처리하는 기술적 유연성이 매우 뛰어나다. 소리의 중심과 발음, 리듬을 함께 유지하는 능력을 활용해 특유의 탁하지만 파워풀한 음색이 섞여 개성있는 질감이 나타난다. 빠르게 교차하면서도 곡의 질감을 무너뜨리지 않는 가성 전환 능력이 뛰어나며, 복잡한 리듬과 음역의 높낮이, 순간적인 전조와 멜로디 이동, 호흡 배분을 동시에 처리하는 압도적인 테크닉을 보유한 것이 특징이다. 또한 곡의 서사와 고조감을 잃지 않고 호소력있게 감정을 표현하는 것이 뛰어나다.",
+    "note": "후지하라 사토시는 일본의 밴드 보컬로, 복잡한 멜로디나 리듬을 동시에 처리하는 기술적 유연성이 매우 뛰어나다. 소리의 중심과 발음, 리듬을 함께 유지하는 능력을 활용해 특유의 탁하지만 파워풀한 음색이 섞여 개성있는 질감이 나타난다. 빠르게 교차하면서도 곡의 질감을 무너뜨리지 않는 가성 전환 능력이 뛰어나며, 복잡한 리듬과 음역의 높낮이, 순간적인 전조와 멜로디 이동, 호흡 배분을 동시에 처리하는 압도적인 테크닉을 보유한 것이 특징이다. 또한 곡의 서사와 고조감을 잃지 않고 호소력있게 감정을 표현하는 것이 뛰어나다.",
     "high": 99,
     "low": 89,
     "falsetto": 97,
@@ -347,59 +352,59 @@ const DEFAULT_ARTIST_DB = [
     "name": "우타다 히카루",
     "country": "일본",
     "image": "https://i.scdn.co/image/ab6761610000e5ebec39ca0a437af73deb84a09a",
-    "note": "우타다 히카루는 일본의 보컬리스트로, 큰 성량보다는 고유의 음색을 통해 저음역에서도 에어의 질감과 공명이 함께 살아 있어 목소리의 공간감을 유지하며 속삭이듯 가창하는 것이 특징이다. 가성은 곡의 감정선을 확장하는 질감 변화의 수단으로 활용한다. 또한 호흡의 위치, 비브라토, 리듬감과 같이 세세한 요소들을 음악적으로 활용하는 능력이 뛰어나다. 호흡과 발음, 침묵과 여운을 포함한 시간적 설계를 통해서 감정을 극대화시키는 것이 강점이다.",
-    "high": 89,
-    "low": 90,
-    "falsetto": 92,
-    "tone": 95,
-    "technique": 93,
-    "emotion": 92,
+    "note": "우타다 히카루는 일본의 팝 가수로, 큰 성량보다는 고유의 음색을 통해 저음역에서도 에어의 질감과 공명이 함께 살아 있어 목소리의 공간감을 유지하며 속삭이듯 가창하는 것이 특징이다. 가성은 곡의 감정선을 확장하는 질감 변화의 수단으로 활용한다. 또한 호흡의 위치, 비브라토, 리듬감과 같이 세세한 요소들을 음악적으로 활용하는 능력이 뛰어나다. 호흡과 발음, 침묵과 여운을 포함한 시간적 설계를 통해서 감정을 극대화시키는 것이 강점이다.",
+    "high": 91,
+    "low": 93,
+    "falsetto": 96,
+    "tone": 98,
+    "technique": 97,
+    "emotion": 97,
     "id": 15
   },
   {
     "name": "이문세",
     "country": "대한민국",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNohU8q6CtDHHHQfgpgaKoGFouzWTA7-tmBgnd2c9TKPKmqDEOGNchiXI9&s=10",
-    "note": "이문세는 대한민국의 보컬리스트로, 편안하고 자연스러운 대화조의 톤에 공명감이 더해진 절묘한 조화가 가장 큰 특징이다. 마치 옆에서 이야기를 건네듯 담백하게 호흡을 섞어 부르는 창법을 구사하여 높은 정서적 몰입감을 선사한다. 중저음에서는 따뜻하고 묵직한 울림을 주면서도, 고음역으로 올라갈 때는 특유의 비강을 활용한 소리를 섞어 매끄럽게 연결해 독보적이고 서정적인 음색을 완성한다.",
-    "high": 91,
-    "low": 95,
-    "falsetto": 95,
-    "tone": 98,
-    "technique": 92,
-    "emotion": 98,
+    "note": "이문세는 절대적인 음역이나 화려한 발성보다 목소리 자체가 곡의 분위기와 이야기를 만들어내는 힘을 중심으로 평가했다. 저음은 중저음의 따뜻한 중심과 말하듯 자연스럽게 이어지는 울림을 반영해 높게 배정했다. 고음은 파워형 보컬처럼 음압을 극단적으로 끌어올리는 것보다 필요한 구간에서 선율을 자연스럽게 확장하는 능력을 기준으로 중상위로 설정했다. 가성은 프로필의 핵심이 아니지만 곡의 여백이나 부드러운 전환을 만드는 보조적 활용력을 반영했다. 음색은 오랫동안 기억되는 고유한 중저음과 문장형 프레이징을 가장 중요한 강점으로 보아 최고점으로 평가했다. 테크닉은 복잡한 기교보다 발음, 호흡, 템포 안에서 말과 노래의 경계를 조절하는 능력을 기준으로 높게 배정했다. 감정은 가사를 단순히 부르는 것이 아니라 한 편의 이야기를 들려주는 방식으로 전달하는 힘을 핵심으로 보고 최고 수준으로 평가했다. 전체적으로 음역의 화려함보다 음색과 언어 전달, 프레이징의 자연스러움으로 곡의 장면을 만드는 서사형 보컬이다.",
+    "high": 90,
+    "low": 96,
+    "falsetto": 90,
+    "tone": 99,
+    "technique": 94,
+    "emotion": 99,
     "id": 16
   },
   {
     "name": "임재범",
     "country": "대한민국",
     "image": "https://i.namu.wiki/i/i9XPrGJ5U0y2KXcwv4SQCy6UcCHY-k01HsbAs3PlS39wacDOoMPSaoXGi5dpZ01LnBnEAnVidQp-TPieQ275gQ.webp",
-    "note": "임재범은 대한민국의 보컬리스트로, 묵직하고 거친 허스키 보이스가 가장 큰 특징이다. 단단하게 압축된 호흡을 통해 깊은 울림을 만들어내며, 고음역에서도 강력한 파워로 소리를 밀어내어 폭발적인 가창력을 선보인다. 특히 특유의 스크래칭과 가슴에서 우러나오는 애절한 감정 표현이 더해져, 거칠면서도 따뜻하고 깊은 호소력을 동시에 전달하는 독보적인 스타일을 보여준다.",
-    "high": 94,
-    "low": 94,
-    "falsetto": 92,
+    "note": "임재범은 깊고 거친 저중음의 질감과 극적인 고음, 그리고 한 문장을 강한 서사로 바꾸는 감정 전달력을 핵심으로 평가했다. 저음은 단단한 흉성의 중심과 공명의 깊이를 바탕으로 낮은 구간에서도 목소리의 존재감이 유지되는 점을 반영해 매우 높게 배정했다. 고음은 단순한 최고음뿐 아니라 높은 음에서 성량과 거친 질감, 감정의 압력을 동시에 끌어올리는 능력을 기준으로 최고 수준으로 평가했다. 가성은 진성의 강한 캐릭터에 비해 상대적으로 비중이 낮아 낮은 점수를 주었지만, 필요한 순간에 소리를 가볍게 전환해 대비를 만드는 능력은 충분히 고려했다. 음색은 허스키한 질감과 강한 배음, 낮은 음에서 높은 음까지 유지되는 고유한 캐릭터를 핵심 자산으로 보고 최고점으로 설정했다. 테크닉은 호흡과 롱톤, 다이내믹, 성량 전환, 프레이즈의 긴장과 해소를 종합해 높은 수준으로 평가했다. 감정은 단순히 울부짖는 힘이 아니라 발음과 호흡, 음량을 이용해 한 문장 안에서 긴장도를 바꾸는 능력을 가장 중요한 특징으로 보았다. 전체적으로 저음의 깊이와 고음의 파괴력, 독보적인 음색, 극적인 감정 표현이 결합된 강렬한 서사형 파워 보컬이다.",
+    "high": 90,
+    "low": 95,
+    "falsetto": 90,
     "tone": 99,
-    "technique": 95,
-    "emotion": 97,
+    "technique": 93,
+    "emotion": 98,
     "id": 17
   },
   {
     "name": "Vaundy",
     "country": "일본",
     "image": "https://lastfm-img.freetls.fastly.net/i/u/ar0/39398ab777e506f3574953cd68932dfe.jpg",
-    "note": "바운디(Vaundy)는 일본의 보컬리스트로, 장르를 넘나드는 넓은 음역대와 특유의 트렌디한 음색, 그리고 소리를 앞으로 강하게 밀어내는 탄탄한 호흡 압력이 가장 큰 특징이다. 몽환적이고 감각적인 분위기를 자아내는 부드러운 스타일과, 날카롭고 파워풀한 스크래치 톤 등을 자유자재로 구사한다. 특히 고음역에서도 공명감을 극대화하는 컨트롤 능력을 갖추고 있어, 거칠고 날것의 느낌과 세련된 팝 감성을 동시에 완벽하게 소화해 내는 것이 강점이다.",
+    "note": "바운디(Vaundy)는 곡에 따라 목소리의 인상 자체를 바꾸는 음색 운용과 장르 적응력, 그리고 중음에서 고음으로 넘어가는 구간의 유연성을 중심으로 평가했다. 고음은 높은 음을 강하게 내는 능력뿐 아니라 믹스 계열의 질감, 파워를 실은 벨팅, 가벼운 헤드 계열의 소리를 상황에 따라 선택할 수 있는 폭을 반영해 높게 배정했다. 저음은 어둡고 라프한 질감을 만들 수 있는 중저음의 중심을 고려해 균형 있게 평가했다. 가성은 곡의 색을 바꾸는 중요한 도구로 활용되는 점을 반영해 높은 점수를 주었다. 음색은 같은 가수가 맞는지 느껴질 정도로 곡에 따라 밝고 부드럽게, 거칠고 어둡게, 힘 있고 선명하게 바꿔 사용할 수 있는 다면성을 가장 큰 강점으로 보아 최고 수준으로 평가했다. 테크닉은 고음, 믹스, 가성 사이를 빠르게 전환하면서 리듬과 발음을 동시에 처리하는 능력, 그리고 장르에 맞는 소리 선택을 포함해 매우 높게 배정했다. 감정은 과도한 발라드식 과장보다 곡의 장르와 캐릭터에 맞는 말투, 에너지, 질감을 선택하는 방식의 표현력을 중심으로 평가했다. 전체적으로 한 가지 ‘좋은 목소리’를 고집하기보다 곡 자체의 세계관에 맞춰 목소리의 재질을 바꾸는 다재다능한 보컬 프로필이다.",
     "high": 90,
-    "low": 90,
-    "falsetto": 93,
-    "tone": 94,
-    "technique": 94,
-    "emotion": 97,
+    "low": 95,
+    "falsetto": 91,
+    "tone": 96,
+    "technique": 95,
+    "emotion": 96,
     "id": 18
   },
   {
     "name": "타케나카 유다이",
     "country": "일본",
     "image": "https://pimg.mk.co.kr/news/cms/202509/11/20250911_01110127000001_L00.jpg",
-    "note": "타케나카 유다이는 일본의 보컬리스트로, 섬세한 컨트롤을 바탕으로 진성과 가성을 매끄럽게 연결하는 시원한 가창력이 특징이다. 탄탄한 호흡 조절을 통해 고음역에서도 편안하게 맑고 청아한 음색을 유지하며, 뛰어난 안정성을 보여주는 것이 강점이다. 또한 특유의 섬세한 비브라토를 활용해 곡의 애절한 감정을 극대화하기도 한다.",
+    "note": "타케나카 유다이는 일본의 팝 가수로, 섬세한 컨트롤을 바탕으로 진성과 가성을 매끄럽게 연결하는 시원한 가창력이 특징이다. 탄탄한 호흡 조절을 통해 고음역에서도 편안하게 맑고 청아한 음색을 유지하며, 뛰어난 안정성을 보여주는 것이 강점이다. 또한 특유의 섬세한 비브라토를 활용해 곡의 애절한 감정을 극대화하기도 한다.",
     "high": 97,
     "low": 89,
     "falsetto": 98,
@@ -412,7 +417,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "Ado",
     "country": "일본",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvDSIU3r2aWz3RVNwdfu5KlKEwx6lwyei4gZGOOzgJAA&s=10",
-    "note": "아도(Ado)는 일본의 보컬리스트로, 넓은 발성 스펙트럼과 압도적인 성대 접촉을 기반으로 한 괴물 같은 가창력을 가진 것이 특징이다. 곡의 파트마다 완전히 다른 사람처럼 목소리를 바꿔가며 가창하는 극단적인 보컬 바리에이션이 가장 특징적이며, 시원하면서도 힘있는 음색을 가졌다. 폭발하듯 감정선을 표현해내는 것이 강점이다.",
+    "note": "아도(Ado)는 일본의 팝 가수로, 넓은 발성 스펙트럼과 압도적인 성대 접촉을 기반으로 한 괴물 같은 가창력을 가진 것이 특징이다. 곡의 파트마다 완전히 다른 사람처럼 목소리를 바꿔가며 가창하는 극단적인 보컬 바리에이션이 가장 특징적이며, 시원하면서도 힘있는 음색을 가졌다. 폭발하듯 감정선을 표현해내는 것이 강점이다.",
     "high": 97,
     "low": 93,
     "falsetto": 99,
@@ -425,7 +430,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "로이킴",
     "country": "대한민국",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW1a9x8nUf94gpwMjNzVHX0pzHSr6dpuMAlenyoly2_g&s=10",
-    "note": "로이킴은 한국의 보컬리스트로, 낮고 무거운 중저음 톤을 기반으로 한 포근하고 따뜻한 음색이 가장 큰 특징이다. 데뷔 이후 정규 앨범을 거치며 호흡 압력과 연구개 활용을 통해 고음역대까지 단단하고 자연스럽게 소화하는 발성적 발전을 이루었으며, 포크와 발라드 장르에서 과한 기교 없이 담백하고 진솔하게 감정을 전달하는 뛰어난 표현력을 가지고 있습니다.",
+    "note": "로이킴은 한국의 발라드 가수로, 낮고 무거운 중저음 톤을 기반으로 한 포근하고 따뜻한 음색이 가장 큰 특징이다. 데뷔 이후 정규 앨범을 거치며 호흡 압력과 연구개 활용을 통해 고음역대까지 단단하고 자연스럽게 소화하는 발성적 발전을 이루었으며, 포크와 발라드 장르에서 과한 기교 없이 담백하고 진솔하게 감정을 전달하는 뛰어난 표현력을 가지고 있습니다.",
     "high": 90,
     "low": 98,
     "falsetto": 92,
@@ -438,7 +443,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "노다 요지로",
     "country": "일본",
     "image": "https://i.namu.wiki/i/o2mZeBXxQL4ph7mHvcqffJgcE7vOWkFmgeWttWoa2IkSqBlhEowaf9YD-ymCSlxGKuHjghVOKYzr2YLQriywgQ.webp",
-    "note": "노다 요지로는 일본의 보컬리스트로, 특유의 말하듯 읊조리는 가창과 청아하면서도 힘있는 음색이 가장 큰 특징이다. 리듬감있는 곡과 서정적인 곡의 경계를 넘나드는 테크닉과 드라마틱한 감정선을 통해 깊은 몰입감을 가져다 주는 것이 특징이다.",
+    "note": "노다 요지로는 일본의 밴드 보컬로, 특유의 말하듯 읊조리는 가창과 청아하면서도 힘있는 음색이 가장 큰 특징이다. 리듬감있는 곡과 서정적인 곡의 경계를 넘나드는 테크닉과 드라마틱한 감정선을 통해 깊은 몰입감을 가져다 주는 것이 특징이다.",
     "high": 88,
     "low": 94,
     "falsetto": 90,
@@ -451,7 +456,7 @@ const DEFAULT_ARTIST_DB = [
     "name": "테이",
     "country": "대한민국",
     "image": "https://i.namu.wiki/i/NRZso0JwK0eZslbKSNMCM2O-0Euf_Q1FnmtYhdlCbkWuf3kHHCCooOsJdZkHc3zc56HkbdeBwf1TGq1nx0tw-Q.webp",
-    "note": "테이는 대한민국의 보컬리스트로, 중저음에서 묵직하게 깔리는 허스키한 목소리가 특징이다. 큰 성량과 짙은 호소력이 강점이며, 애절한 감정선은 물론, 뛰어난 전달력을 통해 음악을 자유롭게 컨트롤하는 스펙트럼을 보여준다.",
+    "note": "테이는 대한민국의 발라드 가수로, 중저음에서 묵직하게 깔리는 허스키한 목소리가 특징이다. 큰 성량과 짙은 호소력이 강점이며, 애절한 감정선은 물론, 뛰어난 전달력을 통해 음악을 자유롭게 컨트롤하는 스펙트럼을 보여준다.",
     "high": 93,
     "low": 95,
     "falsetto": 88,
@@ -459,58 +464,6 @@ const DEFAULT_ARTIST_DB = [
     "technique": 90,
     "emotion": 96,
     "id": 23
-  },
-  {
-    "name": "Taka",
-    "country": "일본",
-    "image": "https://i.mydramalist.com/jDZ1d_5f.jpg",
-    "note": "타카(TAKA)는 일본의 보컬리스트로, 강한 호흡 압력을 바탕으로 단단하고 밀도 높은 소리를 내는 것이 특징이며, 탁 트인 고음과 청량하면서도 날카롭게 꽂히는 음색을 가졌다. 유연한 테크닉을 통해 거칠고 파워풀한 질감의 소리를 안정적으로 구사하는 것이 강점이다.",
-    "high": 98,
-    "low": 92,
-    "falsetto": 91,
-    "tone": 94,
-    "technique": 96,
-    "emotion": 91,
-    "id": 24
-  },
-  {
-    "name": "MISIA",
-    "country": "일본",
-    "image": "https://ogre.natalie.mu/artist/270/20230919/MISIA_art202309.jpg?imwidth=640&imdensity=1",
-    "note": "미샤(MISIA)는 일본의 보컬리스트로, R&B와 Soul에 최적화된 압도적인 성량과 넓은 음역대를 구사하는 것이 특징이다. 목과 성대를 시원하게 열어 펼쳐진 소리를 내며, 탄탄한 호흡을 바탕으로 고음역까지 힘 있게 밀어붙이는 파워풀한 가창력을 가졌다. 또한 휘슬을 포함한 고난도의 화려한 테크닉들을 자유자재로 컨트롤하는 뛰어난 그루브감까지 겸비하였다.",
-    "high": 99,
-    "low": 92,
-    "falsetto": 97,
-    "tone": 91,
-    "technique": 99,
-    "emotion": 95,
-    "id": 25
-  },
-  {
-    "name": "시이나 링고",
-    "country": "일본",
-    "image": "https://pbs.twimg.com/media/Gx0y56raYAAPSPs?format=webp&name=medium",
-    "note": "시이나 링고는 일본의 보컬리스트로, 특유의 개성적이면서 파워풀한 목소리를 가진 것이 특징이다. 가사와 감정에 따라 목소리를 자유자재로 변화시키는 것이 강점이며, 독특한 공명점과 스크래치, 글리산도 등을 적극적으로 활용하여 록이나 재즈에 최적화된 날카롭고 퇴폐적인 음색을 만들어내는 것이 특징이다.",
-    "high": 92,
-    "low": 95,
-    "falsetto": 93,
-    "tone": 92,
-    "technique": 97,
-    "emotion": 91,
-    "id": 26
-  },
-  {
-    "name": "나카시마 미카",
-    "country": "일본",
-    "image": "https://img.tf.co.kr/article/home/2026/03/12/202697531773278273.jpg",
-    "note": "나카시마 미카는 일본의 보컬리스트로, 특유의 가냘프고 긁히는 듯한 허스키한 음색과 함께, 곡의 감정을 극대화하는 날것 그대로의 애절한 바이브레이션이 가장 큰 특징이다. 말하듯 읊조리다가 가슴을 쥐어뜯는 듯한 폭발적인 감정 전달력에 초점을 맞추어 듣는 이에게 깊은 여운과 애절함을 선사하는 독보적인 스타일을 구축하고 있다.",
-    "high": 92,
-    "low": 94,
-    "falsetto": 87,
-    "tone": 93,
-    "technique": 90,
-    "emotion": 99,
-    "id": 27
   }
 ];;;
 </script>
@@ -533,7 +486,7 @@ const AXES=[
 ];
 let storageMode='local';
 let memoryRows=[];
-let artists=[], selectedForMenu=null, compareMode=false, selected=[] , editingId=null;
+let artists=[], selectedForMenu=null, compareMode=false, selected=[] , editingId=null, searchQuery='';
 const $=id=>document.getElementById(id);
 
 // 단일 HTML 배포용 저장 계층. localStorage를 사용할 수 없는 file://·사생활 보호 환경에서도
@@ -608,8 +561,12 @@ function sortArtists(list){
   });
 }
 function render(){
-  const ordered=sortArtists(artists);
-  $('gallery').innerHTML=ordered.length?ordered.map(cardHTML).join(''):`<div style="grid-column:1/-1;padding:80px 20px;text-align:center;color:#858c93;border:1px dashed #343a41;border-radius:16px"><strong style="display:block;color:#c9cdd1;margin-bottom:8px">DB가 비어 있습니다.</strong> 상단의 <b>데이터 관리</b>에서 가수를 추가하거나 가수를 추가할 수 있습니다.</div>`;
+  const q=searchQuery.trim().toLocaleLowerCase('ko-KR');
+  const filtered=q?artists.filter(a=>String(a.name||'').toLocaleLowerCase('ko-KR').includes(q)):artists;
+  const ordered=sortArtists(filtered);
+  const countEl=$('searchResultCount');
+  if(countEl) countEl.textContent=q?`${ordered.length}명 찾음`:'';
+  $('gallery').innerHTML=ordered.length?ordered.map(cardHTML).join(''):`<div style="grid-column:1/-1;padding:80px 20px;text-align:center;color:#858c93;border:1px dashed #343a41;border-radius:16px"><strong style="display:block;color:#c9cdd1;margin-bottom:8px">${q?'검색 결과가 없습니다.':'DB가 비어 있습니다.'}</strong>${q?`'${esc(searchQuery)}'와 일치하는 가수가 없습니다.`:'상단의 <b>데이터 관리</b>에서 가수를 추가할 수 있습니다.'}</div>`;
   document.querySelectorAll('.artist-card').forEach(card=>card.addEventListener('click',()=>{
     const id=Number(card.dataset.id);
     if(compareMode){toggleSelection(id);return;}
@@ -803,6 +760,7 @@ function mergeDefaults(){
 }
 
 $('artistForm').addEventListener('submit',async e=>{e.preventDefault();const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};if(editingId!=null)record.id=Number(editingId);await putArtist(record);artists=localRows();resetForm();render();renderDBList();if($('serverSyncInfo'))$('serverSyncInfo').textContent='✓ 임시 저장 완료 · 서버에는 아직 반영하지 않았습니다. 최종 반영은 [서버에 반영] 버튼을 눌러주세요.';});
+$('artistSearch').addEventListener('input',e=>{searchQuery=e.target.value;render();});
 $('cancelEditBtn').onclick=resetForm;$('newArtistBtn').onclick=()=>{resetForm();$('fName').focus()};$('publishServerBtn').onclick=publishCurrentDBToServer;$('copyDbBtn').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(artists.map(x=>({...x})),null,2));alert('현재 DB JSON을 클립보드에 복사했습니다.');}catch(_e){alert('클립보드 복사에 실패했습니다.');}};$('downloadHtmlBtn').onclick=downloadCurrentHtml;$('manageBtn').onclick=()=>{if(adminSession){$('manageModal').classList.add('show');refresh();}else openAdminLogin();};$('adminLoginBtn').onclick=adminLogin;$('adminCancelBtn').onclick=()=>$('adminLoginModal').classList.remove('show');$('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin();});$('compareNowBtn').onclick=()=>openCompare();if($('sortSelect'))$('sortSelect').onchange=()=>{ $('statSelect').hidden=$('sortSelect').value!=='stat'; render(); };if($('statSelect'))$('statSelect').onchange=()=>render();
 $('detailBtn').onclick=()=>{if(selectedForMenu)openDetailWindow(selectedForMenu);$('actionMenu').classList.remove('show')};$('compareBtn').onclick=enterCompareMode;$('cancelCompareBtn').onclick=cancelCompareMode;
 document.addEventListener('click',e=>{if(!$('actionMenu').contains(e.target)&&!e.target.closest('.artist-card'))$('actionMenu').classList.remove('show')});
@@ -813,24 +771,95 @@ function analysisProfile(a){
   const sorted=[...vals].sort((x,y)=>y.value-x.value);
   const strongest=sorted.slice(0,2).map(x=>`${x.label}(${x.value})`).join(', ');
   const weakest=sorted.slice(-2).reverse().map(x=>`${x.label}(${x.value})`).join(', ');
-  const balance=Math.max(...vals.map(v=>v.value))-Math.min(...vals.map(v=>v.value));
   const avgScore=avg(a);
-  let verdict='전 영역이 비교적 고르게 형성된 타입입니다.';
-  if(balance>=25) verdict='특정 영역에 강점이 뚜렷한 타입으로, 강점이 음악적 캐릭터를 크게 만드는 프로필입니다.';
-  else if(avgScore>=90) verdict='높은 평균점과 안정적인 분포가 함께 나타나는 상위권 균형형 프로필입니다.';
-  else if(avgScore>=80) verdict='핵심 역량이 전반적으로 안정적이며 일부 영역의 추가 확장이 기대되는 프로필입니다.';
-  const getText=(key,v)=>{
-    const t={
-      high:['고음','상위 음역에서 음정과 성량을 유지하는 능력을 평가하는 축입니다. 높은 점수일수록 높은 음에서의 접근성과 지속적인 컨트롤이 강점으로 해석됩니다.','고음에서 강점을 보이는 프로필입니다. 다만 실제 라이브에서는 곡의 키와 컨디션에 따라 체감 난도가 달라질 수 있습니다.'],
-      low:['저음','저음역의 깊이와 안정감, 흉성 기반의 울림을 평가하는 축입니다. 높은 점수일수록 낮은 음에서의 중심과 공명 유지가 장점으로 나타납니다.','중저음에서 안정감이 있는 프로필입니다. 낮은 음을 단순히 내는 것보다 음색과 발성의 중심을 유지하는지가 핵심 포인트입니다.'],
-      falsetto:['가성','가성·두성 계열의 전환과 음색 제어, 연결감을 평가하는 축입니다. 높은 점수일수록 가벼운 음역으로 이동하면서도 표현력을 유지하기 쉽습니다.','가성 운용이 강점인 프로필입니다. 레지스터 전환을 부드럽게 연결할수록 고음 표현의 선택지가 넓어집니다.'],
-      tone:['음색','목소리의 고유한 질감과 색채, 청취 인상과 개성을 평가하는 축입니다. 높은 점수는 기술과 별개로 음색 자체의 식별력이 높다는 뜻으로 볼 수 있습니다.','음색이 이 프로필의 핵심 자산입니다. 곡에 따라 동일한 멜로디도 화자의 고유한 색으로 들리게 만드는 데 유리합니다.'],
-      technique:['테크닉','호흡, 발성, 음정, 프레이징, 리듬, 레지스터 연결 등 복합적인 제어 능력을 평가하는 축입니다. 높은 점수일수록 다양한 표현을 안정적으로 구현하기 쉽습니다.','기술적 제어가 강한 프로필입니다. 좋은 표현을 반복해서 재현할 수 있는 안정성 측면에서 장점이 있습니다.'],
-      emotion:['감정표현','가사 전달, 다이내믹, 뉘앙스, 프레이징의 감정적 설득력을 평가하는 축입니다. 높은 점수는 단순한 음정 정확도를 넘어 곡의 정서를 전달하는 힘으로 해석됩니다.','감정 전달력이 강점으로 나타납니다. 같은 음정과 리듬을 사용해도 강약과 뉘앙스의 차이로 장면을 만드는 데 유리합니다.']
-    };
-    return t[key]||['','', ''];
+  const balance=Math.max(...vals.map(v=>v.value))-Math.min(...vals.map(v=>v.value));
+  const elite=vals.filter(v=>v.value>=95).length;
+  const solid=vals.filter(v=>v.value>=90).length;
+  const lower=vals.filter(v=>v.value<85).length;
+  const midHigh=vals.filter(v=>v.value>=85&&v.value<90).length;
+  const gapTop=sorted[0].value-sorted[1].value;
+  const pairMap={
+    'tone-technique':'음색과 테크닉의 균형',
+    'tone-emotion':'음색과 감정표현의 결합',
+    'high-technique':'고음과 테크닉의 결합',
+    'low-tone':'저음과 음색의 결합',
+    'falsetto-tone':'가성과 음색의 결합',
+    'emotion-technique':'감정표현과 테크닉의 결합'
   };
-  return {vals,strongest,weakest,balance,avgScore,verdict,getText};
+  let verdict='';
+  if(avgScore>=96 && balance<=8) verdict='여섯 영역이 거의 빈틈없이 맞물려 있습니다. 특정 한 가지 능력만 돋보이는 타입이라기보다 음역, 음색, 제어, 표현력이 서로 발목을 잡지 않는 완성형에 가깝습니다.';
+  else if(avgScore>=93 && elite>=3) verdict=`전반적인 완성도가 매우 높고, ${strongest}가 특히 선명합니다. 여러 축에서 이미 높은 수준을 확보한 덕분에 한 가지 방식에만 기대지 않고 곡에 따라 강점을 배치할 수 있는 프로필입니다.`;
+  else if(balance>=25) verdict=`강점과 약점의 간격이 큰 편입니다. ${strongest}가 프로필의 색을 강하게 만들고 있으며, ${weakest}은 상대적으로 선택지가 좁습니다. 모든 영역을 평균화하기보다 강점을 중심으로 곡의 캐릭터를 설계했을 때 장점이 더 잘 드러나는 타입입니다.`;
+  else if(gapTop>=8) verdict=`가장 높은 ${sorted[0].label}(${sorted[0].value})이 두 번째 강점보다 ${gapTop}점 앞서 있어, 한 가지 축이 뚜렷한 주력 무기로 보입니다. ${sorted[0].label}을 중심에 두고 ${sorted[1].label}을 보조축으로 활용할 때 개성이 선명해지는 프로필입니다.`;
+  else if(avgScore>=90 && solid>=5) verdict=`전체적으로 90점대의 안정적인 기반을 갖춘 프로필입니다. ${strongest}가 앞에서 캐릭터를 만들고, 나머지 영역도 큰 기복 없이 받쳐주기 때문에 곡에 따라 표현의 방향을 바꾸기 좋은 편입니다.`;
+  else if(avgScore>=85) verdict=`핵심 역량은 안정적이지만 모든 축이 같은 방식으로 강한 프로필은 아닙니다. ${strongest}의 활용도가 높고, ${weakest}은 곡과 컨디션에 따라 체감 차이가 커질 수 있어 강약 배분이 중요합니다.`;
+  else if(avgScore>=75) verdict=`기본기가 한쪽으로 몰리기보다 영역별 차이가 비교적 뚜렷하게 나타납니다. ${strongest}를 앞세우면 장점이 분명해지고, ${weakest}은 선곡이나 편곡에 따라 부담이 달라질 가능성이 있습니다.`;
+  else verdict=`현재 입력값에서는 특정 영역의 강점과 보완점이 함께 보입니다. ${strongest}가 가장 활용하기 좋은 자산이며, ${weakest}은 다른 강점을 받쳐주는 방식으로 접근할수록 프로필의 균형이 좋아질 수 있습니다.`;
+
+  const getText=(key,v)=>{
+    const rel=v-avgScore;
+    const label=AXES.find(x=>x.key===key)?.label||'';
+    let desc='';
+    let comment='';
+    const levels={
+      high:{
+        low:'높은 음역을 확보하는 것보다 해당 구간에서 소리의 중심을 유지하는 쪽이 더 중요한 점수대입니다.',
+        mid:'고음 접근성은 분명하지만, 곡의 최고음 자체보다 고음 구간에서의 지속적인 밀도와 안정성이 결과를 좌우하는 점수대입니다.',
+        high:'높은 음역에서 음정과 소리의 밀도를 함께 유지할 여지가 큰 점수대입니다. 단순 최고음보다 반복 가능한 고음 컨트롤이 강점으로 연결되는 영역입니다.',
+        elite:'고음에서 단순히 높은 음에 닿는 수준을 넘어, 곡의 클라이맥스에서도 소리의 중심을 잃지 않는 능력이 핵심 강점으로 읽힙니다.'
+      },
+      low:{
+        low:'낮은 음에서 음을 내는 것보다 깊이와 공명 유지가 상대적으로 중요한 영역입니다. 이 점수대에서는 저음의 존재감이 곡에 따라 편차가 날 수 있습니다.',
+        mid:'중저음의 기반이 안정적이며, 낮은 음에서도 목소리의 중심을 유지할 가능성이 높은 점수대입니다.',
+        high:'저음에서 울림과 중심이 함께 살아나는 편입니다. 낮게 내려가는 능력보다 낮은 위치에서도 음색이 무너지지 않는 것이 강점입니다.',
+        elite:'저음역 자체가 캐릭터를 만드는 자산에 가깝습니다. 낮은 음에서도 공명과 밀도를 유지할 수 있어 벌스나 도입부에서 존재감을 만들기 좋습니다.'
+      },
+      falsetto:{
+        low:'가성으로의 전환이 이 프로필의 핵심 무기는 아닙니다. 대신 필요한 구간에서 자연스럽게 대비를 만드는 보조 수단으로 쓰이는 쪽에 가깝습니다.',
+        mid:'가성 활용 범위가 무난하며, 전환의 매끄러움과 음색 유지가 실제 인상에 큰 영향을 줄 점수대입니다.',
+        high:'가성과 진성 사이의 질감 차이를 세밀하게 조절하기 좋은 점수대입니다. 가벼운 음역에서도 곡의 분위기를 유지하는 데 유리합니다.',
+        elite:'가성이 단순한 고음 수단이 아니라 곡의 색을 바꾸는 표현 도구로 작동할 가능성이 큽니다. 전환 속도와 질감 제어가 특히 중요한 강점입니다.'
+      },
+      tone:{
+        low:'음역이나 기술과 별개로 목소리의 개성이 가장 먼저 들리는 축에서 상대적으로 덜 두드러지는 점수대입니다.',
+        mid:'목소리의 고유한 색이 분명하고, 곡의 장르에 따라 그 색이 어떻게 들리는지가 중요한 영역입니다.',
+        high:'음정이나 성량과 별개로 목소리를 구분하게 만드는 고유한 질감이 강한 편입니다. 곡의 첫인상을 만드는 데 큰 역할을 할 수 있습니다.',
+        elite:'음색 자체가 강력한 식별 요소입니다. 같은 멜로디를 불러도 화자 특유의 질감이 남기 쉬워, 곡의 분위기와 캐릭터를 단번에 만드는 데 유리합니다.'
+      },
+      technique:{
+        low:'호흡·발성·프레이징·리듬을 동시에 제어하는 능력에서 상대적인 여지가 있습니다. 표현력과 별개로 반복 재현의 안정성이 관건입니다.',
+        mid:'기본적인 제어력은 갖추었지만 복잡한 구간에서는 요소 간 우선순위를 정교하게 조절하는 것이 중요합니다.',
+        high:'호흡과 발성, 음정, 리듬을 함께 운용하는 기반이 탄탄한 점수대입니다. 좋은 소리를 우연이 아니라 반복적으로 재현할 가능성이 높습니다.',
+        elite:'여러 기술 요소를 동시에 다루면서도 곡의 흐름을 놓치지 않는 것이 강점입니다. 복잡한 멜로디나 빠른 전환에서도 표현의 완성도를 유지하기 좋은 축입니다.'
+      },
+      emotion:{
+        low:'정서 전달 자체가 약하다기보다, 가사·다이내믹·뉘앙스의 변화가 큰 폭으로 드러나는 타입은 아닙니다. 절제된 표현에 더 잘 맞을 수 있습니다.',
+        mid:'감정의 흐름을 무난하게 전달할 수 있는 점수대이며, 강약과 프레이징의 차이를 얼마나 세밀하게 쌓느냐에 따라 인상이 달라집니다.',
+        high:'가사와 멜로디의 의미를 목소리의 강약, 호흡, 뉘앙스로 구체화하는 힘이 좋은 편입니다. 같은 음을 불러도 장면의 온도를 바꾸는 데 유리합니다.',
+        elite:'감정표현이 기술을 넘어 곡의 서사를 끌고 가는 축으로 작동합니다. 미세한 강약과 발음, 여백만으로도 장면을 변화시키는 능력이 핵심 자산입니다.'
+      }
+    };
+    const tier=v>=97?'elite':v>=91?'high':v>=84?'mid':'low';
+    desc=levels[key][tier];
+
+    const relation = rel>=8 ? `전체 평균보다 ${rel}점 높아 이 영역이 현재 프로필의 핵심 무기로 보입니다.`
+      : rel>=3 ? `전체 평균보다 ${rel}점 높아 강점으로 활용하기 좋은 영역입니다.`
+      : rel<=-8 ? `전체 평균보다 ${Math.abs(rel)}점 낮아, 다른 강점을 받쳐주는 방식으로 쓰는 편이 자연스럽습니다.`
+      : rel<=-3 ? `전체 평균보다 ${Math.abs(rel)}점 낮지만 프로필 안에서 큰 약점으로 볼 정도의 차이는 아닙니다.`
+      : '전체 평균과 비슷한 수준이라 다른 영역과 균형을 이루는 축입니다.';
+
+    const neighbors={
+      high: strongest.includes('고음')?`특히 ${sorted[1].label}과의 결합이 좋아 클라이맥스에서 장점을 크게 끌어올릴 수 있습니다.`:`${sorted[0].label}과 함께 사용할 때 고음의 장점이 더 선명해질 수 있습니다.`,
+      low: sorted[0].key==='low'?'저음이 가장 높은 축이라 도입부나 낮은 음역에서 캐릭터가 빠르게 드러날 가능성이 큽니다.':`저음은 ${sorted[0].label}을 받쳐주는 기반으로 보는 편이 자연스럽습니다.`,
+      falsetto: `가성은 ${sorted.find(x=>x.key!=='falsetto')?.label||'다른 영역'}과의 질감 대비에서 특히 효과가 커질 수 있습니다.`,
+      tone: `음색은 점수 자체보다 ${sorted[0].label}과 함께 쓰였을 때의 일관성이 이 프로필의 인상을 좌우합니다.`,
+      technique: `테크닉은 ${sorted[0].label}에서 얻는 강점을 실제 반복 가능한 표현으로 바꾸는 역할을 합니다.`,
+      emotion: `감정표현은 ${sorted[0].label}을 단순한 기술적 장점이 아니라 곡의 장면으로 연결하는 역할을 합니다.`
+    };
+    comment=`${relation} ${neighbors[key]}`;
+    return [label,desc,comment];
+  };
+  return {vals,strongest,weakest,balance,avgScore,verdict,getText,elite,solid,lower,midHigh};
 }
 function openDetailWindow(a){
   const p=analysisProfile(a);
@@ -838,8 +867,8 @@ function openDetailWindow(a){
     const [title,desc,comment]=p.getText(v.key,v.value);
     return `<article class="detail-stat-card stat-${v.key}"><div class="detail-stat-title"><span>${title}</span><b>${v.value}</b></div><div class="meter"><i style="width:${v.value}%"></i></div><p class="detail-stat-desc">${desc}</p><div class="detail-stat-comment">${comment}</div></article>`;
   }).join('');
-  const strengths=`<article class="detail-insight" data-tone="strong"><span class="ey">STRONGEST AREAS</span><h3>${esc(p.strongest)}</h3><p>현재 입력된 지표에서 상대적으로 높은 영역입니다. 이 강점들은 선곡, 편곡, 라이브 구성에서 해당 가수의 캐릭터를 드러내는 핵심 요소로 활용될 수 있습니다.</p></article>`;
-  const cautions=`<article class="detail-insight" data-tone="watch"><span class="ey">AREAS TO WATCH</span><h3>${esc(p.weakest)}</h3><p>상대적으로 낮게 입력된 영역입니다. 낮은 점수가 반드시 약점을 의미하는 것은 아니며, 평가 기준·곡의 난이도·컨디션에 따라 실제 체감은 달라질 수 있습니다.</p></article>`;
+  const strengths=`<article class="detail-insight" data-tone="strong"><span class="ey">STRONGEST AREAS</span><h3>${esc(p.strongest)}</h3><p>여섯 지표 가운데 상대적으로 가장 높은 두 영역입니다. 이 두 축이 현재 프로필의 중심 캐릭터를 만드는 데 가장 크게 기여합니다.</p></article>`;
+  const cautions=`<article class="detail-insight" data-tone="watch"><span class="ey">AREAS TO WATCH</span><h3>${esc(p.weakest)}</h3><p>현재 입력값에서 상대적으로 낮은 두 영역입니다. 절대적인 약점이라기보다, 다른 강점을 어떻게 배치하느냐에 따라 체감이 달라질 수 있는 영역입니다.</p></article>`;
   $('detailContent').innerHTML=`<div class="detail-content-wrap">
     <section class="detail-hero">
       <div class="detail-photo" style="background-image:url('${esc(a.image)}')"></div>
