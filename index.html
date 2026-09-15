@@ -155,7 +155,7 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 
 <div id="detailModal" class="overlay"><div class="modal detail-modal"><div class="modal-head"><div><h2>상세 보컬 분석</h2><div class="modal-sub">6개 스탯의 강점·주의 영역·상세 해석</div></div><button class="close" data-close="detailModal">×</button></div><div id="detailContent"></div></div></div>
 
-<div id="manageModal" class="overlay"><div class="modal manage"><div class="modal-head"><h2>보컬 DB 관리</h2><button class="close" data-close="manageModal">×</button></div><div class="server-sync"><div><strong>서버 DB 반영</strong><br><small id="serverSyncInfo">현재 DB가 포함된 index.html을 저장했습니다.</small></div><button class="solid-btn" id="publishServerBtn" type="button" disabled="">서버에 반영</button></div><div class="db-actions"><button id="newArtistBtn">＋ 새 가수</button><button id="copyDbBtn">DB 코드 복사</button><button id="downloadHtmlBtn">현재 DB로 HTML 저장</button></div><div class="manage-layout"><div class="panel"><h3 id="formTitle">가수 추가</h3><form id="artistForm"><div class="form-grid"><div class="field"><label>이름</label><input id="fName" required=""></div><div class="field"><label>국적</label><input id="fCountry" required=""></div><div class="field full"><label>사진 URL</label><input id="fImage" type="url" placeholder="https://…" required=""></div><div class="field full"><label>상세 분석 메모</label><textarea id="fNote" placeholder="보컬 특성 / 대표적인 강점 / 라이브 안정성 등"></textarea></div></div><h3 style="margin-top:16px">6개 스탯 (0–100)</h3><div class="stat-inputs"><div class="field stat-field"><label class="c-crimson">고음</label><input id="sHigh" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-lime">저음</label><input id="sLow" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-sky">가성</label><input id="sFalsetto" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-gold">음색</label><input id="sTone" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-purple">테크닉</label><input id="sTechnique" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-yellow">감정표현</label><input id="sEmotion" type="number" min="0" max="100" required=""></div></div><div class="manage-actions"><button class="solid-btn" type="submit">임시 저장</button><button class="ghost-btn" type="button" id="cancelEditBtn">취소</button></div></form></div><div class="panel"><h3>현재 DB</h3><div id="dbList" class="db-list"></div></div></div></div></div>
+<div id="manageModal" class="overlay"><div class="modal manage"><div class="modal-head"><h2>보컬 DB 관리</h2><button class="close" data-close="manageModal">×</button></div><div class="server-sync"><div><strong>서버 DB 반영</strong><br><small id="serverSyncInfo">관리자 인증 완료 · 서버에 직접 반영할 수 있습니다.</small></div><button class="solid-btn" id="publishServerBtn" type="button" disabled="">서버에 반영</button></div><div class="db-actions"><button id="newArtistBtn">＋ 새 가수</button><button id="copyDbBtn">DB 코드 복사</button><button id="downloadHtmlBtn">현재 DB로 HTML 저장</button></div><div class="manage-layout"><div class="panel"><h3 id="formTitle">가수 추가</h3><form id="artistForm"><div class="form-grid"><div class="field"><label>이름</label><input id="fName" required=""></div><div class="field"><label>국적</label><input id="fCountry" required=""></div><div class="field full"><label>사진 URL</label><input id="fImage" type="url" placeholder="https://…" required=""></div><div class="field full"><label>상세 분석 메모</label><textarea id="fNote" placeholder="보컬 특성 / 대표적인 강점 / 라이브 안정성 등"></textarea></div></div><h3 style="margin-top:16px">6개 스탯 (0–100)</h3><div class="stat-inputs"><div class="field stat-field"><label class="c-crimson">고음</label><input id="sHigh" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-lime">저음</label><input id="sLow" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-sky">가성</label><input id="sFalsetto" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-gold">음색</label><input id="sTone" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-purple">테크닉</label><input id="sTechnique" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-yellow">감정표현</label><input id="sEmotion" type="number" min="0" max="100" required=""></div></div><div class="manage-actions"><button class="solid-btn" type="submit">임시 저장</button><button class="ghost-btn" type="button" id="cancelEditBtn">취소</button></div></form></div><div class="panel"><h3>현재 DB</h3><div id="dbList" class="db-list"></div></div></div></div></div>
 
 <!--
   ==================== DEFAULT_ARTIST_DB ====================
@@ -515,18 +515,30 @@ try{
 }catch(_e){}
 function localRows(){ return Array.isArray(memoryRows)?memoryRows.map(x=>({...x})):[]; }
 function saveLocalRows(rows){ memoryRows=Array.isArray(rows)?rows.map(x=>({...x})):[]; }
-function getAll(){ return Promise.resolve(readDefaultDB()); }
+// 중앙 DB의 런타임 복사본. 페이지 최초 로드시에는 HTML의 DEFAULT_ARTIST_DB에서 시작하고,
+// 관리자 화면의 '임시 저장'은 이 메모리 DB를 직접 수정합니다. 브라우저 localStorage는 사용하지 않습니다.
+let centralRows=readDefaultDB().map((x,i)=>({...x,id:Number(x.id??(i+1))}));
+function getAll(){ return Promise.resolve(centralRows.map(x=>({...x}))); }
 function putArtist(a){
-  const rows=localRows();
   let record={...a};
-  if(record.id===undefined||record.id===null){record.id=rows.reduce((m,x)=>Math.max(m,Number(x.id)||0),0)+1}
-  const idx=rows.findIndex(x=>Number(x.id)===Number(record.id));
-  if(idx>=0)rows[idx]=record; else rows.push(record);
-  saveLocalRows(rows);
+  if(record.id===undefined||record.id===null){record.id=centralRows.reduce((m,x)=>Math.max(m,Number(x.id)||0),0)+1}
+  record.id=Number(record.id);
+  const idx=centralRows.findIndex(x=>Number(x.id)===record.id);
+  if(idx>=0) centralRows[idx]={...centralRows[idx],...record};
+  else centralRows.push(record);
+  saveLocalRows(centralRows);
   return Promise.resolve(record.id);
 }
-function deleteArtist(id){ saveLocalRows(localRows().filter(x=>Number(x.id)!==Number(id))); return Promise.resolve(); }
-function replaceAll(rows){ saveLocalRows(rows.map((x,i)=>({...x,id:x.id??(i+1)}))); return Promise.resolve(); }
+function deleteArtist(id){
+  centralRows=centralRows.filter(x=>Number(x.id)!==Number(id));
+  saveLocalRows(centralRows);
+  return Promise.resolve();
+}
+function replaceAll(rows){
+  centralRows=rows.map((x,i)=>({...x,id:Number(x.id??(i+1))}));
+  saveLocalRows(centralRows);
+  return Promise.resolve();
+}
 
 function avg(a){return Math.round((a.high+a.low+a.falsetto+a.tone+a.technique+a.emotion)/6)}
 function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
@@ -745,8 +757,8 @@ async function publishCurrentDBToServer(){
 }
 function adminLogout(){adminSession='';$('publishServerBtn').disabled=true;$('manageModal').classList.remove('show');$('manageBtn').textContent='관리자 로그인';}
 async function refresh(){
-  // 항상 현재 HTML의 중앙 DB를 다시 읽어 화면을 갱신합니다.
-  // 로컬 브라우저에 남아 있는 과거 값은 절대 병합하지 않습니다.
+  // 현재 페이지에서 관리자가 임시 저장한 값을 유지한 채 화면만 다시 그립니다.
+  // 페이지를 새로 열었을 때만 HTML의 DEFAULT_ARTIST_DB가 중앙 기준으로 다시 시작됩니다.
   artists=await getAll();
   saveLocalRows(artists);
   $('dbStatus').textContent=`HTML DB · 중앙 기준 ${artists.length}명`;
@@ -755,14 +767,24 @@ async function refresh(){
 }
 
 function mergeDefaults(){
-  // 모든 기기는 이 HTML에 내장된 DEFAULT_ARTIST_DB를 동일한 단일 기준으로 사용합니다.
-  // 기존 localStorage는 읽지도 않고, 중앙 DB의 전체 레코드로 즉시 덮어씁니다.
-  const defaults=readDefaultDB().map((x,i)=>({...x,id:Number(x.id??(i+1))}));
-  saveLocalRows(defaults);
-  return defaults;
+  // 새 페이지에서는 항상 HTML의 DEFAULT_ARTIST_DB를 유일한 초기 중앙 기준으로 사용합니다.
+  // 이전 브라우저 localStorage는 절대 병합하지 않습니다.
+  centralRows=readDefaultDB().map((x,i)=>({...x,id:Number(x.id??(i+1))}));
+  saveLocalRows(centralRows);
+  return centralRows.map(x=>({...x}));
 }
 
-$('artistForm').addEventListener('submit',async e=>{e.preventDefault();const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};if(editingId!=null)record.id=Number(editingId);await putArtist(record);artists=localRows();resetForm();render();renderDBList();if($('serverSyncInfo'))$('serverSyncInfo').textContent='✓ 임시 저장 완료 · 서버에는 아직 반영하지 않았습니다. 최종 반영은 [서버에 반영] 버튼을 눌러주세요.';});
+$('artistForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};
+  if(editingId!=null)record.id=Number(editingId);
+  await putArtist(record);
+  artists=await getAll();
+  resetForm();
+  render();
+  renderDBList();
+  if($('serverSyncInfo'))$('serverSyncInfo').textContent=`✓ ${record.name} 변경사항을 임시 DB에 저장했습니다 · 여러 명을 연속 수정할 수 있습니다. 서버 반영은 [서버에 반영] 버튼을 눌러주세요.`;
+});
 $('artistSearch').addEventListener('input',e=>{searchQuery=e.target.value;render();});
 $('cancelEditBtn').onclick=resetForm;$('newArtistBtn').onclick=()=>{resetForm();$('fName').focus()};$('publishServerBtn').onclick=publishCurrentDBToServer;$('copyDbBtn').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(artists.map(x=>({...x})),null,2));alert('현재 DB JSON을 클립보드에 복사했습니다.');}catch(_e){alert('클립보드 복사에 실패했습니다.');}};$('downloadHtmlBtn').onclick=downloadCurrentHtml;$('manageBtn').onclick=()=>{if(adminSession){$('manageModal').classList.add('show');refresh();}else openAdminLogin();};$('adminLoginBtn').onclick=adminLogin;$('adminCancelBtn').onclick=()=>$('adminLoginModal').classList.remove('show');$('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin();});$('compareNowBtn').onclick=()=>openCompare();if($('sortSelect'))$('sortSelect').onchange=()=>{ $('statSelect').hidden=$('sortSelect').value!=='stat'; render(); };if($('statSelect'))$('statSelect').onchange=()=>render();
 $('detailBtn').onclick=()=>{if(selectedForMenu)openDetailWindow(selectedForMenu);$('actionMenu').classList.remove('show')};$('compareBtn').onclick=enterCompareMode;$('cancelCompareBtn').onclick=cancelCompareMode;
@@ -920,6 +942,7 @@ function boot(){
 
 boot();
 </script>
+
 
 
 </body></html>
