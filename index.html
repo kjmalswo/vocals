@@ -161,12 +161,14 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 </header>
 <main>
   <div class="toolbar">
-    <div class="sort-controls" aria-label="가수 정렬">
+    <div class="sort-controls" aria-label="가수 정렬 및 국적 필터">
       <label for="sortSelect">정렬</label>
       <select id="sortSelect">
         <option value="overall">오버롤순</option>
-        <option value="country">국적순</option>
+        <option value="country">국적별</option>
         <option value="stat">세부스탯순</option>
+      </select>
+      <select id="countrySelect" hidden="" aria-label="국적 선택">
       </select>
       <select id="statSelect" hidden="" aria-label="세부 스탯 선택">
         <option value="high">고음</option>
@@ -198,7 +200,7 @@ main{padding-top:24px;padding-bottom:80px}.toolbar{display:flex;align-items:cent
 
 <div id="detailModal" class="overlay"><div class="modal detail-modal"><div class="modal-head"><div><h2>전문 보컬 심층 분석</h2><div class="modal-sub">발성 메커니즘 · 상호 스탯 시너지 · 아키타입 프로파일링</div></div><button class="close" data-close="detailModal">×</button></div><div id="detailContent"></div></div></div>
 
-<div id="manageModal" class="overlay"><div class="modal manage"><div class="modal-head"><h2>보컬 DB 관리</h2><button class="close" data-close="manageModal">×</button></div><div class="server-sync"><div><strong>서버 DB 반영</strong><br><small id="serverSyncInfo">관리자 인증 완료 · 서버에 직접 반영할 수 있습니다.</small></div><button class="solid-btn" id="publishServerBtn" type="button" disabled="">서버에 반영</button></div><div class="db-actions"><button id="newArtistBtn">＋ 새 가수</button><button id="copyDbBtn">DB 코드 복사</button><button id="downloadHtmlBtn">현재 DB로 HTML 저장</button></div><div class="manage-layout"><div class="panel"><h3 id="formTitle">가수 추가</h3><form id="artistForm"><div class="form-grid"><div class="field"><label>이름</label><input id="fName" required=""></div><div class="field"><label>국적</label><input id="fCountry" required=""></div><div class="field full"><label>사진 URL</label><input id="fImage" type="url" placeholder="https://…" required=""></div><div class="field full"><label>상세 분석 메모</label><textarea id="fNote" placeholder="보컬 특성 / 대표적인 강점 / 라이브 안정성 등"></textarea></div></div><h3 style="margin-top:16px">6개 스탯 (0–100)</h3><div class="stat-inputs"><div class="field stat-field"><label class="c-crimson">고음</label><input id="sHigh" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-lime">저음</label><input id="sLow" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-sky">가성</label><input id="sFalsetto" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-gold">음색</label><input id="sTone" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-purple">테크닉</label><input id="sTechnique" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-yellow">감정표현</label><input id="sEmotion" type="number" min="0" max="100" required=""></div></div><div class="manage-actions"><button class="solid-btn" type="submit">임시 저장</button><button class="ghost-btn" type="button" id="cancelEditBtn">취소</button></div></form></div><div class="panel"><h3>현재 DB</h3><div id="dbList" class="db-list"></div></div></div></div></div>
+<div id="manageModal" class="overlay"><div class="modal manage"><div class="modal-head"><h2>보컬 DB 관리</h2><button class="close" data-close="manageModal">×</button></div><div class="server-sync"><div><strong>서버 DB 반영</strong><br><small id="serverSyncInfo">관리자 인증 완료 · 서버에 직접 반영할 수 있습니다.</small></div><button class="solid-btn" id="publishServerBtn" type="button" disabled="">서버에 반영</button></div><div class="db-actions"><button id="newArtistBtn">＋ 새 가수</button><button id="copyDbBtn">DB 코드 복사</button><button id="downloadHtmlBtn">현재 DB로 HTML 저장</button></div><div class="manage-layout"><div class="panel"><h3 id="formTitle">가수 추가</h3><form id="artistForm"><div class="form-grid"><div class="field"><label>이름</label><input id="fName" required=""></div><div class="field"><label>사진 URL</label><input id="fImage" type="url" placeholder="https://…" required=""></div><div class="field"><label>국적 1 (주국적)</label><input id="fCountry" placeholder="예: 대한민국" required=""></div><div class="field"><label>국적 2 (선택 · 이중국적)</label><input id="fCountry2" placeholder="예: 미국"></div><div class="field full"><label>상세 분석 메모</label><textarea id="fNote" placeholder="보컬 특성 / 대표적인 강점 / 라이브 안정성 등"></textarea></div></div><h3 style="margin-top:16px">6개 스탯 (0–100)</h3><div class="stat-inputs"><div class="field stat-field"><label class="c-crimson">고음</label><input id="sHigh" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-lime">저음</label><input id="sLow" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-sky">가성</label><input id="sFalsetto" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-gold">음색</label><input id="sTone" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-purple">테크닉</label><input id="sTechnique" type="number" min="0" max="100" required=""></div><div class="field stat-field"><label class="c-yellow">감정표현</label><input id="sEmotion" type="number" min="0" max="100" required=""></div></div><div class="manage-actions"><button class="solid-btn" type="submit">임시 저장</button><button class="ghost-btn" type="button" id="cancelEditBtn">취소</button></div></form></div><div class="panel"><h3>현재 DB</h3><div id="dbList" class="db-list"></div></div></div></div></div>
 
 <!-- DEFAULT_ARTIST_DB -->
 <script>
@@ -206,6 +208,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "성시경",
     "country": "대한민국",
+    "country2": "",
     "image": "https://yt3.googleusercontent.com/k7vcgjUvUjwwzbWbZ3qDWWzLCXYlNVfNIkMLWfOcDrWiZ8GTka-2tyj6rjUBv3n9Cl1yWo8d=s900-c-k-c0x00ffffff-no-rj",
     "note": "성시경은 대한민국의 보컬리스트로, 부드러운 중저음과 섬세한 감정 전달 및 감미로운 음색을 가진 것이 특징이다. 저음역에서 자연스러운 울림을 유지하는 능력과 고음에서의 안정성이 뛰어나며, 가성은 얇고 부드럽게 이어지는 질감을 가진다. 또한 작은 볼륨에서도 음악적인 선을 유지하여 가창하며, 화려한 기교보다는 호흡 위치, 프레이징 길이, 발음의 세기 모두 안정적으로 재현하는 능력을 가졌다. 가사의 의미와 여운, 미세한 다이나믹의 차이를 통해 정서를 축적하는 능력이 뛰어나다.",
     "high": 88,
@@ -219,7 +222,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "태연",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RBJejYBcY7NhVf2pafXnHhiKVE6vPdY2RLkq-Ydpyo68MBWJBuRjZ6PJ&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RBJejYBcY7NhVf2pafXnHhiKVE6vPdY2RLkq-Ydpyo68MBWJBuRjZ6PJ\u0026s=10",
     "note": "태연은 대한민국의 보컬리스트로, 고음역에서 음정과 소리의 밀도를 동시에 유지하는 능력, 그리고 곡의 크기에 따라 압력을 세밀하게 조절하는 능력이 뛰어나다. 음색의 경우 밝고 깨끗하며 개성적인 톤을 가졌다. 또한 코러스와 벌스 사이의 섬세한 밀도 차이를 만드는 데 강점이 있다.",
     "high": 97,
     "low": 89,
@@ -232,6 +236,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "이수현",
     "country": "대한민국",
+    "country2": "",
     "image": "https://www.dizzotv.com/site/data/img_dir/2020/11/16/2020111680123_0.jpg",
     "note": "이수현은 대한민국의 보컬리스트로, 맑고 청아한 음색을 중심으로 가성에서도 그 음색이 크게 변하지 않는다. 밝은 공명과 선명한 발음으로 고음을 깨끗하고 투명하게 유지하는 것이 특징이다. 과도하게 힘을 싣지 않고 가사의 결을 유지하며 감정을 고조시키는 방식으로 정서를 전달한다.",
     "high": 95,
@@ -245,7 +250,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "케이윌",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnuzCKZAfOQMsrqUmvkR4VcMmWC4VyEyPJowB3kvy1hKyZnom62QWTeUA&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnuzCKZAfOQMsrqUmvkR4VcMmWC4VyEyPJowB3kvy1hKyZnom62QWTeUA\u0026s=10",
     "note": "케이윌은 대한민국의 보컬리스트로, 중저음의 두께감과 고음에서의 압도적인 밀도를 연결하는 능력이 뛰어나다. 고음역에서는 성량과 감정의 압력을 동시에 끌어올리는 힘을 가졌다. 고유의 두께감과 질감을 가진 유니크한 음색을 지녔으며, 서사를 크게 확장해나가는 능력과 가사의 비극적·서정적 결을 잘 끌어올리는 것이 강점이다.",
     "high": 95,
     "low": 91,
@@ -258,6 +264,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "오오모리 모토키",
     "country": "일본",
+    "country2": "",
     "image": "https://mrsgreenapple.com/static/mga/contents/upimg/8d7ffc89abe24ac41aeb55cba8e8eab8.jpeg",
     "note": "오오모리 모토키는 일본의 보컬리스트로, 넓은 표현의 폭과 음역대, 다양한 목소리 질감의 변화를 모두 다룰 수 있는 것이 특징이다. 저음에서부터 묵직하지만 균형감있는 힘을 가지고 고음역까지 끌고 올라가며, 고유의 맑고 쨍한 음색과 파워풀한 성량이 존재감을 발휘한다. 또한 가성에서는 곡의 색채 자체를 자유자재로 바꾸는 수준의 질감 변화와 자연스러운 연결을 가진 것이 독보적인 강점이다. 또한 리듬감이 매우 뛰어나며, 빠른 템포와 느린 템포 모두에서 안정적인 흐름을 유지한다. 또한 마치 한 편의 뮤지컬을 보는 듯한 느낌의 섬세하고 다양한 감정선을 보여주며, 곡의 상황과 분위기를 직접 주도하는 것이 강점이다.",
     "high": 98,
@@ -271,7 +278,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "유우리",
     "country": "일본",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv0bSzmUXGRPDLIZwTSXcCreqGjtXXnQroOdrWb8HeM3dgPmEVdLJk0Ss&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv0bSzmUXGRPDLIZwTSXcCreqGjtXXnQroOdrWb8HeM3dgPmEVdLJk0Ss\u0026s=10",
     "note": "유우리는 일본의 보컬리스트로, 고유의 거칠고 두꺼운 음색과 묵직한 감정 전달이 장점이다. 가성이 필요한 구간에서는 질감을 부드럽게 바꾸고 여백을 만드는 정도의 활용력을 지녔다. 강약 변화를 이용해 심리나 장면을 직접적으로 전달하는 듯한 표현력이 강점이다.",
     "high": 95,
     "low": 93,
@@ -284,6 +292,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "이창섭",
     "country": "대한민국",
+    "country2": "",
     "image": "https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/080/441/192/80441192_1761109156794_1_600x600.JPG",
     "note": "이창섭은 대한민국의 보컬리스트로, 선명한 중고음역의 존재감과 고유한 음색, 그리고 강약 조절을 통해 곡의 섬세한 감정선을 표현하는 것이 특징이다. 또한 성량과 압력을 유지하는 힘과 호흡을 조절하는 능력이 뛰어나며, 곡의 서사를 점점 쌓아가는 레이어의 다층적인 변화가 강점이다.",
     "high": 95,
@@ -297,6 +306,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "이승철",
     "country": "대한민국",
+    "country2": "",
     "image": "https://img2.yna.co.kr/etc/inner/KR/2020/05/14/AKR20200514053500005_01_i_P4.jpg",
     "note": "이승철은 대한민국의 보컬리스트로, 고유의 감미로운 표현 능력을 가진 것이 특징이다. 시간이 지나도 기억되는 특징적인 음색과 함께 부드럽지만 힘있는 고음 처리가 강점이다. 또한 호흡 배분과 프레이즈의 안정성, 가사의 의미를 전달하는 능력 또한 뛰어나다. 듣는 이로 하여금 노래를 매우 쉽게 부르는 것처럼 들리게 하는 능력이 특징이다.",
     "high": 96,
@@ -310,10 +320,11 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "임창정",
     "country": "대한민국",
+    "country2": "",
     "image": "https://1.vikiplatform.com/pr/15629pr/4d598adf83.jpg?x=b",
     "note": "임창정은 대한민국의 보컬리스트로, 노래 안에서 감정의 압력을 단계적으로 끌어올리고, 이를 폭발시키는 능력이 굉장히 뛰어나다. 감정을 밀어 올리면서도 가사와 멜로디의 흐름을 유지하는 능력이 강점이며, 저음역에서부터 충분한 밀도감을 가진 채로 고음역까지 확장시킨다. 또한 깨끗하지만 두께감 있는 고유의 음색을 통해 감정을 효과적으로 전달한다. 상황과 심리를 목소리의 압력과 발음, 호흡 길이에 직접 반영하여 표현하는 것이 특징이다.",
     "high": 98,
-    "low": 97,
+    "low": 91,
     "falsetto": 83,
     "tone": 96,
     "technique": 95,
@@ -323,7 +334,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "백예린",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcTBQtfzMO7mGCvbxUKY4hhbzv32eEkthWtqkPuWEQ4BScuWXgz7Mj9gt9&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcTBQtfzMO7mGCvbxUKY4hhbzv32eEkthWtqkPuWEQ4BScuWXgz7Mj9gt9\u0026s=10",
     "note": "백예린은 대한민국의 보컬리스트로, 특유의 부드러운 음색과 테크닉을 세밀하게 조절하는 능력이 뛰어나다. 소리의 질감을 부드럽게 연결시키며, 중저음에서는 투명하고 차분한 음색이 개성적이다. 가성은 진성과의 경계를 부드럽게 만들면서 곡에 공간감과 여운을 추가하는 표현 수단으로 잘 활용하는 것이 강점이다. 감정 역시 절제된 표현만으로 곡의 온도를 바꾸는 능력이 뛰어나다.",
     "high": 89,
     "low": 90,
@@ -336,7 +348,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "이구치 사토루",
     "country": "일본",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-bcZv9JhZr5cq98xm6xoGsLliUrHTnENKPlthF8oVktwcH5b-wehZbfQ&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-bcZv9JhZr5cq98xm6xoGsLliUrHTnENKPlthF8oVktwcH5b-wehZbfQ\u0026s=10",
     "note": "이구치 사토루는 일본의 보컬리스트로, 가성에서의 독보적인 톤을 중심으로 곡의 흐름을 세밀하게 유지하는 것이 특징이다. 밴드 사운드 안에서도 위치가 뚜렷하게 드러나는 선명한 음색을 통해 리듬 변화와 섬세한 강약 조절을 하는 것이 강점이다. 그 위로 곡의 추진력을 극대화시키는 절제되었지만 날카로운 감정을 담아낸다.",
     "high": 94,
     "low": 88,
@@ -349,6 +362,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "시미즈 이요리",
     "country": "일본",
+    "country2": "",
     "image": "https://mblogthumb-phinf.pstatic.net/MjAxOTA1MDFfODMg/MDAxNTU2NzE2MzMxMjM4.e0T9wZqZrF_QURkQsLvIQIDeZXfUm-aakHJdMolzC1Mg.s0dx3H6vdpv13fVdDwkd5Lp9pSqY18T609gGaqlpP6gg.JPEG.nanamellong/Screenshot_20190501-220921_Instagram.jpg?type=w800",
     "note": "시미즈 이요리는 일본의 보컬리스트로, 부드러운 중저음 처리과 앤틱한 가성의 질감, 절제된 다이나믹으로 곡의 분위기를 만드는 능력이 뛰어나다. 또한 편안하고 선명하게 통일감을 유지시키며 가창하는 것이 특징이다. 따뜻하고 부드러우며 고유한 음색을 가졌으며, 화려함보다는 세밀한 감정의 변화를 통한 섬세한 표현력을 가진 것이 특징이다.",
     "high": 92,
@@ -362,7 +376,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "박효신",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DdJJvI5v4uirhrffRIQ3CP33CjQM3X6So8SKqxXDQg&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DdJJvI5v4uirhrffRIQ3CP33CjQM3X6So8SKqxXDQg\u0026s=10",
     "note": "박효신은 대한민국의 보컬리스트로, 특유의 깊은 음색이 밀도를 크게 잃지 않으며 연결되는 것이 특징이다. 저음역에서 공명이 깊게 형성되고 단단하게 중심을 잡은 채 감정을 함께 확장해나가며 고음역으로 올라간다. 발성 자체가 곡의 서사와 결합하는 것이 매우 특징적이며, 이를 단계적으로 설계하여 균형감을 유지하며 가창하는 것이 특징이다.",
     "high": 98,
     "low": 97,
@@ -375,7 +390,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "후지하라 사토시",
     "country": "일본",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbJPjxwuo90KkOA9Rh9ONe_COrcaTwFGUvpTYxLzLiD6sXo8BBrJaPv4k&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbJPjxwuo90KkOA9Rh9ONe_COrcaTwFGUvpTYxLzLiD6sXo8BBrJaPv4k\u0026s=10",
     "note": "후지하라 사토시는 일본의 보컬리스트로, 복잡한 멜로디나 리듬을 동시에 처리하는 기술적 유연성이 매우 뛰어나다. 소리의 중심과 발음, 리듬을 함께 유지하는 능력을 활용해 특유의 탁하지만 파워풀한 음색이 섞여 개성있는 질감이 나타난다. 빠르게 교차하면서도 곡의 질감을 무너뜨리지 않는 가성 전환 능력이 뛰어나며, 복잡한 리듬과 음역의 높낮이, 순간적인 전조와 멜로디 이동, 호흡 배분을 동시에 처리하는 압도적인 테크닉을 보유한 것이 특징이다. 또한 곡의 서사와 고조감을 잃지 않고 호소력있게 감정을 표현하는 것이 뛰어나다.",
     "high": 99,
     "low": 90,
@@ -388,6 +404,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "우타다 히카루",
     "country": "일본",
+    "country2": "",
     "image": "https://i.scdn.co/image/ab6761610000e5ebec39ca0a437af73deb84a09a",
     "note": "우타다 히카루는 일본의 보컬리스트로, 큰 성량보다는 고유의 음색을 통해 저음역에서도 에어의 질감과 공명이 함께 살아 있어 목소리의 공간감을 유지하며 속삭이듯 가창하는 것이 특징이다. 가성은 곡의 감정선을 확장하는 질감 변화의 수단으로 활용한다. 또한 호흡의 위치, 비브라토, 리듬감과 같이 세세한 요소들을 음악적으로 활용하는 능력이 뛰어나다. 호흡과 발음, 침묵과 여운을 포함한 시간적 설계를 통해서 감정을 극대화시키는 것이 강점이다.",
     "high": 91,
@@ -401,7 +418,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "이문세",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNohU8q6CtDHHHQfgpgaKoGFouzWTA7-tmBgnd2c9TKPKmqDEOGNchiXI9&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNohU8q6CtDHHHQfgpgaKoGFouzWTA7-tmBgnd2c9TKPKmqDEOGNchiXI9\u0026s=10",
     "note": "이문세는 대한민국의 보컬리스트로, 목소리 자체가 곡의 분위기와 이야기를 만들어내는 힘을 가진 것이 특징이다. 중저음의 따뜻함과 말하듯 자연스럽게 이어지는 울림을 활용하여 가창한다. 또한 필요한 구간에서는 선율을 자연스럽게 확장하는 능력을 가졌다. 고유의 배음감이 묻어나는 음색과 이야기를 건네듯 가사를 전달하는 능력이 뛰어나다.",
     "high": 89,
     "low": 97,
@@ -414,6 +432,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "임재범",
     "country": "대한민국",
+    "country2": "",
     "image": "https://i.namu.wiki/i/i9XPrGJ5U0y2KXcwv4SQCy6UcCHY-k01HsbAs3PlS39wacDOoMPSaoXGi5dpZ01LnBnEAnVidQp-TPieQ275gQ.webp",
     "note": "임재범은 대한민국의 보컬리스트로, 가슴을 울리는 깊은 거친 허스키 보이스와 폭발적인 성량, 그리고 독보적인 감정 표현력이 결합된 목소리를 가진 것이 특징이다. 묵직하고 두터운 중저음에서 뿜어져 나오는 특유의 긁는 듯한 허스키 톤과, 고음역에서도 힘을 잃지 않고 단단하게 뻗어나가는 탄탄한 호흡과 밸런스를 가졌다. 삶의 희로애락과 한(恨)이 서린 듯한 애절한 감정을 목소리 자체에 녹여내어 서사를 만들어나가는 호소력을 지니고 있다.",
     "high": 96,
@@ -427,6 +446,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "Vaundy",
     "country": "일본",
+    "country2": "",
     "image": "https://lastfm-img.freetls.fastly.net/i/u/ar0/39398ab777e506f3574953cd68932dfe.jpg",
     "note": "바운디(Vaundy)는 일본의 보컬리스트로, 한 사람의 목소리라고 믿기 힘들 정도로 장르에 맞춰 목소리의 톤과 질감을 자유자재로 바꾸는 압도적인 스펙트럼을 가진 것이 가장 큰 특징이다. 힙하고 트렌디한 음색과, 거칠고 파워풀하며 날카로운 음색을 자유롭게 오간다. 특유의 리드미컬한 그루브와 탁월한 박자감, 그리고 곡의 감정을 극대화하는 흡입력 있는 호소력을 모두 갖추고 있어, 마치 보컬 자체를 하나의 악기처럼 다룬다.",
     "high": 93,
@@ -440,6 +460,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "타케나카 유다이",
     "country": "일본",
+    "country2": "",
     "image": "https://pimg.mk.co.kr/news/cms/202509/11/20250911_01110127000001_L00.jpg",
     "note": "타케나카 유다이는 일본의 보컬리스트로, 섬세한 컨트롤을 바탕으로 진성과 가성을 매끄럽게 연결하는 시원한 가창력이 특징이다. 탄탄한 호흡 조절을 통해 고음역에서도 편안하게 맑고 청아한 음색을 유지하며, 뛰어난 안정성을 보여주는 것이 강점이다. 또한 특유의 섬세한 비브라토를 활용해 곡의 애절한 감정을 극대화하기도 한다.",
     "high": 98,
@@ -453,7 +474,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "Ado",
     "country": "일본",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvDSIU3r2aWz3RVNwdfu5KlKEwx6lwyei4gZGOOzgJAA&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvDSIU3r2aWz3RVNwdfu5KlKEwx6lwyei4gZGOOzgJAA\u0026s=10",
     "note": "아도(Ado)는 일본의 보컬리스트로, 넓은 발성 스펙트럼과 압도적인 성대 접촉을 기반으로 한 괴물 같은 가창력을 가진 것이 특징이다. 곡의 파트마다 완전히 다른 사람처럼 목소리를 바꿔가며 가창하는 극단적인 보컬 바리에이션이 가장 특징적이며, 시원하면서도 힘있는 음색을 가졌다. 폭발하듯 감정선을 표현해내는 것이 강점이다.",
     "high": 98,
     "low": 94,
@@ -466,7 +488,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "로이킴",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW1a9x8nUf94gpwMjNzVHX0pzHSr6dpuMAlenyoly2_g&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW1a9x8nUf94gpwMjNzVHX0pzHSr6dpuMAlenyoly2_g\u0026s=10",
     "note": "로이킴은 한국의 보컬리스트로, 낮고 무거운 중저음 톤을 기반으로 한 포근하고 따뜻한 음색이 가장 큰 특징이다. 데뷔 이후 정규 앨범을 거치며 호흡 압력과 연구개 활용을 통해 고음역대까지 단단하고 자연스럽게 소화하는 발성적 발전을 이루었으며, 포크와 발라드 장르에서 과한 기교 없이 담백하고 진솔하게 감정을 전달하는 뛰어난 표현력을 가지고 있습니다.",
     "high": 92,
     "low": 98,
@@ -479,7 +502,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "노다 요지로",
     "country": "일본",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeXh51Xto3skaE3DkSmSFuW0ttu9-QvfK9mMYiFdsNaNTifqpDU7TET8Hs&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeXh51Xto3skaE3DkSmSFuW0ttu9-QvfK9mMYiFdsNaNTifqpDU7TET8Hs\u0026s=10",
     "note": "노다 요지로는 일본의 보컬리스트로, 특유의 말하듯 읊조리는 가창과 청아하면서도 힘있는 음색이 가장 큰 특징이다. 리듬감있는 곡과 서정적인 곡의 경계를 넘나드는 테크닉과 드라마틱한 감정선을 통해 깊은 몰입감을 가져다 주는 것이 특징이다.",
     "high": 89,
     "low": 92,
@@ -492,6 +516,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "테이",
     "country": "대한민국",
+    "country2": "",
     "image": "https://i.namu.wiki/i/NRZso0JwK0eZslbKSNMCM2O-0Euf_Q1FnmtYhdlCbkWuf3kHHCCooOsJdZkHc3zc56HkbdeBwf1TGq1nx0tw-Q.webp",
     "note": "테이는 대한민국의 보컬리스트로, 중저음에서 묵직하게 깔리는 허스키한 목소리가 특징이다. 큰 성량과 짙은 호소력이 강점이며, 애절한 감정선은 물론, 뛰어난 전달력을 통해 음악을 자유롭게 컨트롤하는 스펙트럼을 보여준다.",
     "high": 95,
@@ -505,6 +530,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "DK",
     "country": "대한민국",
+    "country2": "",
     "image": "https://img.tenasia.co.kr/photo/201912/BF.21186301.1.jpg",
     "note": "DK는 대한민국의 보컬리스트로, 압도적인 고음과 넓은 음역대를 소화할 수 있으며, 중저음에서는 호소력 짙고 감성적인 보이스를 들려주고, 고음역대에서는 폭발적인 성량과 안정성을 보여주는 것이 특징입니다. 특유의 애절한 감정선과 정교한 바이브레이션, 그리고 파워풀한 창법을 자유자재로 구사하여 강한 몰입감과 카타르시스를 선사한다.",
     "high": 99,
@@ -518,7 +544,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "Taka",
     "country": "일본",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_0UxkKAqGuJzWpbTKKFXCRjqbmot2u8T4i0YgRTjn7hwnEjjOuZTaIRLA&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_0UxkKAqGuJzWpbTKKFXCRjqbmot2u8T4i0YgRTjn7hwnEjjOuZTaIRLA\u0026s=10",
     "note": "타카(Taka)는 일본의 보컬리스트로, 폭넓은 음역대를 바탕으로 탁월한 가창력과 호소력 짙은 음색을 지닌 것이 특징이다. 속삭이듯 섬세한 미성부터 긁어내는 듯한 강렬한 스크리밍까지 자유자재로 구사하며, 흔들림 없는 압도적인 성량과 정확한 음정을 유지한다. 특히 과거 아이돌 활동 경험과 영미권 감성이 더해진 유창한 영어 발음 덕분에, 특유의 멜로디컬함과 서구적인 사운드를 완벽하게 결합한 유니크한 보컬 스타일을 구축하고 있다.",
     "high": 99,
     "low": 89,
@@ -531,6 +558,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "Toshl",
     "country": "일본",
+    "country2": "",
     "image": "https://rockinon.com/images/entry/width:750/172049/1",
     "note": "토시(Toshl)는 일본의 보컬리스트로, 가냘프고 맑은 미성으로 시작해 초고음역대를 거칠고 날카롭게 뚫고 나오는 독보적인 하이톤 보이스가 가장 큰 특징이다. 드럼과 일렉 기타의 강렬한 사운드를 뚫고 나오며 특유의 파워풀한 고음과 폭발적인 성량을 보여준다. 안정적으로 3옥타브를 넘나드는 경이로운 고음 유지력과 후반부로 갈수록 에너지를 더해가며 보여주는 흡인력이 강점이다.",
     "high": 100,
@@ -544,8 +572,9 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "존박",
     "country": "미국",
+    "country2": "",
     "image": "https://i.namu.wiki/i/uqF5HW7xsdBd5WrT-6oVyrOwHYAVkZkO575BVtrXKcVUbuC2NFvI38TZjKlDTe3720egogYoTPl3uAsTZBQLww.webp",
-    "note": "존박은 낮고 묵직한 중저음의 바리톤 성종의 톤을 바탕으로, 소리를 억지로 쥐어짜지 않고 자연스럽게 툭 던지듯 부르는 편안한 발성과 특유의 그루브가 가장 큰 특징이다. R&B와 재즈, 소울 음악에 최적화된 매력적인 음색을 가졌으며, 고음역대를 화려하게 지르기보다는 중저역대에서 음을 단단하고 부드럽게 감싸 안는 호흡 섞인 목소리로 곡의 감성을 깊이 있게 전달하는 데 탁월한 강점을 보인다.",
+    "note": "존박은 낮고 묵직한 중저음의 바리톤 성종의 톤을 바탕으로, 소리를 억지로 쥐어짜지 않고 자연스럽게 툭 던지듯 부르는 편안한 발성과 특유의 그루브가 가장 큰 특징이다. R\u0026B와 재즈, 소울 음악에 최적화된 매력적인 음색을 가졌으며, 고음역대를 화려하게 지르기보다는 중저역대에서 음을 단단하고 부드럽게 감싸 안는 호흡 섞인 목소리로 곡의 감성을 깊이 있게 전달하는 데 탁월한 강점을 보인다.",
     "high": 81,
     "low": 100,
     "falsetto": 97,
@@ -557,6 +586,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "윤도현",
     "country": "대한민국",
+    "country2": "",
     "image": "https://i.namu.wiki/i/kxbrXs7401UlaxHWdFt3DZXUC7AvP3a0XnLcCPahJUprJaUIWY5i5R_m2B7_AqEMQKC3W1LD9e1IYBlB6Poahw.webp",
     "note": "윤도현은 대한민국의 보컬리스트로, 강렬하고 시원한 가창력과 마음을 울리는 따뜻한 감성이 공존하는 것이 특징이다. 단단하고 탄탄한 호흡을 바탕으로 고음에서도 맑고 청량하게 뻗어나가는 직선적인 샤우팅을 구사하며, 특유의 거칠고 허스키한 질감을 더해 곡의 역동성을 극대화한다. 동시에 정확한 딕션과 진정성 있는 표현력으로 장르를 가리지 않고 넓은 스펙트럼을 소화하며, 울림이 있으면서도 친근함을 주는 음색을 가지고 있다.",
     "high": 97,
@@ -570,6 +600,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "이쿠타 리라",
     "country": "일본",
+    "country2": "",
     "image": "https://lh3.googleusercontent.com/UlUm8vPVwz_5jjSkG9yu0h3Vu-HwHkvmORxYLM03oZmhqDRcrWlz1TlGsj918TtsBiYqP4b4Pu4CNzI=w544-h544-p-l90-rj",
     "note": "이쿠타 리라(Ikura)는 일본의 보컬리스트로, 맑고 투명한 음색을 바탕으로, 빠르고 복잡한 박자의 곡들도 정확하게 소화해내는 정교한 딕션과 가창력이 가장 큰 특징이다. 가녀리고 청량한 미성을 통해 고음에서도 편안함을 주며, 가사와 감정을 세밀하게 쪼개어 표현하는 섬세한 곡 해석력으로 깊은 몰입감을 선사한다.",
     "high": 94,
@@ -583,6 +614,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "시이나 링고",
     "country": "일본",
+    "country2": "",
     "image": "https://www.thefirsttimes.jp/admin/wp-content/uploads/5000/08/20250809-st-143104-1200x630.jpg",
     "note": "시이나 링고는 일본의 보컬리스트로, 독특한 비음과 날카로운 가성, 거친 스크래치와 그로울링을 넘나드는 변화무쌍한 가창력이 가장 큰 특징이다. 엔카의 전통적인 꺾기 기교를 현대적인 록과 재즈에 접목하여 특유의 퇴폐적이고 주술적인 분위기를 자아내며, 가사를 강하게 짓씹듯 발음하거나 롤링을 섞어 부르는 등 극적인 표현력이 매우 뛰어나다.",
     "high": 91,
@@ -596,6 +628,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "스다 마사키",
     "country": "일본",
+    "country2": "",
     "image": "https://img.theqoo.net/img/PFKqb.jpg",
     "note": "스다 마사키는 배우 출신 특유의 뛰어난 감정 전달력과 날것 그대로의 거친 음색이 가장 큰 특징이다. 소년미와 남성미가 공존하는 비음 섞인 음색을 가졌으며, 감정이 고조될 때 진심을 터트리듯 내지르는 호소력 짙은 창법을 구사한다. 기교를 부리기보다 가사의 메시지를 툭툭 던지듯 진정성 있게 표현하여 강한 울림과 몰입감을 선사한다.",
     "high": 86,
@@ -609,6 +642,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "아이묭",
     "country": "일본",
+    "country2": "",
     "image": "https://magazine.weverse.io/static/external-link/1961957e-af99-44d3-9c4e-0cdf4838e21d",
     "note": "아이묭(Aimyon)은 일본의 보컬리스트로, 특유의 낮고 중성적인 톤과 꾸밈없이 담백하게 내뱉는 창법이 가장 큰 특징이다. 화려한 기교보다는 정직하고 직선적으로 전달하여 가사의 서사를 극대화하여 가창한다. 여기에 아날로그적 음색과 특유의 쓸쓸하면서도 단단한 울림이 더해져, 강한 몰입감을 선사한다.",
     "high": 89,
@@ -622,6 +656,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "백현",
     "country": "대한민국",
+    "country2": "",
     "image": "https://i.namu.wiki/i/Q58eON9SWnDNUWlTnzwfeL-BaMBjsB4Tc8JIMOM8OCwxfMwHC6fmDW_iiYwDJpSXg6FYHcX7uUi7WzIR8DGYnA.webp",
     "note": "백현은 대한민국의 보컬리스트로, 따뜻하고 감미로운 음색을 바탕으로 장르를 자유자재로 넘나드는 뛰어난 장르 소화력이 특징이다. 탄탄한 발성에서 나오는 맑고 깨끗한 고음뿐만 아니라, 특유의 공기 섞인 부드러운 중저음까지 넓은 음역대를 안정적으로 구사한다. 특히 섬세한 감정 표현과 세련된 가창 테크닉, 그리고 곡의 분위기에 맞춰 소리의 질감을 다채롭게 바꾸는 탁월한 컨트롤 능력까지 갖추고 있다.",
     "high": 95,
@@ -635,6 +670,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "김범수",
     "country": "대한민국",
+    "country2": "",
     "image": "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202412/06/f317beef-f139-4995-b1bc-2664eca8676d.jpg",
     "note": "김범수는 대한민국의 보컬리스트로, 폭넓은 음역대와 완벽한 피치 제어, 그리고 탄탄한 발성이 가장 큰 강점이다. 저음부터 고음까지 음색의 이질감 없이 매끄럽게 연결하는 밸런스가 매우 뛰어나다. 화려한 테크닉을 구사하면서도 감정의 과잉 없이 곡의 서사를 섬세하게 전달하는 깊은 표현력까지 갖추고 있다.",
     "high": 97,
@@ -647,8 +683,9 @@ const DEFAULT_ARTIST_DB = [
   },
   {
     "name": "에일리",
-    "country": "대한민국 / 미국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgDHRmDDX9r43hkhWp_lSXD5IAF79ZuosUzqFUc0znQFnIs1oVi-1lK0o&s=10",
+    "country": "대한민국",
+    "country2": "미국",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgDHRmDDX9r43hkhWp_lSXD5IAF79ZuosUzqFUc0znQFnIs1oVi-1lK0o\u0026s=10",
     "note": "에일리는 대한민국의 보컬리스트로, 폭발적인 성량과 탄탄한 호흡을 바탕으로 전 음역대를 거침없이 오가는 압도적인 가창력이 가장 큰 특징이다. 팝 보컬 기반의 화려하고 파워풀한 고음뿐만 아니라, 진하고 호소력 짙은 중저음까지 모두 소화하며 곡의 감정을 극대화하는 뛰어난 표현력을 가지고 있다. 여기에 정확한 딕션과 정교한 기교, 안정감까지 겸비했다.",
     "high": 98,
     "low": 93,
@@ -661,8 +698,9 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "나얼",
     "country": "대한민국",
+    "country2": "",
     "image": "https://cdn.topstarnews.net/news/photo/202601/15926559_1822488_1852.jpg",
-    "note": "나얼은 대한민국의 보컬리스트로, 압도적인 성량과 넓은 음역대를 바탕으로, 소울과 R&B 감성을 완벽하게 구현하는 것이 강점이다. 특히 단단하고 청량한 음색으로 화려한 테크닉을 자랑하며, 감정을 극대화하는 정교한 멜리스마 기술과 폭발적인 애드리브가 독보적이다. 또한 호소력이 짙고 음정 및 박자감까지 완벽해, 장르의 경계를 넘나들며 깊은 여운을 남긴다.",
+    "note": "나얼은 대한민국의 보컬리스트로, 압도적인 성량과 넓은 음역대를 바탕으로, 소울과 R\u0026B 감성을 완벽하게 구현하는 것이 강점이다. 특히 단단하고 청량한 음색으로 화려한 테크닉을 자랑하며, 감정을 극대화하는 정교한 멜리스마 기술과 폭발적인 애드리브가 독보적이다. 또한 호소력이 짙고 음정 및 박자감까지 완벽해, 장르의 경계를 넘나들며 깊은 여운을 남긴다.",
     "high": 100,
     "low": 91,
     "falsetto": 94,
@@ -674,7 +712,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "박재정",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRR8y8HYR3YoLsmB-1lEbMTLDKRY8SsDuUwPHtFotN3FtjybAOJQYV_OA&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRR8y8HYR3YoLsmB-1lEbMTLDKRY8SsDuUwPHtFotN3FtjybAOJQYV_OA\u0026s=10",
     "note": "박재정은 대한민국의 보컬리스트로, 묵직하고 깊은 저음역대와 따뜻한 미성을 겸비한 것이 특징이며, 정통 발라드의 계보를 잇는 정교한 감정 표현이 강점이다. 중저음에서는 속삭이듯 포근하고 안정적인 톤으로 서사를 전달하며, 고음역에서는 탄탄한 호흡을 바탕으로 애절하고 폭발적인 성량을 뿜어낸다. 특히 기교를 최소화하고 정직하게 음을 밀어내면서도 담담함에서 격정적인 슬픔으로 이어지는 감정의 고조를 매끄럽게 표현해내는 것에 강점이 있다.",
     "high": 95,
     "low": 98,
@@ -687,6 +726,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "폴킴",
     "country": "대한민국",
+    "country2": "",
     "image": "https://img2.yna.co.kr/etc/inner/KR/2021/10/07/AKR20211007042700005_01_i_P4.jpg",
     "note": "폴킴은 대한민국의 보컬리스트로, 감미롭고 가벼운 믹스보이스를 구사하는 것이 특징입니다. 과도한 힘을 주지 않고 호흡을 자연스럽게 섞어내어 듣기 편안하고 포근한 음색을 만들며, 고음역에서도 뛰어난 연결성과 컨트롤 능력을 보여줍니다. 특히 가사 전달력을 더해주는 깔끔한 발음과 속삭이는 듯한 섬세한 호흡 제어를 통해 독보적인 감정선을 전달한다.",
     "high": 88,
@@ -700,7 +740,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "정승환",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjiDuJPPJuT_cwcod8hIOf-_E3cUAgUybgusPQ5mWp4jm_ibt2-M0BjdDv&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjiDuJPPJuT_cwcod8hIOf-_E3cUAgUybgusPQ5mWp4jm_ibt2-M0BjdDv\u0026s=10",
     "note": "정승환은 대한민국의 보컬리스트로, 말하듯이 자연스럽게 소리를 내며 공명을 적절히 섞어 짙은 감성과 무게감을 만들어내는 것이 가장 큰 특징입니다. 부드러운 가성부터 고음에서의 단단함까지 매우 편안하게 발성하며, 호흡을 효율적으로 사용하여 특유의 애절하고 서정적인 톤을 안정적으로 유지합니다.",
     "high": 92,
     "low": 95,
@@ -713,6 +754,7 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "허각",
     "country": "대한민국",
+    "country2": "",
     "image": "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2024/10/08/ebdc013f-726b-4230-a95f-4415f61286b2.jpg",
     "note": "허각은 대한민국의 보컬리스트로, 탄탄한 호흡을 기반으로 한 압도적인 성량과 단단한 고음 처리가 가장 큰 특징이다. 묵직하고 알찬 소리를 통해 고음역에서도 파워를 그대로 유지해 폭발적인 에너지를 전달한다. 여기에 특유의 호소력 짙은 거친 질감의 음색과 정교한 비강 사용이 더해져, 가사 전달력이 뛰어나고 청중의 감정을 흔드는 호소력 짙은 발성을 구사한다.",
     "high": 97,
@@ -726,7 +768,8 @@ const DEFAULT_ARTIST_DB = [
   {
     "name": "이승윤",
     "country": "대한민국",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaWo9vreoGNsoEn82paAtVWapNsOO3a2xc_HPDV1-r-3EVR2Ou4XX75UHM&s=10",
+    "country2": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaWo9vreoGNsoEn82paAtVWapNsOO3a2xc_HPDV1-r-3EVR2Ou4XX75UHM\u0026s=10",
     "note": "이승윤은 대한민국의 보컬리스트로, 강렬하고 넓은 음역대를 바탕으로, 정석적인 보컬에 얽매이지 않고 감정을 날것 그대로 터뜨리는 독창적인 성향이다. 특히 가사와 선율의 울림에 따라 목소리의 질감을 거칠게 긁거나 잔잔하게 읊조리듯 바꾸는 다채로운 음색 스펙트럼을 보여주며, 폭발적인 성량과 독특한 비브라토를 더해 곡의 극적인 몰입감을 극대화하는 것이 특징이다.",
     "high": 93,
     "low": 92,
@@ -838,6 +881,14 @@ function radarSVG(a){const radii=[30,55,80];const lines=AXES.map(x=>{const p=poi
 function labelHTML(a,key,position){const axis=AXES.find(x=>x.key===key);return `<div class="r-label ${position} c-${axis.cls}">${axis.label}<b>${a[key]}</b></div>`}
 function statRadar(a){return `<div class="radar-wrap">${radarSVG(a)}${labelHTML(a,'high','r-top')}${labelHTML(a,'falsetto','r-ur')}${labelHTML(a,'tone','r-lr')}${labelHTML(a,'emotion','r-bot')}${labelHTML(a,'low','r-ll')}${labelHTML(a,'technique','r-ul')}</div>`}
 
+function displayCountry(a){
+  if(!a) return '';
+  const c1 = (a.country || '').trim();
+  const c2 = (a.country2 || '').trim();
+  if(c1 && c2) return `${c1} / ${c2}`;
+  return c1 || c2 || '';
+}
+
 async function centerFace(img){
   try{
     if(!('FaceDetector' in window)) return;
@@ -870,7 +921,7 @@ function cardHTML(a){
       </div>
     </button>
     <div class="artist-name">${esc(a.name)}</div>
-    <div class="artist-country">${esc(a.country)}</div>
+    <div class="artist-country">${esc(displayCountry(a))}</div>
     <div class="stat-pop">
       <div class="stat-head"><strong>${esc(a.name)} · VOICE PROFILE</strong><span>${avg(a)}/100</span></div>
       ${statRadar(a)}
@@ -878,23 +929,61 @@ function cardHTML(a){
   </div>`;
 }
 
-function sortArtists(list){
-  const mode=$('sortSelect')?.value||'overall';
-  const stat=$('statSelect')?.value||'high';
-  return [...list].sort((a,b)=>{
-    if(mode==='country') return String(a.country||'').localeCompare(String(b.country||''),'ko') || String(a.name||'').localeCompare(String(b.name||''),'ko');
-    if(mode==='stat') return (Number(b[stat])||0)-(Number(a[stat])||0) || avg(b)-avg(a);
-    return avg(b)-avg(a) || String(a.name||'').localeCompare(String(b.name||''),'ko');
+function updateCountryOptions(){
+  const select = $('countrySelect');
+  if(!select) return;
+  const currentVal = select.value;
+  const countrySet = new Set();
+  artists.forEach(a => {
+    if(a.country && a.country.trim()) countrySet.add(a.country.trim());
+    if(a.country2 && a.country2.trim()) countrySet.add(a.country2.trim());
   });
+  const sortedCountries = [...countrySet].sort((x, y) => x.localeCompare(y, 'ko'));
+  
+  select.innerHTML = sortedCountries.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  if(sortedCountries.includes(currentVal)){
+    select.value = currentVal;
+  } else if(sortedCountries.length > 0){
+    select.value = sortedCountries[0];
+  }
+}
+
+function getFilteredAndSortedArtists(){
+  const q = searchQuery.trim().toLocaleLowerCase('ko-KR');
+  let list = q ? artists.filter(a => String(a.name||'').toLocaleLowerCase('ko-KR').includes(q)) : [...artists];
+  
+  const mode = $('sortSelect')?.value || 'overall';
+  const stat = $('statSelect')?.value || 'high';
+  const selCountry = $('countrySelect')?.value || '';
+
+  if(mode === 'country' && selCountry){
+    list = list.filter(a => (a.country && a.country.trim() === selCountry) || (a.country2 && a.country2.trim() === selCountry));
+    list.sort((a, b) => avg(b) - avg(a) || String(a.name||'').localeCompare(String(b.name||''), 'ko'));
+  } else if(mode === 'stat'){
+    list.sort((a, b) => (Number(b[stat])||0) - (Number(a[stat])||0) || avg(b) - avg(a) || String(a.name||'').localeCompare(String(b.name||''), 'ko'));
+  } else {
+    // overall
+    list.sort((a, b) => avg(b) - avg(a) || String(a.name||'').localeCompare(String(b.name||''), 'ko'));
+  }
+  return list;
 }
 
 function render(){
-  const q=searchQuery.trim().toLocaleLowerCase('ko-KR');
-  const filtered=q?artists.filter(a=>String(a.name||'').toLocaleLowerCase('ko-KR').includes(q)):artists;
-  const ordered=sortArtists(filtered);
-  const countEl=$('searchResultCount');
-  if(countEl) countEl.textContent=q?`${ordered.length}명 찾음`:'';
-  $('gallery').innerHTML=ordered.length?ordered.map(cardHTML).join(''):`<div style="grid-column:1/-1;padding:80px 20px;text-align:center;color:#858c93;border:1px dashed #343a41;border-radius:16px"><strong style="display:block;color:#c9cdd1;margin-bottom:8px">${q?'검색 결과가 없습니다.':'DB가 비어 있습니다.'}</strong>${q?`'${esc(searchQuery)}'와 일치하는 가수가 없습니다.`:'상단의 <b>데이터 관리</b>에서 가수를 추가할 수 있습니다.'}</div>`;
+  updateCountryOptions();
+  const mode = $('sortSelect')?.value || 'overall';
+  const ordered = getFilteredAndSortedArtists();
+  const countEl = $('searchResultCount');
+  if(countEl) {
+    if(searchQuery.trim()){
+      countEl.textContent = `${ordered.length}명 찾음`;
+    } else if(mode === 'country'){
+      countEl.textContent = `${$('countrySelect')?.value || ''} (${ordered.length}명)`;
+    } else {
+      countEl.textContent = '';
+    }
+  }
+
+  $('gallery').innerHTML = ordered.length ? ordered.map(cardHTML).join('') : `<div style="grid-column:1/-1;padding:80px 20px;text-align:center;color:#858c93;border:1px dashed #343a41;border-radius:16px"><strong style="display:block;color:#c9cdd1;margin-bottom:8px">일치하는 가수가 없습니다.</strong>${mode==='country'?`선택한 국적(${esc($('countrySelect')?.value||'')})의 가수가 없습니다.`:'검색어나 필터를 확인해보세요.'}</div>`;
   
   document.querySelectorAll('.artist-card').forEach(card=>{
     card.addEventListener('click',()=>{
@@ -1162,7 +1251,7 @@ function openDetailWindow(a){
           <div class="detail-archetype-pill">⚡ ${esc(p.archetype.title)}</div>
         </div>
         <h1 class="detail-name">${esc(a.name)}</h1>
-        <div class="detail-country">${esc(a.country)}</div>
+        <div class="detail-country">${esc(displayCountry(a))}</div>
         <div class="detail-score-row">
           <div class="detail-score">${p.avgScore}</div>
           <div class="detail-score-label">/ 100 OVERALL MASTER SCORE</div>
@@ -1324,7 +1413,7 @@ function openCompare(){
         <div class="compare-title">
           <div class="compare-matchup-pill">${esc(arch.title)}</div>
           <h3>${esc(a.name)}</h3>
-          <div class="compare-country">${esc(a.country)}</div>
+          <div class="compare-country">${esc(displayCountry(a))}</div>
           <div class="compare-score">${avg(a)}<small style="font-size:12px;color:#85898e;font-weight:800"> / 100</small></div>
         </div>
       </div>
@@ -1338,14 +1427,35 @@ function openCompare(){
   $('selectionTip').classList.remove('show');
 }
 
-function resetForm(){editingId=null;$('artistForm').reset();$('formTitle').textContent='가수 추가'}
-function fillForm(a){editingId=a.id;$('formTitle').textContent='가수 수정';$('fName').value=a.name||'';$('fCountry').value=a.country||'';$('fImage').value=a.image||'';$('fNote').value=a.note||'';$('sHigh').value=a.high;$('sLow').value=a.low;$('sFalsetto').value=a.falsetto;$('sTone').value=a.tone;$('sTechnique').value=a.technique;$('sEmotion').value=a.emotion}
+function resetForm(){
+  editingId=null;
+  $('artistForm').reset();
+  $('fCountry2').value='';
+  $('formTitle').textContent='가수 추가';
+}
+
+function fillForm(a){
+  editingId=a.id;
+  $('formTitle').textContent='가수 수정';
+  $('fName').value=a.name||'';
+  $('fCountry').value=a.country||'';
+  $('fCountry2').value=a.country2||'';
+  $('fImage').value=a.image||'';
+  $('fNote').value=a.note||'';
+  $('sHigh').value=a.high;
+  $('sLow').value=a.low;
+  $('sFalsetto').value=a.falsetto;
+  $('sTone').value=a.tone;
+  $('sTechnique').value=a.technique;
+  $('sEmotion').value=a.emotion;
+}
+
 function val(id){return Math.max(0,Math.min(100,Number($(id).value)||0))}
 
 function renderDBList(){
   $('dbList').innerHTML=artists.length?artists.map(a=>`
     <div class="db-row">
-      <div class="meta"><strong>${esc(a.name)}</strong><small>${esc(a.country)} · 평균 ${avg(a)}</small></div>
+      <div class="meta"><strong>${esc(a.name)}</strong><small>${esc(displayCountry(a))} · 평균 ${avg(a)}</small></div>
       <div class="row-actions"><button data-edit="${a.id}">수정</button><button class="danger" data-delete="${a.id}">삭제</button></div>
     </div>`).join(''):`<div class="empty">저장된 가수가 없습니다.</div>`;
   
@@ -1473,7 +1583,19 @@ function mergeDefaults(){
 
 $('artistForm').addEventListener('submit',async e=>{
   e.preventDefault();
-  const record={name:$('fName').value.trim(),country:$('fCountry').value.trim(),image:$('fImage').value.trim(),note:$('fNote').value.trim(),high:val('sHigh'),low:val('sLow'),falsetto:val('sFalsetto'),tone:val('sTone'),technique:val('sTechnique'),emotion:val('sEmotion')};
+  const record={
+    name:$('fName').value.trim(),
+    country:$('fCountry').value.trim(),
+    country2:$('fCountry2').value.trim(),
+    image:$('fImage').value.trim(),
+    note:$('fNote').value.trim(),
+    high:val('sHigh'),
+    low:val('sLow'),
+    falsetto:val('sFalsetto'),
+    tone:val('sTone'),
+    technique:val('sTechnique'),
+    emotion:val('sEmotion')
+  };
   if(editingId!=null)record.id=Number(editingId);
   await putArtist(record);
   artists=await getAll();
@@ -1499,7 +1621,14 @@ $('adminLoginBtn').onclick=adminLogin;
 $('adminCancelBtn').onclick=()=>$('adminLoginModal').classList.remove('show');
 $('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin();});
 $('compareNowBtn').onclick=()=>openCompare();
-if($('sortSelect'))$('sortSelect').onchange=()=>{ $('statSelect').hidden=$('sortSelect').value!=='stat'; render(); };
+
+if($('sortSelect'))$('sortSelect').onchange=()=>{ 
+  const val = $('sortSelect').value;
+  if($('statSelect')) $('statSelect').hidden = val !== 'stat';
+  if($('countrySelect')) $('countrySelect').hidden = val !== 'country';
+  render();
+};
+if($('countrySelect'))$('countrySelect').onchange=()=>render();
 if($('statSelect'))$('statSelect').onchange=()=>render();
 
 $('detailBtn').onclick=()=>{if(selectedForMenu)openDetailWindow(selectedForMenu);$('actionMenu').classList.remove('show')};
